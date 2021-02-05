@@ -15,21 +15,9 @@
             <v-row>
               <v-card class="pa-1" style="width: 100%;">
                 <v-container fluid flex>
-                  <Status/>
+                  <MEAStatus/>
                 </v-container>
               </v-card>
-            </v-row>
-            <v-row class="mt-3" align="auto">
-              <v-col class="d-flex">
-                <v-card class="pa-1" style="width: 100%;" >
-                  <ControlForm />
-                </v-card>
-              </v-col>
-              <v-col>
-                <v-card class="pa-1">
-                    <GeofenceForm />
-                </v-card>
-              </v-col>
             </v-row>
             <v-row class="pt-0" align="auto"> 
               <v-col cols="6" class="ml-0 pl-3">
@@ -43,7 +31,18 @@
                 </v-card>
               </v-col>
             </v-row>
-
+            <v-row class="mt-3" align="auto">
+              <v-col class="d-flex">
+                <v-card class="pa-1" style="width: 100%;" >
+                  <ControlForm />
+                </v-card>
+              </v-col>
+              <v-col>
+                <v-card class="pa-1">
+                    <GeofenceForm />
+                </v-card>
+              </v-col>
+            </v-row>
           </v-container>
         </v-col>
       </v-row>
@@ -53,7 +52,7 @@
 
 <script>
 
-import Status from '@/components/Status.vue'
+import MEAStatus from '@/components/MEA/MEAStatus.vue'
 import ControlForm from '@/components/ControlForm.vue'
 import GeofenceForm from '@/components/GeofenceForm.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
@@ -64,7 +63,7 @@ export default {
   name: '',
 
   components: {
-    Status,
+    MEAStatus,
     ControlForm,
     GeofenceForm,
     GeneralStage,

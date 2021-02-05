@@ -6,7 +6,7 @@
       offset-x
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn x-large dark color="primary" v-bind="attrs" v-on="on" ><v-icon x-large>mdi-gamepad-square</v-icon></v-btn>
+        <v-btn width="100%" x-large dark color="primary" v-bind="attrs" v-on="on" class="mx-2" >VEHICLE CONTROL<v-icon x-large>mdi-gamepad-square</v-icon></v-btn>
       </template>
 
       <v-card>
@@ -50,7 +50,7 @@ export default {
       stages: [
           'Standby',
           'Minimum Altitude Climb',
-          'Eru Drop',
+          'Fly To EZ',
           'Load Hiker',
           'Return Home',
         ],

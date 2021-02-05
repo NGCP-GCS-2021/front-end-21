@@ -20,13 +20,12 @@
                       <h1 class="font-weight-regular text-center display-2 green--text pr-4">MAC</h1>
                       <v-icon large color="green">mdi-airplane</v-icon>
                     </v-row>
-                    <Status />
+                    <MACStatus />
                     <v-row justify="center">
-                      <v-col :cols="3">
-
-                          <Control />
+                      <v-col :cols="5" class="mx-2 px-0">
+                          <MACMainControl />
                       </v-col>
-                      <v-col :cols="3">
+                      <v-col :cols="5" class="mx-2 px-0">
                         <Emergency />
                       </v-col>
                     </v-row>
@@ -40,15 +39,12 @@
                       <h1 class="font-weight-regular text-center display-2 orange--text pr-4">ERU</h1>
                       <v-icon large color="orange">mdi-car-lifted-pickup</v-icon>
                     </v-row>
-                    <Status />
+                    <ERUStatus />
                     <v-row justify="center">
-                      <v-col :cols="3" class="mx-0 px-0">
-                          <Control />
+                      <v-col :cols="5" class="mx-2 px-0">
+                          <ERUMainControl />
                       </v-col>
-                      <v-col :cols="3" class="mx-0 px-0">
-                        <v-btn x-large dark color="secondary"><v-icon x-large>mdi-video</v-icon></v-btn>
-                      </v-col>
-                      <v-col :cols="3" class="mx-0 px-0">
+                      <v-col :cols="5" class="mx-2 px-0">
                         <Emergency />
                       </v-col>
                     </v-row>
@@ -62,12 +58,12 @@
                       <h1 class="font-weight-regular text-center display-2 purple--text pr-4">MEA</h1>
                       <v-icon large color="purple">mdi-quadcopter</v-icon>
                     </v-row>
-                    <Status />
+                    <MEAStatus />
                     <v-row justify="center">
-                      <v-col :cols="3">
-                        <Control />
+                      <v-col :cols="5" class="mx-2 px-0">
+                          <MEAMainControl />
                       </v-col>
-                      <v-col :cols="3">
+                      <v-col :cols="5" class="mx-2 px-0">
                         <Emergency />
                       </v-col>
                     </v-row>
@@ -85,8 +81,12 @@
 <script>
 // @ is an alias to /src
 import Emergency from '@/components/Emergency.vue'
-import Control from '@/components/Control.vue'
-import Status from '@/components/Status.vue'
+import MACMainControl from '@/components/MAC/MACMainControl.vue'
+import ERUMainControl from '@/components/ERU/ERUMainControl.vue'
+import MEAMainControl from '@/components/MEA/MEAMainControl.vue'
+import MEAStatus from '@/components/MEA/MEAStatus.vue'
+import ERUStatus from '@/components/ERU/ERUStatus.vue'
+import MACStatus from '@/components/MAC/MACStatus.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
 
 export default {
@@ -149,8 +149,12 @@ export default {
   }),
   components: {
     Emergency,
-    Control,
-    Status,
+    MACMainControl,
+    ERUMainControl,
+    MEAMainControl,
+    MEAStatus,
+    ERUStatus,
+    MACStatus,
     GeneralStage
   }
 }
