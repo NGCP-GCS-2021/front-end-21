@@ -34,6 +34,18 @@
         </v-row>
     </div>
 </template>
+
+<script>
+export default {
+
+  data(){
+    return{
+
+    };
+  },
+};
+</script>
+
 <style>
 .scrollable:hover, .scrollable:active, .scrollable:focus {
   overflow-y: auto !important;
