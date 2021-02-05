@@ -1,4 +1,3 @@
-
 <template>
 <div>
   <h1 class="font-weight-light">Stage Command</h1>

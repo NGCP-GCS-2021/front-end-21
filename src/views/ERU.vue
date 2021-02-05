@@ -15,20 +15,23 @@
             <v-row>
               <v-card class="pa-1" style="width: 100%;">
                 <v-container fluid flex>
-                  <Status/>
+                  <ERUStatus/>
                 </v-container>
               </v-card>
             </v-row>
-            <v-container class="mt-5 pt-5 scrollable" style="height: 515px; overflow-y: hidden;">
-            <v-row class="px-3 pt-0" justify="center" align="auto">
-              <v-col cols="3" class="mx-5">
-                <v-btn dark color="secondary">Video Feed<v-icon>mdi-video</v-icon></v-btn>
+            <v-row class="pt-0" align="auto"> 
+              <v-col cols="6" class="ml-0 pl-3">
+                <v-card class="pa-1" style="width: 100%;" >
+                  <EvacuationZone />
+                </v-card>
               </v-col>
-              <v-col cols="3" class="mx-5">
-                <ManualControl />
+              <v-col cols="6">
+                <v-card class="pa-1"  >
+                  <EmergencyCoords />
+                </v-card>
               </v-col>
             </v-row>
-            <v-row align="auto">
+            <v-row class="mt-3" align="auto">
               <v-col class="d-flex">
                 <v-card class="pa-1" style="width: 100%;" >
                   <ControlForm />
@@ -40,19 +43,7 @@
                 </v-card>
               </v-col>
             </v-row>
-            <v-row class="pt-0" align="auto"> 
-              <v-col cols="6" class="ml-0 pl-3">
-                <v-card class="pa-1" style="width: 100%;" >
-                  <EvacuationZone />
-                </v-card>
-              </v-col>
-              <v-col cols="6">
-                <v-card class="pa-1" style="width: 100%;"  >
-                  <EmergencyCoords />
-                </v-card>
-              </v-col>
-            </v-row>
-            </v-container>
+
           </v-container>
         </v-col>
       </v-row>
@@ -62,25 +53,23 @@
 
 <script>
 
-import Status from '@/components/Status.vue'
+import ERUStatus from '@/components/ERU/ERUStatus.vue'
 import ControlForm from '@/components/ControlForm.vue'
 import GeofenceForm from '@/components/GeofenceForm.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
 import EmergencyCoords from '@/components/EmergencyCoords.vue'
 import EvacuationZone from '@/components/EvacuationZone.vue'
-import ManualControl from '@/components/ManualControl.vue'
 
 export default {
   name: '',
 
   components: {
-    Status,
+    ERUStatus,
     ControlForm,
     GeofenceForm,
     GeneralStage,
     EmergencyCoords,
     EvacuationZone,
-    ManualControl
   },
 
   data: () => ({

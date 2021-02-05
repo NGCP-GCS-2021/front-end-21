@@ -1,7 +1,7 @@
 <template>
 <div class="emergency">
-    <v-btn dark x-large color="red" class="mx-2" @click="dialog = true">
-        <v-icon x-large>mdi-alert-octagon</v-icon>
+    <v-btn width="100%" dark x-large color="red" class="mx-2" @click="dialog = true">
+        EMERGENCY STOP<v-icon x-large>mdi-alert-octagon</v-icon>
     </v-btn>
     <v-dialog
         v-model="dialog"

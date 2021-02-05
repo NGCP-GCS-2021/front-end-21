@@ -21,7 +21,7 @@
         </v-row>
         <v-row fluid justify="center">
             <v-col :cols="12">
-                <div  class="scrollable" style="border: 1px solid #BFBFBF; font-size: small; border-radius: 5px; height: 65px; box-shadow: 5px 5px 2px #aaaaaa; overflow-y:hidden;">
+                <div  class="scrollable" style="border: 1px solid #BFBFBF; font-size: small; border-radius: 5px; height: 65px; overflow-y:hidden;">
                     <p class="my-0 py-0 px-1"> Vehicle connected to GCS</p>
                     <p class="my-0 py-0 px-1"> Location Sent</p>
                     <p class="my-0 py-0 px-1"> Speed Sent</p>
