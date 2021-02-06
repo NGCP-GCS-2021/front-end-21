@@ -91,62 +91,6 @@ import GeneralStage from '@/components/GeneralStage.vue'
 
 export default {
   name: '',
-  data: () => ({
-    eru: [
-      {
-      altitude: 10.5,
-      speed: 10.5,
-      gps: 
-        {lat: -34.123, 
-        lng: 151.132},
-      battery: 99.5,
-      sensors_ok: true,
-      connection: 5,
-      current_stage: 5,
-      stage_complete: false,
-      ready: true,
-      in_geofence: true,
-      console_messages: {
-
-      }
-    }],
-    mea: [
-      {
-      altitude: 10.5,
-      speed: 10.5,
-      gps: 
-        {lat: -34.123, 
-        lng: 151.132},
-      battery: 99.5,
-      sensors_ok: true,
-      connection: 5,
-      current_stage: 5,
-      stage_complete: false,
-      ready: true,
-      in_geofence: true,
-      console_messages: {
-
-      }
-    }],
-    mac: [
-      {
-      altitude: 10.5,
-      speed: 10.5,
-      gps: 
-        {lat: -34.123, 
-        lng: 151.132},
-      battery: 99.5,
-      sensors_ok: true,
-      connection: 5,
-      current_stage: 5,
-      stage_complete: false,
-      ready: true,
-      in_geofence: true,
-      console_messages: {
-
-      }
-    }],
-  }),
   components: {
     Emergency,
     MACMainControl,
