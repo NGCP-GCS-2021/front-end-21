@@ -40,5 +40,28 @@
       "value": 0,
       "title": "Status"
     }
+  ],
+  "eru_messages": [
+    {
+      "message": "Vehicle connected to GCS"
+    },
+    {
+      "message": "Location Sent"
+    },
+    {
+      "message": "Speed Sent"
+    },
+    {
+      "message": "Altitude Sent"
+    },
+    {
+      "message": "Error 404"
+    },
+    {
+      "message": "Re-connected"
+    },
+    {
+      "message": "Updated"
+    }
   ]
 }
