@@ -82,9 +82,17 @@ export default {
     SearchArea
   },
 
-  data: () => ({
-    //
-  }),
+  data(){
+    return {
+      mac_data: []
+    }
+  },
+  mounted() {
+    fetch('http://localhost:3000/mac_data')
+      .then(res => res.json())
+      .then(data => this.mac_data = data)
+      .catch(err => console.log(err.message))
+  }
 };
 </script>
 

@@ -1,5 +1,13 @@
 <template>
     <div>
+      <div style="display: grid; grid-template-columns: auto auto auto auto auto; grid-gap: 5px; padding-bottom:15px;">
+        <div v-for="(mac_data, index) in mac_data" :key="index">
+          <div style="display: flex; padding-right:3px;"><h4 class="font-weight-regular pr-1">{{ mac_data.title }}:</h4><h4 class="font-weight-bold" style="float: right">{{ mac_data.value }}</h4></div>
+        </div>
+      </div>
+<!--      <div v-for="(mac_data, index) in mac_data" :key="index">-->
+<!--        <h1>{{mac_data.title}}: {{mac_data.value}}</h1>-->
+<!--      </div>-->
         <v-row justify="center">
             <h2 class="font-weight-light pr-2">Vehicle Mission Stage:</h2>
             <h2 class="font-weight-regular pb-2">ERU Drop</h2>
@@ -34,8 +42,27 @@
         </v-row>
     </div>
 </template>
+
+<script>
+export default {
+  data()
+    {
+    return {
+      mac_data: []
+    }
+  },
+  mounted() {
+    fetch('http://localhost:3000/mac_data')
+        .then(res => res.json())
+        .then(data => this.mac_data = data)
+        .catch(err => console.log(err.message))
+  }
+  }
+</script>
+
 <style>
 .scrollable:hover, .scrollable:active, .scrollable:focus {
   overflow-y: auto !important;
 }
 </style>
+
