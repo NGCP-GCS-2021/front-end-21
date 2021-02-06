@@ -56,5 +56,13 @@
       "value": 0.0,
       "title": "Yaw"
     }
+  ],
+  "mac_msg": [
+    {
+      "message": "Vehicle connected to GCS"
+    },
+    {
+      "message": "Location Sent"
+    }
   ]
 }
