@@ -4,18 +4,11 @@
             <h2 class="font-weight-light pr-2">Vehicle Mission Stage:</h2>
             <h2 class="font-weight-regular pb-2">ERU Drop</h2>
         </v-row>
-        <v-row justify="space-around">
-            <h4 class="font-weight-light pr-3"></h4>Speed: <h4 class="font-weight-bold pr-3" >80 </h4>
-            <h4 class="font-weight-light pr-3"></h4>Longitude: <h4 class="font-weight-bold pr-3">89345 </h4>
-            <h4 class="font-weight-light pr-3"></h4>Latitude: <h4 class="font-weight-bold pr-3">45893450 </h4>
-            <h4 class="font-weight-light pr-3 pb-2"></h4>Altitude: <h4 class="font-weight-bold pr-3 pb-2">7384 </h4>
-        </v-row>
-        <v-row justify="space-around">
-            <h4 class="font-weight-light pr-3"></h4>In Geofence: <h4 class="font-weight-bold pr-3" >True </h4>
-            <h4 class="font-weight-light pr-3"></h4>Connection: <h4 class="font-weight-bold pr-3">5</h4>
-            <h4 class="font-weight-light pr-3"></h4>Ready: <h4 class="font-weight-bold pr-3">True </h4>
-            <h4 class="font-weight-light pr-3 pb-3"></h4>Battery: <h4 class="font-weight-bold pr-3 pb-3">88</h4>
-        </v-row>
+        <div style="display: grid; grid-template-columns: auto auto auto auto auto; grid-gap: 5px; padding-bottom:15px;">
+        <div v-for="(eru_data, index) in eru_data" :key="index">
+            <div style="display: flex; padding-right:3px;"><h4 class="font-weight-regular pr-1">{{ eru_data.title }}:</h4><h4 class="font-weight-bold" style="float: right">{{ eru_data.value }}</h4></div>
+        </div>
+        </div>
         <v-row justify="left">
             <h3 class="font-weight-bold">Messages:</h3>
         </v-row>
@@ -39,3 +32,69 @@
   overflow-y: auto !important;
 }
 </style>
+<script>
+import axios from 'axios';
+
+export default {
+  data: () => ({
+        eru_data: [ 
+            {
+            value: 41.0,
+            title: "Altitude"
+            },
+            {
+            value: 0.0,
+            title: "Battery"
+            },
+            {
+            value: 0,
+            title: "Current Stage"
+            },
+            {
+            value: false,
+            title: "Geofence Compliant"
+            },
+            {
+            value: 0.0,
+            title: "Latitude"
+            },
+            {
+            value: 0.0,
+            title: "Longitude" 
+            },
+            {
+            value: false,
+            title: "Sensors Ok"
+            },
+            {
+            value: 0.0,
+            title: "Speed"
+            },
+            {
+            value: false,
+            title: "Stage Completed"
+            },
+            {
+            value: 0,
+            title: "Status"
+            }
+        ]
+    }),
+  methods: {
+    getERUStatus() {
+      const path = 'http://localhost:5000/eru';
+      axios.get(path)
+        .then((res) => {
+          this.eru = res.data.eru;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        });
+    },
+  },
+  created() {
+    this.ERUStatus();
+  },
+};
+</script>
