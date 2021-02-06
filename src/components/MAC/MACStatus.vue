@@ -33,6 +33,9 @@
                   <div v-for="(mac_msg, index) in mac_msg" :key="index">
                     <p class="my-0 py-0 px-1"> {{ mac_msg.message }}</p>
                   </div>
+                  <div v-for="(mac_messages, index) in mac_messages" :key="index">
+                    <p class="my-0 py-0 px-1"> {{ mac_messages.message }}</p>
+                  </div>
                 </div>
             </v-col>
         </v-row>
@@ -45,7 +48,8 @@ export default {
     {
     return {
       mac_data: [],
-      mac_msg: []
+      mac_msg: [],
+      mac_messages: []
     }
   },
   mounted() {
@@ -57,6 +61,9 @@ export default {
     fetch('http://localhost:3000/mac_msg')
         .then(res => res.json())
         .then(data => this.mac_msg = data)
+    fetch('http://localhost:3000/mac_messages')
+        .then(res => res.json())
+        .then(data => this.mac_messages = data)
         .catch(err => console.log(err.message))
   }
   }

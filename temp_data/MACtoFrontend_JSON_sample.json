@@ -1,0 +1,83 @@
+{
+  "mac_data": [
+    {
+      "value": 0.0,
+      "title": "Altitude"
+    },
+    {
+      "value": 0.0,
+      "title": "Battery"
+    },
+    {
+      "value": 0,
+      "title": "Current Stage"
+    },
+    {
+      "value": false,
+      "title": "Geofence Compliant"
+    },
+    {
+      "value": 0.0,
+      "title": "Latitude"
+    },
+    {
+      "value": 0.0,
+      "title": "Longitude"
+    },
+    {
+      "value": 0.0,
+      "title": "Pitch"
+    },
+    {
+      "value": false,
+      "title": "Propulsion"
+    },
+    {
+      "value": 0.0,
+      "title": "Roll"
+    },
+    {
+      "value": false,
+      "title": "Sensors Ok"
+    },
+    {
+      "value": 95.0,
+      "title": "Speed"
+    },
+    {
+      "value": false,
+      "title": "Stage Completed"
+    },
+    {
+      "value": 0,
+      "title": "Status"
+    },
+    {
+      "value": 0.0,
+      "title": "Yaw"
+    }
+  ],
+  "mac_messages": [
+    {
+      "message": "Vehicle connected to GCS"
+    },
+    {
+      "message": "Location Sent"
+    },
+    {
+      "message": "Speed Sent"
+    },
+    {
+      "message": "Altitude Sent"
+    },
+    {
+      "message": "Error 404"
+    },
+    {
+      "message": "Re-connected"
+    },
+    {
+      "message": "Updated"
+    }
+  ]
+}
