@@ -15,8 +15,8 @@
             class="pa-4"
             v-model="select"
             :items="stages"
-            :rules="[v => !!v || 'Please select stage']"
-            label="Stage"
+            :rules="[v => !!v || 'Please select state']"
+            label="State"
             required
         ></v-select>
 

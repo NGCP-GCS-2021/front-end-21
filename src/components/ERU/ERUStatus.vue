@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-row justify="center">
-      <h2 class="font-weight-light pr-2">Vehicle Mission Stage:</h2>
-      <h2 class="font-weight-regular pb-2">ERU Drop</h2>
+      <h2 class="font-weight-light pr-2">Vehicle Mission State:</h2>
+      <h2 class="font-weight-regular pb-2">Standby</h2>
     </v-row>
     <div
       style="
@@ -86,7 +86,7 @@ export default {
             },
             {
             value: 0,
-            title: "Current Stage"
+            title: "Current State"
             },
             {
             value: false,
@@ -110,12 +110,32 @@ export default {
             },
             {
             value: false,
-            title: "Stage Completed"
+            title: "State Completed"
             },
             {
             value: 0,
             title: "Status"
             }
+        ],
+        eru_messages: [
+          {
+            message: 'connected'
+          },
+          {
+            message: 'vehicle updated'
+          },
+          {
+            message: 'status updated'
+          },
+          {
+            message: 'coordinates sent'
+          },
+          {
+            message: 're-connected'
+          },
+          {
+            message: 're-connected'
+          },
         ]
     }),
   methods: {
