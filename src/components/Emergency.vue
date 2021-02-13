@@ -40,18 +40,10 @@
 </template>
 
 <script>
-import axios from 'axios';
   export default {
     data () {
       return {
         dialog: false,
-        e_stop: [
-          {
-            "title": "Stop",
-            "value": true
-          }
-        ]
-
       }
     },
     methods: {

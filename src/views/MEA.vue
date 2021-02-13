@@ -34,7 +34,7 @@
             <v-row class="mt-3" align="auto">
               <v-col class="d-flex">
                 <v-card class="pa-1" style="width: 100%;" >
-                  <MEAControlForm />
+                  <ControlForm />
                 </v-card>
               </v-col>
               <v-col>
@@ -53,7 +53,7 @@
 <script>
 
 import MEAStatus from '@/components/MEA/MEAStatus.vue'
-import MEAControlForm from '@/components/MEA/MEAControlForm.vue'
+import ControlForm from '@/components/ControlForm.vue'
 import GeofenceForm from '@/components/GeofenceForm.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
 import EmergencyCoords from '@/components/EmergencyCoords.vue'
@@ -64,7 +64,7 @@ export default {
 
   components: {
     MEAStatus,
-    MEAControlForm,
+    ControlForm,
     GeofenceForm,
     GeneralStage,
     EmergencyCoords,

@@ -35,7 +35,7 @@
             <v-row align="auto">
               <v-col class="d-flex">
                 <v-card class="pa-1" style="width: 100%;" >
-                  <MACControlForm />
+                  <ControlForm />
                 </v-card>
               </v-col>
               <v-col class="d-flex">
@@ -60,7 +60,7 @@
 <script>
 
 import MACStatus from '@/components/MAC/MACStatus.vue'
-import MACControlForm from '@/components/MAC/MACControlForm.vue'
+import ControlForm from '@/components/ControlForm.vue'
 import GeofenceForm from '@/components/GeofenceForm.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
 import EmergencyCoords from '@/components/EmergencyCoords.vue'
@@ -73,7 +73,7 @@ export default {
 
   components: {
     MACStatus,
-    MACControlForm,
+    ControlForm,
     GeofenceForm,
     GeneralStage,
     EmergencyCoords,

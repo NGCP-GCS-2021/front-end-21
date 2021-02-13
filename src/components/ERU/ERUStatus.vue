@@ -27,15 +27,7 @@
     </v-row>
     <v-row fluid justify="center">
       <v-col :cols="12">
-        <div
-          class="scrollable"
-          style="
-            border: 1px solid #bfbfbf;
-            font-size: small;
-            border-radius: 5px;
-            height: 65px;
-            overflow-y: hidden;
-          "
+        <div class="scrollable" style="border: 1px solid #bfbfbf; font-size: small; border-radius: 5px; height: 65px; overflow-y: hidden;"
         >
           <div v-for="(eru_messages, index) in eru_messages" :key="index">
             <p class="my-0 py-0 px-1">{{ eru_messages.message }}</p>
@@ -47,8 +39,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   //either props or in data MOST LIKELY DATA
   data() {
@@ -59,27 +49,17 @@ export default {
       //battery
     };
   },
-  methods: {
-    getERUData() {
-      const path = "http://127.0.0.1:5000/ERU";
-      axios
-        .get(path)
-        .then((res) => {
-          //console.log(res.data);
-          //console.log("hello there");
-          this.eru_data = res.data.ERU;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-  },
   mounted() {
-    this.getERUData();
+    fetch("http://localhost:3000/eru_data")
+      .then((res) => res.json())
+      .then((data) => (this.eru_data = data))
+      .catch((err) => console.log(err.message));
+    fetch("http://localhost:3000/eru_messages")
+      .then((res) => res.json())
+      .then((data) => (this.eru_messages = data))
+      .catch((err) => console.log(err.message));
   },
-  updated() {
-    this.getERUData();
-  },
+  //formatted() {},
 };
 </script>
 
