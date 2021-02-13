@@ -46,10 +46,13 @@
         dialog: false,
       }
     },
+<<<<<<< HEAD
     methods: {
       e_stop() {
         const path = ""
       }
     }
+=======
+>>>>>>> parent of 9fa6882 (GET from Backend active, new components)
   }
 </script>
