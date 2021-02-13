@@ -77,45 +77,36 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
       mac_data: [],
-      mac_msg: [],
-      mac_messages: []
-    }
+      mac_messages: [],
+    };
   },
-  mounted() {
-    fetch('http://localhost:3000/mac_data')
-        .then(res => res.json())
-        .then(data => this.mac_data = data)
-        .catch(err => console.log(err.message))
-
-    fetch('http://localhost:3000/mac_msg')
-        .then(res => res.json())
-        .then(data => this.mac_msg = data)
-    fetch('http://localhost:3000/mac_messages')
-        .then(res => res.json())
-        .then(data => this.mac_messages = data)
-        .catch(err => console.log(err.message))
-  },
-  }
   methods: {
     getMACData() {
       const path = "http://127.0.0.1:5000/MAC";
       axios
-        .get(path)
-        .then((res) => {
-          //console.log(res.data);
-          //console.log("hello there");
-          this.mac_data = res.data.MAC;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+          .get(path)
+          .then((res) => {
+            //console.log(res.data);
+            //console.log("hello there");
+            this.mac_data = res.data.MAC;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
     },
-  };
+  },
+  mounted() {
+    this.getMACData();
+  },
+  updated() {
+    this.getMACData();
+  },
+
+};
 </script>
 
 <style>

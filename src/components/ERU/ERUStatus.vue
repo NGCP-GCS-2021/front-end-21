@@ -48,7 +48,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   //either props or in data MOST LIKELY DATA
   data() {
@@ -63,27 +62,18 @@ export default {
     getERUData() {
       const path = "http://127.0.0.1:5000/ERU";
       axios
-        .get(path)
-        .then((res) => {
-          //console.log(res.data);
-          //console.log("hello there");
-          this.eru_data = res.data.ERU;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+          .get(path)
+          .then((res) => {
+            //console.log(res.data);
+            //console.log("hello there");
+            this.eru_data = res.data.ERU;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
     },
   },
   mounted() {
-    fetch("http://localhost:3000/eru_data")
-      .then((res) => res.json())
-      .then((data) => (this.eru_data = data))
-      .catch((err) => console.log(err.message));
-    fetch("http://localhost:3000/eru_messages")
-      .then((res) => res.json())
-      .then((data) => (this.eru_messages = data))
-      .catch((err) => console.log(err.message));
-  },
     this.getERUData();
   },
   updated() {
