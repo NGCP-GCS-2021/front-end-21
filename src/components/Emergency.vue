@@ -55,7 +55,9 @@ import axios from 'axios';
       }
     },
     methods: {
-      
+      e_stop() {
+        const path = ""
+      }
     }
   }
 </script>
