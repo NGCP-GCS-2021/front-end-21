@@ -78,20 +78,24 @@
 
 <script>
 // @ is an alias to /src
-import Emergency from '@/components/Emergency.vue'
-import MACMainControl from '@/components/MAC/MACMainControl.vue'
-import ERUMainControl from '@/components/ERU/ERUMainControl.vue'
-import MEAMainControl from '@/components/MEA/MEAMainControl.vue'
-import MEAStatus from '@/components/MEA/MEAStatus.vue'
-import ERUStatus from '@/components/ERU/ERUStatus.vue'
-import MACStatus from '@/components/MAC/MACStatus.vue'
-import GeneralStage from '@/components/GeneralStage.vue'
+import MACEmergency from "@/components/Main/MACEmergency.vue";
+import ERUEmergency from "@/components/Main/ERUEmergency.vue";
+import MEAEmergency from "@/components/Main/MEAEmergency.vue";
+import MACMainControl from "@/components/Main/MACMainControl.vue";
+import ERUMainControl from "@/components/Main/ERUMainControl.vue";
+import MEAMainControl from "@/components/Main/MEAMainControl.vue";
+import MEAStatus from "@/components/MEA/MEAStatus.vue";
+import ERUStatus from "@/components/ERU/ERUStatus.vue";
+import MACStatus from "@/components/MAC/MACStatus.vue";
+import GeneralStage from "@/components/GeneralStage.vue";
 import Map from '@/components/Map.vue'
 
 export default {   
     name: '',
     components: {
-        Emergency,
+        MACEmergency,
+        ERUEmergency,
+        MEAEmergency,
         MACMainControl,
         ERUMainControl,
         MEAMainControl,
