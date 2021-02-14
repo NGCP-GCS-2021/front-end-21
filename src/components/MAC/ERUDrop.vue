@@ -59,11 +59,14 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         </v-container>
       </form>
     </validation-observer>
   </div>
 =======
+=======
+>>>>>>> parent of 9fa6882 (GET from Backend active, new components)
 =======
 >>>>>>> parent of 9fa6882 (GET from Backend active, new components)
 =======
@@ -77,6 +80,9 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 9fa6882 (GET from Backend active, new components)
+=======
 >>>>>>> parent of 9fa6882 (GET from Backend active, new components)
 =======
 >>>>>>> parent of 9fa6882 (GET from Backend active, new components)

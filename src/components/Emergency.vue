@@ -49,9 +49,12 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     methods: {
       
     }
+=======
+>>>>>>> parent of 9fa6882 (GET from Backend active, new components)
 =======
 >>>>>>> parent of 9fa6882 (GET from Backend active, new components)
 =======
