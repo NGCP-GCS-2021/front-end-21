@@ -26,7 +26,7 @@
                           <MACMainControl />
                       </v-col>
                       <v-col :cols="5" class="mx-2 px-0">
-                        <MACEmergency />
+                        <Emergency />
                       </v-col>
                     </v-row>
                   </v-container>
@@ -45,7 +45,7 @@
                           <ERUMainControl />
                       </v-col>
                       <v-col :cols="5" class="mx-2 px-0">
-                        <ERUEmergency />
+                        <Emergency />
                       </v-col>
                     </v-row>
                   </v-container>
@@ -64,7 +64,7 @@
                           <MEAMainControl />
                       </v-col>
                       <v-col :cols="5" class="mx-2 px-0">
-                        <MEAEmergency />
+                        <Emergency />
                       </v-col>
                     </v-row>
                   </v-container>
@@ -80,9 +80,7 @@
 
 <script>
 // @ is an alias to /src
-import MACEmergency from '@/components/Emergency/MACEmergency.vue'
-import ERUEmergency from '@/components/Emergency/ERUEmergency.vue'
-import MEAEmergency from '@/components/Emergency/MEAEmergency.vue'
+import Emergency from '@/components/Emergency.vue'
 import MACMainControl from '@/components/MAC/MACMainControl.vue'
 import ERUMainControl from '@/components/ERU/ERUMainControl.vue'
 import MEAMainControl from '@/components/MEA/MEAMainControl.vue'
@@ -94,9 +92,7 @@ import GeneralStage from '@/components/GeneralStage.vue'
 export default {
   name: '',
   components: {
-    MACEmergency,
-    ERUEmergency,
-    MEAEmergency,
+    Emergency,
     MACMainControl,
     ERUMainControl,
     MEAMainControl,
