@@ -2,12 +2,7 @@
   <div class="mea">
     <v-container fill-height fluid flex class="pa-2 mt-3 d-flex">
       <v-row align="auto">
-        <v-col :cols="6" class="d-flex">
-          <v-card>
-            <v-img height="100%" src="../assets/map.png"></v-img>
-            <!---Needs to be replaced by map component--->
-          </v-card>
-        </v-col>
+        <Map cols="col col-6" />
         <template v-if="!manualControlView">
           <v-col :cols="6">
             <v-container fluid flex>
@@ -107,6 +102,7 @@ import InputToggle from "@/components/ERU/ManualControl/InputToggle.vue";
 import BackButton from "@/components/ERU/ManualControl/BackButton.vue";
 import MaxSpeed from "@/components/ERU/ManualControl/MaxSpeed.vue";
 import SimpleKeyboard from "@/components/ERU/ManualControl/Keyboard/SimpleKeyboard";
+import Map from '@/components/Map.vue'
 
 export default {
   name: "",
@@ -123,6 +119,7 @@ export default {
     BackButton,
     MaxSpeed,
     SimpleKeyboard,
+    Map
   },
   data: () => ({
     updatedStage: null,

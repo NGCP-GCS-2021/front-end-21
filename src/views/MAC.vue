@@ -2,12 +2,7 @@
   <div class="mea">
     <v-container fill-height fluid flex class="pa-2 mt-3 d-flex">
       <v-row align="auto">
-        <v-col :cols="6" class="d-flex">
-          <v-card>
-            <v-img height="900px" src="../assets/map.png"></v-img>
-            <!---Needs to be replaced by map component--->
-          </v-card>
-        </v-col>
+        <Map cols="col col-6" />
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row>
@@ -87,6 +82,7 @@ import MACHome from "@/components/MAC/MACHome.vue";
 import EvacuationZone from "@/components/EvacuationZone.vue";
 import ERUDrop from "@/components/MAC/ERUDrop.vue";
 import MACSearchArea from "@/components/MAC/MACSearchArea.vue";
+import Map from "@/components/Map.vue";
 
 export default {
   name: "",
@@ -99,6 +95,7 @@ export default {
     EvacuationZone,
     ERUDrop,
     MACSearchArea,
+    Map
   },
 
   data: () => ({
