@@ -55,71 +55,43 @@
                 Clear
             </v-btn>
           </v-row>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         </v-container>
       </form>
     </validation-observer>
-  </div>
-=======
-=======
->>>>>>> parent of 9fa6882 (GET from Backend active, new components)
-=======
->>>>>>> parent of 9fa6882 (GET from Backend active, new components)
-=======
->>>>>>> parent of 9fa6882 (GET from Backend active, new components)
-=======
->>>>>>> parent of 9fa6882 (GET from Backend active, new components)
-      </v-container>
-    </form>
-  </validation-observer>
-</div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 9fa6882 (GET from Backend active, new components)
-=======
->>>>>>> parent of 9fa6882 (GET from Backend active, new components)
-=======
->>>>>>> parent of 9fa6882 (GET from Backend active, new components)
-=======
->>>>>>> parent of 9fa6882 (GET from Backend active, new components)
-=======
->>>>>>> parent of 9fa6882 (GET from Backend active, new components)
 </template>
 
 <script>
-  import { required, minValue } from 'vee-validate/dist/rules'
-  import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+import { required, minValue } from "vee-validate/dist/rules";
+import {
+  extend,
+  ValidationObserver,
+  ValidationProvider,
+  setInteractionMode,
+} from "vee-validate";
 
-  setInteractionMode('eager')
+setInteractionMode("eager");
 
-  extend('required', {
-    ...required,
-    message: '{_field_} cannot be empty',
-  })
+extend("required", {
+  ...required,
+  message: "{_field_} cannot be empty",
+});
 
-  export default {
-    components: {
-      ValidationProvider,
-      ValidationObserver,
+export default {
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
+  data: () => ({}),
+
+  methods: {
+    submit() {
+      this.$refs.observer.validate();
     },
-    data: () => ({
-    }),
-
-    methods: {
-      submit () {
-        this.$refs.observer.validate()
-      },
-      clear () {
-        this.Longitude = ''
-        this.Latitude = ''
-        this.$refs.observer.reset()
-      },
+    clear() {
+      this.Longitude = "";
+      this.Latitude = "";
+      this.$refs.observer.reset();
     },
-  }
+  },
+};
 </script>
