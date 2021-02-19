@@ -23,7 +23,7 @@ export default {
         }
     },
     methods: {
-        map: function() {
+        makeMap: function() {
             // Creates and adds a mapbox to the element with id "map"
             mapboxgl.accessToken = 'pk.eyJ1IjoiaGxpbjkxIiwiYSI6ImNrbDQ2MjY4NzE0ZXEycHFpaXBya2tvN3gifQ.Tqa8iLUqXeKZQ8SmhLoRtg';
             
@@ -43,7 +43,7 @@ export default {
         }
     },
     mounted() {
-        map = this.map()
+        map = this.makeMap()
         map.addControl(new mapboxgl.NavigationControl());
     },
     template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
