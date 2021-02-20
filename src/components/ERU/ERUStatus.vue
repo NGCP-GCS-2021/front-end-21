@@ -65,8 +65,6 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          //console.log(res.data);
-          //console.log("hello there");
           this.eru_data = res.data.ERU;
         })
         .catch((error) => {
