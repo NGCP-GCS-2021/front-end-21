@@ -31,11 +31,8 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <div v-if="backendStop">
-      <p>Backend stop value: {{ backendStop.value }}</p>
-    </div>
-    <div v-else>
-      <p>emergency not activated yet</p>
+    <div>
+      <p>Emegerncy Stop Activated: {{ activated }}</p>
     </div>
   </div>
 </template>
@@ -47,13 +44,13 @@ export default {
     return {
       dialog: false,
       e_stop: {
-        "Stop": true
+        Stop: true,
       },
       // e_stop: {
       //   title: "Stop",
       //   value: true,
       // },
-      backendStop: null,
+      activated: false,
     };
   },
   methods: {
@@ -63,26 +60,11 @@ export default {
       axios
         .post(path, this.e_stop)
         .then(() => {
-          console.log("stokers!");
-          this.getStop();
+          console.log("Posted Emergency Stop to MAC");
+          this.activated = true;
         })
         .catch((error) => {
           console.log(error);
-        });
-        
-    },
-    getStop() {
-      const path = "http://127.0.0.1:5000/MAC";
-      axios
-        .get(path)
-        .then((res) => {
-          this.backendStop = res.data.e_stop;
-          console.log("stoke nation!");
-          console.log("res.data.e_stop: ", res.data.e_stop);
-          console.log("this.backendStop: ", this.backendStop);
-        })
-        .catch((error) => {
-          console.error(error);
         });
     },
   },

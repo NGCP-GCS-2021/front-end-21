@@ -27,10 +27,13 @@
 
           <v-btn color="secondary" text @click="dialog = false"> Cancel </v-btn>
 
-          <v-btn color="primary" text @click="dialog = false"> Activate </v-btn>
+          <v-btn color="primary" text @click="emergencyStop"> Activate </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <div>
+      <p>Emegerncy Stop Activated: {{ activated }}</p>
+    </div>
   </div>
 </template>
 
@@ -40,16 +43,30 @@ export default {
   data() {
     return {
       dialog: false,
-      e_stop: [
-        {
-          title: "Stop",
-          value: true,
-        },
-      ],
+      e_stop: {
+        Stop: true,
+      },
+      // e_stop: {
+      //   title: "Stop",
+      //   value: true,
+      // },
+      activated: false,
     };
   },
   methods: {
-   
+    emergencyStop() {
+      this.dialog = false;
+      const path = "http://127.0.0.1:5000/MEA";
+      axios
+        .post(path, this.e_stop)
+        .then(() => {
+          console.log("Posted Emergency Stop to MEA");
+          this.activated = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
