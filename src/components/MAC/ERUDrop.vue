@@ -60,7 +60,7 @@
         <p></p>
       </form>
     </validation-observer>
-     <div/>
+     </div>
 
 </template>
 
