@@ -40,24 +40,26 @@
 </template>
 
 <script>
-import axios from 'axios';
   export default {
     data () {
       return {
         dialog: false,
-        e_stop: [
-          {
-            "title": "Stop",
-            "value": true
-          }
-        ]
-
       }
     },
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     methods: {
-      e_stop() {
-        const path = ""
-      }
+      
     }
+=======
+>>>>>>> parent of 9fa6882 (GET from Backend active, new components)
+=======
+>>>>>>> parent of 9fa6882 (GET from Backend active, new components)
+=======
+>>>>>>> parent of 9fa6882 (GET from Backend active, new components)
+=======
+>>>>>>> parent of 9fa6882 (GET from Backend active, new components)
   }
 </script>

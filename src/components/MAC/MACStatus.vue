@@ -88,15 +88,13 @@ export default {
     getMACData() {
       const path = "http://127.0.0.1:5000/MAC";
       axios
-          .get(path)
-          .then((res) => {
-            //console.log(res.data);
-            //console.log("hello there");
-            this.mac_data = res.data.MAC;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+        .get(path)
+        .then((res) => {
+          this.mac_data = res.data.MAC;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   },
   mounted() {

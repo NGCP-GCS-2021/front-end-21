@@ -62,15 +62,13 @@ export default {
     getERUData() {
       const path = "http://127.0.0.1:5000/ERU";
       axios
-          .get(path)
-          .then((res) => {
-            //console.log(res.data);
-            //console.log("hello there");
-            this.eru_data = res.data.ERU;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+        .get(path)
+        .then((res) => {
+          this.eru_data = res.data.ERU;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   },
   mounted() {
