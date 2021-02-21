@@ -32,13 +32,18 @@ export default {
                 container: 'map',
                 center: [-74.5, 40],
                 zoom: 9,
-                style: 'mapbox://styles/mapbox/streets-v11'
+                style: 'mapbox://styles/mapbox/satellite-v9'
             });
         }
         
         addCircle: function(latitude, longitude, radius, name, color) {
             // Adds a circle to the map at the specified coordinate
-            // With specified radius, name, and color
+            // With specified radius in METERS, name, and color
+
+            // Used to set the radius for max zoom level 22 so circle scales accurately with zoom
+            const metersToPixelsAtMaxZoom = (meters, latitude) =>
+                  meters / (78271.484 / 2 ** 22) / Math.cos(latitude * Math.PI / 180)
+            
             this.map.addSource(name, {
                 'type': 'geojson',
                 'type': 'Feature',
@@ -54,7 +59,10 @@ export default {
                 'paint': {
                     'circle-radius': {
                         'base': radius
-                        // Can add "stops" to support scaling when zoomed in/out
+                        'stops': [
+                            [0,0],
+                            [22, metersToPixelsAtMaxZoom(radius, latitude)]
+                        ]
                     },
                     'circle-color': color
                 }
