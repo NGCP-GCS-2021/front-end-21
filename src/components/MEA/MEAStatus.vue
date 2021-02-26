@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   //either props or in data MOST LIKELY DATA
   data() {
@@ -49,15 +51,26 @@ export default {
       //battery
     };
   },
+  methods: {
+    getMEAData() {
+      const path = "http://127.0.0.1:5000/MEA";
+      axios
+        .get(path)
+        .then((res) => {
+          //console.log(res.data);
+          //console.log("hello there");
+          this.mea_data = res.data.MEA;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  },
   mounted() {
-    fetch("http://localhost:3000/eru_data")
-      .then((res) => res.json())
-      .then((data) => (this.eru_data = data))
-      .catch((err) => console.log(err.message));
-    fetch("http://localhost:3000/eru_messages")
-      .then((res) => res.json())
-      .then((data) => (this.eru_messages = data))
-      .catch((err) => console.log(err.message));
+    this.getMEAData();
+  },
+  updated() {
+    this.getMEAData();
   },
   //formatted() {},
 };
