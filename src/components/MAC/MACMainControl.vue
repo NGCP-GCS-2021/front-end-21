@@ -39,12 +39,38 @@
 export default {
   data: () => ({
     menu: false,
+    // stages: [
+    //   "Standby",
+    //   "Minimum Altitude Climb",
+    //   "Search For Hiker",
+    //   "ERU Drop",
+    //   "Return Home",
+    // ],
+    currentStage: {
+      Perform_stage: null,
+    },
+    //All stage id's are: (Integer Indication + 1)
     stages: [
-      "Standby",
-      "Minimum Altitude Climb",
-      "Search For Hiker",
-      "ERU Drop",
-      "Return Home",
+      {
+        stage: "Ready to Start",
+        id: 1,
+      },
+      {
+        stage: "Takeoff to Minimum Altitude",
+        id: 2,
+      },
+      {
+        stage: "Drive to Hiker",
+        id: 3,
+      },
+      {
+        stage: "ERU Drop",
+        id: 4,
+      },
+      {
+        stage: "Return to Home/Travel to Position",
+        id: 10,
+      },
     ],
   }),
 };
