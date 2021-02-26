@@ -61,8 +61,6 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          //console.log(res.data);
-          //console.log("hello there");
           this.mac_data = res.data.MAC;
         })
         .catch((error) => {

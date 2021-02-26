@@ -57,8 +57,6 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          //console.log(res.data);
-          //console.log("hello there");
           this.mea_data = res.data.MEA;
         })
         .catch((error) => {
