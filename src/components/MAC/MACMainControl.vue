@@ -21,6 +21,8 @@
           :items="stages"
           :rules="[(v) => !!v || 'Please select stage']"
           label="Stage"
+          item-text="stage"
+          item-value="id"
           required
         ></v-select>
 
@@ -28,7 +30,7 @@
           <v-spacer></v-spacer>
 
           <v-btn color="secondary" text @click="menu = false"> Cancel </v-btn>
-          <v-btn color="primary" text @click="menu = false"> Submit </v-btn>
+          <v-btn color="primary" text @click="postCurrentStage"> Submit </v-btn>
         </v-card-actions>
       </v-card>
     </v-menu>
@@ -36,16 +38,61 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data: () => ({
     menu: false,
+    // stages: [
+    //   "Standby",
+    //   "Minimum Altitude Climb",
+    //   "Search For Hiker",
+    //   "ERU Drop",
+    //   "Return Home",
+    // ],
+    currentStage: {
+      Perform_stage: null,
+    },
+    //All stage id's are: (Integer Indication + 1)
     stages: [
-      "Standby",
-      "Minimum Altitude Climb",
-      "Search For Hiker",
-      "ERU Drop",
-      "Return Home",
+      {
+        stage: "Ready to Start",
+        id: 1,
+      },
+      {
+        stage: "Takeoff to Minimum Altitude",
+        id: 2,
+      },
+      {
+        stage: "Drive to Hiker",
+        id: 3,
+      },
+      {
+        stage: "ERU Drop",
+        id: 4,
+      },
+      {
+        stage: "Return to Home/Travel to Position",
+        id: 10,
+      },
     ],
   }),
+  methods: {
+    postCurrentStage() {
+      console.log("hello there");
+      this.menu = false;
+      const path = "http://127.0.0.1:5000/MAC";
+      this.currentStage.Perform_stage = this.select - 1;
+      axios
+          .post(path, this.currentStage)
+          .then(() => {
+            console.log("Posted stage to MAC");
+            //console.log(this.currentStage);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+  },
 };
 </script>
