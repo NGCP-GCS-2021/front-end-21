@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data: () => ({
     menu: false,
@@ -73,5 +75,22 @@ export default {
       },
     ],
   }),
+  methods: {
+    postCurrentStage() {
+      console.log("hello there");
+      this.menu = false;
+      const path = "http://127.0.0.1:5000/MAC";
+      this.currentStage.Perform_stage = this.select - 1;
+      axios
+          .post(path, this.currentStage)
+          .then(() => {
+            console.log("Posted stage to MAC");
+            //console.log(this.currentStage);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+  },
 };
 </script>
