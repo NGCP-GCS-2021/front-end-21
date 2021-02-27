@@ -139,31 +139,6 @@ export default {
             };
         },
 
-        init: function(lng, lat) {
-            // Initialize conversion variables based on anchor coordinate
-            // TODO: Implement this
-        },
-
-        computeBasis: function() {
-            // TODO: Implement this
-            // Compute custom basis vectors
-        },
-
-        GPSToCartesian: function(lng, lat) {
-            // Convert a GPS coordinate to standard basis 3D cartesian
-            // TODO: Implement this
-        },
-
-        GPSToCoord: function(lng, lat) {
-            // Convert a GPS coordinate to custom basis 2D cartesian
-            // TODO: Implement this
-        },
-
-        CoordToGPS: function(x, y) {
-            // Convert custom basis 2D cartesian to GPS
-            // TODO: Implement this
-        },
-
         approximateCircle: function(lng, lat, radius) {
             // Return a list of coordinates that form a 16 point polygon approximation
             // of the circle
@@ -174,20 +149,7 @@ export default {
     data: {
         function() {
             return {
-                map: null,
-                // Variables for GPS-Cartesian conversion. Same method as AUVSI search path algorithm
-                // IMPORTANT: Needs to be initialized before use
-                refCart: [0,0,0],
-                ourX: [0,0,0],
-                ourY: [0,0,0],
-                ourZ: [0,0,0],
-                convMatrix: [
-                    [0,0,0],
-                    [0,0,0],
-                    [0,0,0]
-                ],
-                REF_LONG: 0,
-                REF_LAT: 0
+                map: null
             };
         }
     },
