@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import { required, minValue, maxValue } from "vee-validate/dist/rules";
 import {
   extend,
@@ -72,17 +73,42 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  data: () => ({
-  }),
+   data() {
+    return {
+      travelTo: []
+    };
+  },
 
   methods: {
     submit() {
       this.$refs.observer.validate();
+      this.postTravelTo();
+
     },
     clear() {
       this.Longitude = "";
       this.Latitude = "";
       this.$refs.observer.reset();
+    },
+    postTravelTo() {
+      this.travelTo = [
+        {
+          Travel_to_lat: this.Latitude
+        },
+        {
+          Travel_to_lng: this.Longitude
+        }
+      ]
+      const path = "http://127.0.0.1:5000/ERU";
+      axios
+        .post(path, this.travelTo)
+        .then(() => {
+          console.log("Posted Travel to/Home coordinates to ERU");
+          // console.log(this.travelTo);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
