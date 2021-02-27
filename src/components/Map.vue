@@ -9,6 +9,7 @@ import mapboxgl from 'mapbox-gl'
 export default {
     props: {
         cols: {
+            default: "",
             type: String
         },
         center_lat: {
@@ -16,7 +17,7 @@ export default {
             type: Number
         },
         center_long: {
-            default: -70,
+            default: -117,
             type: Number
         },
         zoom: {
