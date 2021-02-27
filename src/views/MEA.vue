@@ -28,7 +28,7 @@
               </v-col>
               <v-col cols="6">
                 <v-card class="pa-1">
-                  <MEAEmergencyCoords />
+                  <MEAHome />
                 </v-card>
               </v-col>
             </v-row>
@@ -56,7 +56,7 @@ import MEAStatus from "@/components/MEA/MEAStatus.vue";
 import ControlForm from "@/components/ControlForm.vue";
 import GeofenceForm from "@/components/GeofenceForm.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
-import MEAEmergencyCoords from "@/components/EmergencyCoords/MEAEmergencyCoords.vue";
+import MEAHome from "@/components/MEA/MEAHome.vue";
 import EvacuationZone from "@/components/EvacuationZone.vue";
 
 export default {
@@ -67,7 +67,7 @@ export default {
     ControlForm,
     GeofenceForm,
     GeneralStage,
-    MEAEmergencyCoords,
+    MEAHome,
     EvacuationZone,
   },
 

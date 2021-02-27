@@ -1,6 +1,6 @@
 <template>
 <div>
-<h1 class="font-weight-light">Emergency Coordinates</h1>
+<h1 class="font-weight-light">Travel to/Home Coordinates</h1>
   <validation-observer
     ref="observer"
     v-slot="{ invalid }"

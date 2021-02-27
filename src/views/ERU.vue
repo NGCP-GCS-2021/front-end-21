@@ -27,7 +27,7 @@
               </v-col>
               <v-col cols="6">
                 <v-card class="pa-1"  >
-                  <ERUEmergencyCoords />
+                  <ERUHome />
                 </v-card>
               </v-col>
             </v-row>
@@ -57,7 +57,7 @@ import ERUStatus from '@/components/ERU/ERUStatus.vue'
 import ControlForm from '@/components/ControlForm.vue'
 import GeofenceForm from '@/components/GeofenceForm.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
-import ERUEmergencyCoords from '@/components/EmergencyCoords/ERUEmergencyCoords.vue'
+import ERUHome from '@/components/ERU/ERUHome.vue'
 import EvacuationZone from '@/components/EvacuationZone.vue'
 
 export default {
@@ -68,7 +68,7 @@ export default {
     ControlForm,
     GeofenceForm,
     GeneralStage,
-    ERUEmergencyCoords,
+    ERUHome,
     EvacuationZone,
   },
 

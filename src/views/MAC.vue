@@ -40,7 +40,7 @@
               </v-col>
               <v-col class="d-flex">
                 <v-card class="pa-1">
-                    <MACEmergencyCoords />
+                    <MACHome />
                 </v-card>
               </v-col>
             </v-row>
@@ -63,7 +63,7 @@ import MACStatus from '@/components/MAC/MACStatus.vue'
 import ControlForm from '@/components/ControlForm.vue'
 import GeofenceForm from '@/components/GeofenceForm.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
-import MACEmergencyCoords from '@/components/EmergencyCoords/MACEmergencyCoords.vue'
+import MACHome from '@/components/MAC/MACHome.vue'
 import EvacuationZone from '@/components/EvacuationZone.vue'
 import ERUDrop from '@/components/MAC/ERUDrop.vue'
 import SearchArea from '@/components/MAC/SearchArea.vue'
@@ -76,7 +76,7 @@ export default {
     ControlForm,
     GeofenceForm,
     GeneralStage,
-    MACEmergencyCoords,
+    MACHome,
     EvacuationZone,
     ERUDrop,
     SearchArea
