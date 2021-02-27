@@ -19,7 +19,7 @@
           </h3>
         </v-card-title>
         <v-card-text justify="center">
-          Warning: Vehicle will come to an immediate stop.
+          Warning: Vehicle will come to an immediate stop at its current position.
         </v-card-text>
 
         <v-card-actions>

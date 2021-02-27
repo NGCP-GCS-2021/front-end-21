@@ -21,6 +21,8 @@
           :items="stages"
           :rules="[(v) => !!v || 'Please select stage']"
           label="Stage"
+          item-text="stage"
+          item-value="id"
           required
         ></v-select>
 
@@ -28,7 +30,7 @@
           <v-spacer></v-spacer>
 
           <v-btn color="secondary" text @click="menu = false"> Cancel </v-btn>
-          <v-btn color="primary" text @click="menu = false"> Submit </v-btn>
+          <v-btn color="primary" text @click="postCurrentStage"> Submit </v-btn>
         </v-card-actions>
       </v-card>
     </v-menu>
