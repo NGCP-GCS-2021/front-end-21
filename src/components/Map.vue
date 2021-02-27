@@ -2,7 +2,6 @@
   <v-col v-bind:class="cols" height="100%" id="map">
   </v-col>
 </template>
-
 <script>
 import mapboxgl from 'mapbox-gl'
 
@@ -85,7 +84,7 @@ export default {
         },
         
         addCircle: function(longitude, latitude, radius, name, color) {
-            // TODO: Test this
+            // TODO: Rewrite to draw a polygonal approximation of a circle instead
             // Adds a circle to the map at the specified coordinate
             // With specified radius in METERS, name, and color
             
@@ -138,12 +137,57 @@ export default {
                 properties: {},
                 type: 'Feature'
             };
+        },
+
+        init: function(lng, lat) {
+            // Initialize conversion variables based on anchor coordinate
+            // TODO: Implement this
+        },
+
+        computeBasis: function() {
+            // TODO: Implement this
+            // Compute custom basis vectors
+        },
+
+        GPSToCartesian: function(lng, lat) {
+            // Convert a GPS coordinate to standard basis 3D cartesian
+            // TODO: Implement this
+        },
+
+        GPSToCoord: function(lng, lat) {
+            // Convert a GPS coordinate to custom basis 2D cartesian
+            // TODO: Implement this
+        },
+
+        CoordToGPS: function(x, y) {
+            // Convert custom basis 2D cartesian to GPS
+            // TODO: Implement this
+        },
+
+        approximateCircle: function(lng, lat, radius) {
+            // Return a list of coordinates that form a 16 point polygon approximation
+            // of the circle
+            // TODO: Figure out the best way to expose the result to client code
+            // TODO: Implement coordinate conversions based on logic from AUVSI search path
         }
     },
     data: {
         function() {
             return {
-                map: null
+                map: null,
+                // Variables for GPS-Cartesian conversion. Same method as AUVSI search path algorithm
+                // IMPORTANT: Needs to be initialized before use
+                refCart: [0,0,0],
+                ourX: [0,0,0],
+                ourY: [0,0,0],
+                ourZ: [0,0,0],
+                convMatrix: [
+                    [0,0,0],
+                    [0,0,0],
+                    [0,0,0]
+                ],
+                REF_LONG: 0,
+                REF_LAT: 0
             };
         }
     },
@@ -151,7 +195,7 @@ export default {
         map = this.makeMap();
         map.addControl(new mapboxgl.NavigationControl());
     },
-    template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
+    template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col><'
 }
 </script>
 
