@@ -7,7 +7,23 @@
 import mapboxgl from 'mapbox-gl'
 
 export default {
-    props:['cols'],
+    props: {
+        cols: {
+            type: String
+        },
+        center_lat: {
+            default: 34,
+            type: Number
+        },
+        center_long: {
+            default: -70,
+            type: Number
+        },
+        zoom: {
+            default: 9,
+            type: Number
+        }
+    },
     
     head () {
         return  {
@@ -30,11 +46,11 @@ export default {
             
             return new mapboxgl.Map({
                 container: 'map',
-                center: [-74.5, 40],
-                zoom: 9,
-                style: 'mapbox://styles/mapbox/satellite-v9'
+                center: [this.center_long, this.center_lat],
+                zoom: this.zoom,
+                style: 'mapbox://styles/mapbox/satellite-streets-v11'
             });
-        }
+        },
         
         addCircle: function(latitude, longitude, radius, name, color) {
             // Adds a circle to the map at the specified coordinate
@@ -48,7 +64,7 @@ export default {
                 'type': 'geojson',
                 'type': 'Feature',
                 'geometry': {
-                    'type': 'Point'
+                    'type': 'Point',
                     'coordinates': [latitude, longitude]
                 }
             });
@@ -58,7 +74,7 @@ export default {
                 'source': name,
                 'paint': {
                     'circle-radius': {
-                        'base': radius
+                        'base': radius,
                         'stops': [
                             [0,0],
                             [22, metersToPixelsAtMaxZoom(radius, latitude)]
