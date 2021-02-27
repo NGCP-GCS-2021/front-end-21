@@ -72,7 +72,8 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  data: () => ({}),
+  data: () => ({
+  }),
 
   methods: {
     submit() {
