@@ -39,7 +39,11 @@
               </validation-provider>
             </v-col>
             <v-col cols="4">
-              <validation-provider v-slot="{ errors }" name="Altitude">
+              <validation-provider
+                v-slot="{ errors }"
+                name="Altitude"
+                :rules="{ required: true }"
+              >
                 <v-text-field
                   v-model="Altitude"
                   :error-messages="errors"
@@ -83,7 +87,7 @@ export default {
     ValidationObserver,
   },
   data: () => ({
-    travelTo: [],
+    travelTo: {},
   }),
 
   methods: {
@@ -98,17 +102,11 @@ export default {
       this.$refs.observer.reset();
     },
     postTravelTo() {
-      this.travelTo = [
-        {
+      this.travelTo = {
           Travel_to_lat: this.Latitude,
-        },
-        {
           Travel_to_lng: this.Longitude,
-        },
-        {
           Travel_to_alt: this.Altitude,
-        },
-      ];
+      };
       const path = "http://127.0.0.1:5000/MAC";
       axios
         .post(path, this.travelTo)

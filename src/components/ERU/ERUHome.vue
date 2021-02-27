@@ -73,9 +73,9 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-   data() {
+  data() {
     return {
-      travelTo: []
+      travelTo: {},
     };
   },
 
@@ -83,7 +83,6 @@ export default {
     submit() {
       this.$refs.observer.validate();
       this.postTravelTo();
-
     },
     clear() {
       this.Longitude = "";
@@ -91,14 +90,10 @@ export default {
       this.$refs.observer.reset();
     },
     postTravelTo() {
-      this.travelTo = [
-        {
-          Travel_to_lat: this.Latitude
-        },
-        {
-          Travel_to_lng: this.Longitude
-        }
-      ]
+      this.travelTo = {
+        Travel_to_lat: this.Latitude,
+        Travel_to_lng: this.Longitude,
+      };
       const path = "http://127.0.0.1:5000/ERU";
       axios
         .post(path, this.travelTo)
