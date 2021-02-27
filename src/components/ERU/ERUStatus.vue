@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-row justify="center">
-      <h2 class="font-weight-light pr-2">Vehicle Mission Stage:</h2>
-      <h2 class="font-weight-regular pb-2">ERU Drop</h2>
+      <h2 class="font-weight-light pr-2">Vehicle Mission State:</h2>
+      <h2 class="font-weight-regular pb-2">Standby</h2>
     </v-row>
     <div
       style="
@@ -88,3 +88,89 @@ export default {
   overflow-y: auto !important;
 }
 </style>
+<script>
+import axios from 'axios';
+
+export default {
+  data: () => ({
+        eru_data: [ 
+            {
+            value: 41.0,
+            title: "Altitude"
+            },
+            {
+            value: 0.0,
+            title: "Battery"
+            },
+            {
+            value: 0,
+            title: "Current State"
+            },
+            {
+            value: false,
+            title: "Geofence Compliant"
+            },
+            {
+            value: 0.0,
+            title: "Latitude"
+            },
+            {
+            value: 0.0,
+            title: "Longitude" 
+            },
+            {
+            value: false,
+            title: "Sensors Ok"
+            },
+            {
+            value: 0.0,
+            title: "Speed"
+            },
+            {
+            value: false,
+            title: "State Completed"
+            },
+            {
+            value: 0,
+            title: "Status"
+            }
+        ],
+        eru_messages: [
+          {
+            message: 'connected'
+          },
+          {
+            message: 'vehicle updated'
+          },
+          {
+            message: 'status updated'
+          },
+          {
+            message: 'coordinates sent'
+          },
+          {
+            message: 're-connected'
+          },
+          {
+            message: 're-connected'
+          },
+        ]
+    }),
+  methods: {
+    getERUStatus() {
+      const path = 'http://localhost:5000/eru';
+      axios.get(path)
+        .then((res) => {
+          this.eru = res.data.eru;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        });
+    },
+  },
+  created() {
+    this.ERUStatus();
+  },
+};
+</script>

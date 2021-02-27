@@ -1,16 +1,15 @@
 <template>
     <nav id="nav">
         <v-app-bar fixed app class="primary">
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
             <v-img class="rounded-circle mx-3" max-height="99%" max-width="4%" src="../assets/ngcp.png"></v-img>
             <v-toolbar-title>
                 <span><h1 class="accent--text font-weight-light">GCS</h1></span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <router-link to ="/"><h1 class="font-weight-light">Main</h1></router-link>
-            <router-link to ="/mac"><h1 class="font-weight-light">MAC</h1></router-link>
-            <router-link to ="/eru"><h1 class="font-weight-light">ERU</h1></router-link>
-            <router-link to ="/mea"><h1 class="font-weight-light">MEA</h1></router-link>
+            <router-link to ="/"><h1 class="font-weight-regular">Main</h1></router-link>
+            <router-link to ="/mac"><h1 class="font-weight-regular">MAC</h1></router-link>
+            <router-link to ="/eru"><h1 class="font-weight-regular">ERU</h1></router-link>
+            <router-link to ="/mea"><h1 class="font-weight-regular">MEA</h1></router-link>
         </v-app-bar>
     </nav>
 </template>

@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-row justify="center">
-      <h2 class="font-weight-light pr-2">Vehicle Mission Stage:</h2>
-      <h2 class="font-weight-regular pb-2">ERU Drop</h2>
+      <h2 class="font-weight-light pr-2">Vehicle Mission State:</h2>
+      <h2 class="font-weight-regular pb-2">Standby</h2>
     </v-row>
     <div
       style="
@@ -12,11 +12,11 @@
         padding-bottom: 15px;
       "
     >
-      <div v-for="(mea_data, index) in mea_data" :key="index">
+      <div v-for="(eru_data, index) in eru_data" :key="index">
         <div style="display: flex; padding-right: 3px">
-          <h4 class="font-weight-regular pr-1">{{ mea_data.title }}:</h4>
+          <h4 class="font-weight-regular pr-1">{{ eru_data.title }}:</h4>
           <h4 class="font-weight-bold" style="float: right">
-            {{ mea_data.value }}
+            {{ eru_data.value }}
           </h4>
         </div>
       </div>
@@ -27,13 +27,10 @@
     </v-row>
     <v-row fluid justify="center">
       <v-col :cols="12">
-        <div
-          class="scrollable"
-          style="border: 1px solid #bfbfbf; font-size: small; border-radius: 5px; height: 65px; overflow-y: hidden;
-          "
+        <div class="scrollable" style="border: 1px solid #bfbfbf; font-size: small; border-radius: 5px; height: 65px; overflow-y: hidden;"
         >
-          <div v-for="(mea_messages, index) in mea_messages" :key="index">
-            <p class="my-0 py-0 px-1">{{ mea_messages.message }}</p>
+          <div v-for="(eru_messages, index) in eru_messages" :key="index">
+            <p class="my-0 py-0 px-1">{{ eru_messages.message }}</p>
           </div>
         </div>
       </v-col>
@@ -48,8 +45,8 @@ export default {
   //either props or in data MOST LIKELY DATA
   data() {
     return {
-      mea_data: [],
-      mea_messages: [],
+      eru_data: [],
+      eru_messages: [],
       //mission_status
       //battery
     };
@@ -73,6 +70,7 @@ export default {
   updated() {
     this.getMEAData();
   },
+  //formatted() {},
 };
 </script>
 
@@ -83,3 +81,89 @@ export default {
   overflow-y: auto !important;
 }
 </style>
+<script>
+import axios from 'axios';
+
+export default {
+  data: () => ({
+        eru_data: [ 
+            {
+            value: 41.0,
+            title: "Altitude"
+            },
+            {
+            value: 0.0,
+            title: "Battery"
+            },
+            {
+            value: 0,
+            title: "Current State"
+            },
+            {
+            value: false,
+            title: "Geofence Compliant"
+            },
+            {
+            value: 0.0,
+            title: "Latitude"
+            },
+            {
+            value: 0.0,
+            title: "Longitude" 
+            },
+            {
+            value: false,
+            title: "Sensors Ok"
+            },
+            {
+            value: 0.0,
+            title: "Speed"
+            },
+            {
+            value: false,
+            title: "State Completed"
+            },
+            {
+            value: 0,
+            title: "Status"
+            }
+        ],
+        eru_messages: [
+          {
+            message: 'connected'
+          },
+          {
+            message: 'vehicle updated'
+          },
+          {
+            message: 'status updated'
+          },
+          {
+            message: 'coordinates sent'
+          },
+          {
+            message: 're-connected'
+          },
+          {
+            message: 're-connected'
+          },
+        ]
+    }),
+  methods: {
+    getERUStatus() {
+      const path = 'http://localhost:5000/eru';
+      axios.get(path)
+        .then((res) => {
+          this.eru = res.data.eru;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        });
+    },
+  },
+  created() {
+    this.ERUStatus();
+  },
+};
+</script>

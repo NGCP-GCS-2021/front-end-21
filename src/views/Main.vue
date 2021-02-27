@@ -103,7 +103,7 @@ export default {
     MEAStatus,
     ERUStatus,
     MACStatus,
-    GeneralStage
+    GeneralStage,
   }
 }
 </script>
