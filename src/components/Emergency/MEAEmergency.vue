@@ -56,11 +56,11 @@ export default {
   methods: {
     postEmergencyStop() {
       this.dialog = false;
-      const path = "http://127.0.0.1:5000/MEA";
+      const path = "http://127.0.0.1:5000/MEA_INPUT";
       axios
         .post(path, this.e_stop)
         .then(() => {
-          console.log("Posted Emergency Stop to MEA");
+          console.log("Posted Emergency Stop to MEA_INPUT");
           this.activated = true;
         })
         .catch((error) => {

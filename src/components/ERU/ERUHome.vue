@@ -11,6 +11,7 @@
                 name="Latitude"
                 :rules="{
                   required: true,
+                  regex: /^\d*\.?\d*$/,
                 }"
                 class="pa-0 ma-0"
               >
@@ -28,6 +29,7 @@
                 name="Longitude"
                 :rules="{
                   required: true,
+                  regex: /^\d*\.?\d*$/,
                 }"
               >
                 <v-text-field
@@ -53,7 +55,7 @@
 
 <script>
 import axios from "axios";
-import { required, minValue, maxValue } from "vee-validate/dist/rules";
+import { required, regex, between } from "vee-validate/dist/rules";
 import {
   extend,
   ValidationObserver,
@@ -66,6 +68,11 @@ setInteractionMode("eager");
 extend("required", {
   ...required,
   message: "{_field_} cannot be empty",
+});
+
+extend("regex", {
+  ...regex,
+  message: "Numbers Only",
 });
 
 export default {
@@ -90,19 +97,22 @@ export default {
       this.$refs.observer.reset();
     },
     postTravelTo() {
-      this.travelTo = {
-        Travel_to_lat: this.Latitude,
-        Travel_to_lng: this.Longitude,
-      };
-      const path = "http://127.0.0.1:5000/ERU";
+      this.travelTo = JSON.stringify({
+        Travel_to_lat: parseFloat(this.Latitude),
+        Travel_to_lng: parseFloat(this.Longitude),
+      });
+      const path = "http://127.0.0.1:5000/ERU_INPUT";
+      // console.log(this.travelTo);
       axios
-        .post(path, this.travelTo)
+        .post(path, this.travelTo, {
+          headers: { "Content-Type": "application/json" },
+        })
         .then(() => {
-          console.log("Posted Travel to/Home coordinates to ERU");
-          // console.log(this.travelTo);
+          console.log("Posted Travel to/Home coordinates to ERU_INPUT");
+          console.log(this.travelTo);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     },
   },

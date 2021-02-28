@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     getMACData() {
-      const path = "http://127.0.0.1:5000/MAC";
+      const path = "http://127.0.0.1:5000/MAC_XBEE";
       axios
         .get(path)
         .then((res) => {

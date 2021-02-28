@@ -73,12 +73,12 @@ export default {
     postCurrentStage() {
       console.log("hello there");
       this.menu = false;
-      const path = "http://127.0.0.1:5000/MEA";
+      const path = "http://127.0.0.1:5000/MEA_INPUT";
       this.currentStage.Perform_stage = this.select - 1;
       axios
         .post(path, this.currentStage)
         .then(() => {
-          console.log("Posted stage to MEA");
+          console.log("Posted stage to MEA_INPUT");
           //console.log(this.currentStage);
         })
         .catch((error) => {

@@ -56,11 +56,11 @@ export default {
   methods: {
     postEmergencyStop() {
       this.dialog = false;
-      const path = "http://127.0.0.1:5000/ERU";
+      const path = "http://127.0.0.1:5000/ERU_INPUT";
       axios
         .post(path, this.e_stop)
         .then(() => {
-          console.log("Posted Emergency Stop to ERU");
+          console.log("Posted Emergency Stop to ERU_INPUT");
           this.activated = true;
         })
         .catch((error) => {

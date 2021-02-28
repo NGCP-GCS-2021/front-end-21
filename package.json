@@ -11,7 +11,7 @@
     "core-js": "^3.6.5",
     "json-server": "^0.16.3",
     "vee-validate": "^3.4.5",
-    "vue": "^2.6.11",
+    "vue": "^2.6.12",
     "vue-router": "^3.2.0",
     "vuetify": "^2.2.11"
   },

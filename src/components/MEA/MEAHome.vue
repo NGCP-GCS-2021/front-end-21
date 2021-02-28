@@ -11,6 +11,7 @@
                 name="Latitude"
                 :rules="{
                   required: true,
+                  regex: /^\d*\.?\d*$/,
                 }"
                 class="pa-0 ma-0"
               >
@@ -28,6 +29,7 @@
                 name="Longitude"
                 :rules="{
                   required: true,
+                  regex: /^\d*\.?\d*$/,
                 }"
               >
                 <v-text-field
@@ -42,12 +44,16 @@
               <validation-provider
                 v-slot="{ errors }"
                 name="Altitude"
-                :rules="{ required: true }"
+                :rules="{
+                  required: true,
+                  regex: /^\d*\.?\d*$/,
+                }"
               >
                 <v-text-field
                   v-model="Altitude"
                   :error-messages="errors"
-                  label="Altitude"
+                  label="Altidude"
+                  required
                 ></v-text-field>
               </validation-provider>
             </v-col>
@@ -65,7 +71,8 @@
 </template>
 
 <script>
-import { required, minValue, maxValue } from "vee-validate/dist/rules";
+import axios from "axios";
+import { required, regex, between } from "vee-validate/dist/rules";
 import {
   extend,
   ValidationObserver,
@@ -80,14 +87,21 @@ extend("required", {
   message: "{_field_} cannot be empty",
 });
 
+extend("regex", {
+  ...regex,
+  message: "Numbers Only",
+});
+
 export default {
   components: {
     ValidationProvider,
     ValidationObserver,
   },
-  data: () => ({
-    travelTo: {},
-  }),
+  data() {
+    return {
+      travelTo: {},
+    };
+  },
 
   methods: {
     submit() {
@@ -101,20 +115,23 @@ export default {
       this.$refs.observer.reset();
     },
     postTravelTo() {
-      this.travelTo = {
-        Travel_to_lat: this.Latitude,
-        Travel_to_lng: this.Longitude,
-        Travel_to_alt: this.Altitude,
-      };
-      const path = "http://127.0.0.1:5000/MEA";
+      this.travelTo = JSON.stringify({
+        Travel_to_lat: parseFloat(this.Latitude),
+        Travel_to_lng: parseFloat(this.Longitude),
+        Travel_to_alt: parseFloat(this.Altitude),
+      });
+      const path = "http://127.0.0.1:5000/MAC_INPUT";
+      // console.log(this.travelTo);
       axios
-        .post(path, this.travelTo)
+        .post(path, this.travelTo, {
+          headers: { "Content-Type": "application/json" },
+        })
         .then(() => {
-          console.log("Posted Travel to/Home coordinates to MEA");
-          // console.log(this.travelTo);
+          console.log("Posted Travel to/Home coordinates to MAC_INPUT");
+          console.log(this.travelTo);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     },
   },
