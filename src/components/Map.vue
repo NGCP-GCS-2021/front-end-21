@@ -57,6 +57,7 @@ export default {
     methods: {
         makeMap: function() {
             // Creates and adds a mapbox to the element with id "map"
+            // TODO: Lock the zoom level
             mapboxgl.accessToken = 'pk.eyJ1IjoiaGxpbjkxIiwiYSI6ImNrbDQ2MjY4NzE0ZXEycHFpaXBya2tvN3gifQ.Tqa8iLUqXeKZQ8SmhLoRtg';
             if (this.SW_bound_lat != null && this.SW_bound_long != null
                 && this.NE_bound_lat != null && this.NE_bound_long != null) {
@@ -83,36 +84,31 @@ export default {
             }
         },
         
-        addCircle: function(longitude, latitude, radius, name, color) {
-            // TODO: Rewrite to draw a polygonal approximation of a circle instead
+        addCircle: function(lng, lat, radius, numPoints, name, color, opacity) {
+            // TODO: Needs testing
             // Adds a circle to the map at the specified coordinate
-            // With specified radius in METERS, name, and color
-            
-            // Used to set the radius for max zoom level 22 so circle scales accurately with zoom
-            const metersToPixelsAtMaxZoom = (meters, latitude) =>
-                  meters / (78271.484 / 2 ** 22) / Math.cos(latitude * Math.PI / 180)
+            // Lng lat in DEGREES
+            // Radius in METERS
+            // Opacity is from 0 to 1.0
+            var coords = this.approxCircle(lng, lat, radius, numPoints);
             
             this.map.addSource(name, {
                 'type': 'geojson',
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'Point',
-                    'coordinates': [latitude, longitude]
+                'data': {
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'Polygon',
+                        'coordinates': coords,
+                    }
                 }
             });
             this.map.addLayer({
                 'id': name + '_layer',
-                'type': 'circle',
+                'type': 'fill',
                 'source': name,
                 'paint': {
-                    'circle-radius': {
-                        'base': radius,
-                        'stops': [
-                            [0,0],
-                            [22, metersToPixelsAtMaxZoom(radius, latitude)]
-                        ]
-                    },
-                    'circle-color': color
+                    'fill-color': color,
+                    'fill-opacity': opacity
                 }
             });
         },
@@ -139,11 +135,32 @@ export default {
             };
         },
 
-        approximateCircle: function(lng, lat, radius) {
-            // Return a list of coordinates that form a 16 point polygon approximation
+        approxCircle: function(lng, lat, radius, numPoints) {
+            // Return a list of coordinates that form an n point polygon approximation
             // of the circle
-            // TODO: Figure out the best way to expose the result to client code
-            // TODO: Implement coordinate conversions based on logic from AUVSI search path
+            // Lng lat is in DEGREES
+            // Radius is in METERS
+            if (numPoints < 3)
+                return [];
+            // Calculate the meters per pixel conversion factor
+            var earthCircum = 40075017; // In meters
+            var latitudeRadians = latitude * (Math.PI/180);
+            // Use this.zoom + 8 for 256px tiles, this.zoom + 9 for 512px tiles
+            var metersPerPixel = earthCircum * Math.cos(latitudeRadians) / Math.pow(2, this.zoom + 8);
+            var radiusInPixels = radius / metersPerPixel;
+            var center = this.map.project([lng, lat]); // Center coordinate in pixels
+            // Compute points on the circle using polar coordinates
+            var angleStep = (Math.PI * 2) / numPoints;
+            var angle = 0;
+            var points = [];
+            for (var i = 0; i < numPoints; ++i) {
+                var p = new mapboxgl.Point();
+                p.x = center.x + radiusInPixels * Math.cos(angle);
+                p.y = center.y + radiusInPixels * Math.sin(angle);
+                points.push(this.map.unproject(p));
+                angle += angleStep;
+            }
+            return points;
         }
     },
     data: {
@@ -157,7 +174,7 @@ export default {
         map = this.makeMap();
         map.addControl(new mapboxgl.NavigationControl());
     },
-    template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col><'
+    template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
 }
 </script>
 
