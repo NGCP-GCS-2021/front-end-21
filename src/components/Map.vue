@@ -4,6 +4,7 @@
 </template>
 <script>
 import mapboxgl from 'mapbox-gl'
+import * as conversions from '@/libraries/Conversions.js'
 
 export default {
     props: {
@@ -57,7 +58,6 @@ export default {
     methods: {
         makeMap: function() {
             // Creates and adds a mapbox to the element with id "map"
-            // TODO: Lock the zoom level
             mapboxgl.accessToken = 'pk.eyJ1IjoiaGxpbjkxIiwiYSI6ImNrbDQ2MjY4NzE0ZXEycHFpaXBya2tvN3gifQ.Tqa8iLUqXeKZQ8SmhLoRtg';
             if (this.SW_bound_lat != null && this.SW_bound_long != null
                 && this.NE_bound_lat != null && this.NE_bound_long != null) {
@@ -70,6 +70,7 @@ export default {
                     container: 'map',
                     center: [this.center_long, this.center_lat],
                     zoom: this.zoom,
+                    scrollZoom: false,
                     style: 'mapbox://styles/mapbox/satellite-streets-v11',
                     maxBounds: bounds
                 });
@@ -79,9 +80,38 @@ export default {
                     container: 'map',
                     center: [this.center_long, this.center_lat],
                     zoom: this.zoom,
+                    scrollZoom: false,
                     style: 'mapbox://styles/mapbox/satellite-streets-v11'
                 });
             }
+        },
+
+        approxCircle: function(lng, lat, radius, numPoints) {
+            // Return a list of coordinates that form an n point polygon approximation
+            // of the circle
+            // Lng lat is in DEGREES
+            // Radius is in METERS
+            if (numPoints < 3)
+                return [];
+            var lngRadians = conversions.toRadians(lng);
+            var latRadians = conversions.toRadians(lat);
+            conversions.init(lngRadians, latRadians); // Initialize circle center as anchor coordinate
+            conversions.computeBasis(); // Compute basis vectors
+            var center = conversions.GPStoCoord(lngRadians, latRadians); // Should be nearly (0,0)
+            // Compute points on the circle using polar coordinates
+            var angleStep = (Math.PI * 2) / numPoints;
+            var angle = 0;
+            var points = [];
+            for (var i = 0; i < numPoints; ++i) {
+                var x = center[0] + radius * Math.cos(angle);
+                var y = center[1] + radius * Math.sin(angle);
+                var p = conversions.CoordtoGPS([x, y]);
+                p[0] = conversions.toDegrees(p[0]);
+                p[1] = conversions.toDegrees(p[1]);
+                points.push(p);
+                angle += angleStep;
+            }
+            return points;
         },
         
         addCircle: function(lng, lat, radius, numPoints, name, color, opacity) {
@@ -91,14 +121,13 @@ export default {
             // Radius in METERS
             // Opacity is from 0 to 1.0
             var coords = this.approxCircle(lng, lat, radius, numPoints);
-            
             this.map.addSource(name, {
                 'type': 'geojson',
                 'data': {
                     'type': 'Feature',
                     'geometry': {
                         'type': 'Polygon',
-                        'coordinates': coords,
+                        'coordinates': [coords]
                     }
                 }
             });
@@ -106,6 +135,7 @@ export default {
                 'id': name + '_layer',
                 'type': 'fill',
                 'source': name,
+                'layout': {},
                 'paint': {
                     'fill-color': color,
                     'fill-opacity': opacity
@@ -133,34 +163,6 @@ export default {
                 properties: {},
                 type: 'Feature'
             };
-        },
-
-        approxCircle: function(lng, lat, radius, numPoints) {
-            // Return a list of coordinates that form an n point polygon approximation
-            // of the circle
-            // Lng lat is in DEGREES
-            // Radius is in METERS
-            if (numPoints < 3)
-                return [];
-            // Calculate the meters per pixel conversion factor
-            var earthCircum = 40075017; // In meters
-            var latitudeRadians = latitude * (Math.PI/180);
-            // Use this.zoom + 8 for 256px tiles, this.zoom + 9 for 512px tiles
-            var metersPerPixel = earthCircum * Math.cos(latitudeRadians) / Math.pow(2, this.zoom + 8);
-            var radiusInPixels = radius / metersPerPixel;
-            var center = this.map.project([lng, lat]); // Center coordinate in pixels
-            // Compute points on the circle using polar coordinates
-            var angleStep = (Math.PI * 2) / numPoints;
-            var angle = 0;
-            var points = [];
-            for (var i = 0; i < numPoints; ++i) {
-                var p = new mapboxgl.Point();
-                p.x = center.x + radiusInPixels * Math.cos(angle);
-                p.y = center.y + radiusInPixels * Math.sin(angle);
-                points.push(this.map.unproject(p));
-                angle += angleStep;
-            }
-            return points;
         }
     },
     data: {
@@ -171,8 +173,11 @@ export default {
         }
     },
     mounted() {
-        map = this.makeMap();
-        map.addControl(new mapboxgl.NavigationControl());
+        this.map = this.makeMap();
+        var vm = this;
+        this.map.on('load', function() {
+            vm.addCircle(vm.center_long, vm.center_lat, 50, 16, "test", "black", 0.8);
+        });
     },
     template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
 }
