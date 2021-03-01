@@ -1,25 +1,25 @@
 // Javascript port of GPS to Cartesian conversion logic
 // From AUVSI search path algorithm
 
-export var EARTH_RADIUS = 6378137; // Radius of the Earth in meters
+var EARTH_RADIUS = 6378137; // Radius of the Earth in meters
 // Aliases for indexing into arrays that represent coordinates
-export var X = 0;
-export var Y = 1;
-export var Z = 2;
+var X = 0;
+var Y = 1;
+var Z = 2;
 // Variables used in coordinate conversion
 // IMPORTANT: Initialize with init() and computeBasis() before using
-export var refCart = []; // Reference point in standard basis 3D Cartesian coordinates
+var refCart = []; // Reference point in standard basis 3D Cartesian coordinates
 // Our new basis vectors
-export var ourX = [];
-export var ourY = [];
-export var ourZ = [];
-export var convMatrix = [
+var ourX = [0, 0, 0];
+var ourY = [0, 0, 0];
+var ourZ = [0, 0, 0];
+var convMatrix = [
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0]
 ];
-export var REF_LONG = 0;
-export var REF_LAT = 0;
+var REF_LONG = 0;
+var REF_LAT = 0;
 
 export function toRadians(degrees) {
     return degrees * (Math.PI / 180.0);
@@ -38,17 +38,17 @@ export function init(longitude, latitude) {
 export function computeBasis() {
     ourZ = refCart.slice();
     var length = Math.sqrt(ourZ[X] * ourZ[X] + ourZ[Y] * ourZ[Y] + ourZ[Z] * ourZ[Z]);
-    ourX.push(1.0);
-    ourX.push(0);
-    ourX.push((ourZ[X] * refCart[X] - ourZ[X] * ourX[X] + ourZ[Y] * refCart[Y] - ourZ[Y] * ourX[Y] + ourZ[Z] * refCart[Z]) / ourZ[Z]);
+    ourX[X] = 1.0;
+    ourX[Y] = 0;
+    ourX[Z] = ((ourZ[X] * refCart[X] - ourZ[X] * ourX[X] + ourZ[Y] * refCart[Y] - ourZ[Y] * ourX[Y] + ourZ[Z] * refCart[Z]) / ourZ[Z]);
     // Make our X the positional vector anchored at global::refCart and pointing towards the point we just calculated on the plane
     ourX[X] -= refCart[X];
     ourX[Y] -= refCart[Y];
     ourX[Z] -= refCart[Z];
     // Cross our X and our Z to get our Y
-    ourY.push(ourZ[Y] * ourX[Z] - ourZ[Z] * ourX[Y]);
-    ourY.push(-(ourZ[X] * ourX[Z] - ourZ[Z] * ourX[X]));
-    ourY.push(ourZ[X] * ourX[Y] - ourZ[Y] * ourX[X]);
+    ourY[X] = (ourZ[Y] * ourX[Z] - ourZ[Z] * ourX[Y]);
+    ourY[Y] = (-(ourZ[X] * ourX[Z] - ourZ[Z] * ourX[X]));
+    ourY[Z] = (ourZ[X] * ourX[Y] - ourZ[Y] * ourX[X]);
     // Scale basis vectors to unit length
     ourZ[X] /= length;
     ourZ[Y] /= length;
