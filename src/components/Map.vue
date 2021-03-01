@@ -5,6 +5,13 @@
 <script>
 import mapboxgl from 'mapbox-gl'
 import * as conversions from '@/libraries/Conversions.js'
+import MapboxDraw from "@mapbox/mapbox-gl-draw"
+import {
+    CircleMode,
+    DragCircleMode,
+    DirectMode,
+    SimpleSelectMode
+} from 'mapbox-gl-draw-circle';
 
 export default {
     props: {
@@ -59,6 +66,7 @@ export default {
         makeMap: function() {
             // Creates and adds a mapbox to the element with id "map"
             mapboxgl.accessToken = 'pk.eyJ1IjoiaGxpbjkxIiwiYSI6ImNrbDQ2MjY4NzE0ZXEycHFpaXBya2tvN3gifQ.Tqa8iLUqXeKZQ8SmhLoRtg';
+            var map = null;
             if (this.SW_bound_lat != null && this.SW_bound_long != null
                 && this.NE_bound_lat != null && this.NE_bound_long != null) {
                 // User supplied a valid bound
@@ -66,7 +74,7 @@ export default {
                     [this.SW_bound_long, this.SW_bound_lat],
                     [this.NE_bound_long, this.NE_bound_lat]
                 ];
-                return new mapboxgl.Map({
+                map = new mapboxgl.Map({
                     container: 'map',
                     center: [this.center_long, this.center_lat],
                     zoom: this.zoom,
@@ -76,7 +84,7 @@ export default {
                 });
             } else {
                 // Create a map with no bounds
-                return new mapboxgl.Map({
+                map = new mapboxgl.Map({
                     container: 'map',
                     center: [this.center_long, this.center_lat],
                     zoom: this.zoom,
@@ -84,8 +92,22 @@ export default {
                     style: 'mapbox://styles/mapbox/satellite-streets-v11'
                 });
             }
+            map.doubleClickZoom.disable();
+            const draw = new MapboxDraw({
+                defaultMode: "drag_circle",
+                userProperties: true,
+                modes: {
+                    ...MapboxDraw.modes,
+                    draw_circle  : CircleMode,
+                    drag_circle  : DragCircleMode,
+                    direct_select: DirectMode,
+                    simple_select: SimpleSelectMode
+                }
+            });
+            map.addControl(draw);
+            return map;
         },
-
+        
         approxCircle: function(lng, lat, radius, numPoints) {
             // Return a list of coordinates that form an n point polygon approximation
             // of the circle
@@ -176,8 +198,11 @@ export default {
         this.map = this.makeMap();
         var vm = this;
         this.map.on('load', function() {
-            vm.addCircle(vm.center_long, vm.center_lat, 50, 16, "test", "black", 0.8);
+            vm.addCircle(vm.center_long, vm.center_lat, 20, 16, "test1", "black", 0.8);
+            vm.addCircle(vm.center_long, vm.center_lat, 40, 16, "test2", "black", 0.8);
+            vm.addCircle(vm.center_long, vm.center_lat, 50, 16, "test3", "black", 0.8);
         });
+        
     },
     template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
 }
