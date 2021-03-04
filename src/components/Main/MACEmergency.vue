@@ -31,9 +31,9 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <div>
+    <!-- <div>
       <p>Emegerncy Stop Activated: {{ activated }}</p>
-    </div>
+    </div> -->
   </div>
 </template>
 
