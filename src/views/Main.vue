@@ -80,12 +80,12 @@
 
 <script>
 // @ is an alias to /src
-import MACEmergency from '@/components/Emergency/MACEmergency.vue'
-import ERUEmergency from '@/components/Emergency/ERUEmergency.vue'
-import MEAEmergency from '@/components/Emergency/MEAEmergency.vue'
-import MACMainControl from '@/components/MAC/MACMainControl.vue'
-import ERUMainControl from '@/components/ERU/ERUMainControl.vue'
-import MEAMainControl from '@/components/MEA/MEAMainControl.vue'
+import MACEmergency from '@/components/Main/MACEmergency.vue'
+import ERUEmergency from '@/components/Main/ERUEmergency.vue'
+import MEAEmergency from '@/components/Main/MEAEmergency.vue'
+import MACMainControl from '@/components/Main/MACMainControl.vue'
+import ERUMainControl from '@/components/Main/ERUMainControl.vue'
+import MEAMainControl from '@/components/Main/MEAMainControl.vue'
 import MEAStatus from '@/components/MEA/MEAStatus.vue'
 import ERUStatus from '@/components/ERU/ERUStatus.vue'
 import MACStatus from '@/components/MAC/MACStatus.vue'
