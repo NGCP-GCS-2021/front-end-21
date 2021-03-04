@@ -19,7 +19,8 @@
           </h3>
         </v-card-title>
         <v-card-text justify="center">
-          Warning: Vehicle will come to an immediate stop at its current position.
+          Warning: Vehicle will come to an immediate stop at its current
+          position.
         </v-card-text>
 
         <v-card-actions>
@@ -27,7 +28,9 @@
 
           <v-btn color="secondary" text @click="dialog = false"> Cancel </v-btn>
 
-          <v-btn color="primary" text @click="postEmergencyStop"> Activate </v-btn>
+          <v-btn color="primary" text @click="getCurrentCoordinates">
+            Activate
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -44,24 +47,48 @@ export default {
     return {
       dialog: false,
       e_stop: {
-        Stop: true,
+        Stop: false,
+        E_stop_lat: null,
+        E_stop_lng: null,
       },
-      // e_stop: {
-      //   title: "Stop",
-      //   value: true,
-      // },
       activated: false,
+      eru_data: [],
     };
   },
   methods: {
-    postEmergencyStop() {
+    getCurrentCoordinates() {
+      this.e_stop.Stop = true;
       this.dialog = false;
-      const path = "http://127.0.0.1:5000/ERU_INPUT";
+      const path = "http://127.0.0.1:5000/ERU_XBEE";
       axios
-        .post(path, this.e_stop)
+        .get(path)
+        .then((res) => {
+          this.eru_data = res.data.ERU;
+
+          for (let i = 0; i < this.eru_data.length; i++) {
+            if (this.eru_data[i].title == "Latitude") {
+              this.e_stop.E_stop_lat = this.eru_data[i].value;
+            } else if (this.eru_data[i].title == "Longitude") {
+              this.e_stop.E_stop_lng = this.eru_data[i].value;
+            }
+          }
+          this.postEmergencyStop();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    postEmergencyStop() {
+      const path = "http://127.0.0.1:5000/ERU_INPUT";
+      const e_stopStringify = JSON.stringify(this.e_stop);
+      axios
+        .post(path, e_stopStringify)
         .then(() => {
-          console.log("Posted Emergency Stop to ERU_INPUT");
+          console.log(
+            "Posted Emergency Stop Command and Coordinates to ERU_INPUT"
+          );
           this.activated = true;
+          console.log(e_stopStringify);
         })
         .catch((error) => {
           console.log(error);
