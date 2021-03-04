@@ -20,7 +20,7 @@
           v-model="select"
           :items="stages"
           :rules="[(v) => !!v || 'Please select stage']"
-          label="Stage"
+          label="Select Mission Stage"
           item-text="stage"
           item-value="id"
           required
@@ -71,15 +71,15 @@ export default {
   }),
   methods: {
     postCurrentStage() {
-      console.log("hello there");
       this.menu = false;
       const path = "http://127.0.0.1:5000/MEA_INPUT";
       this.currentStage.Perform_stage = this.select - 1;
+      const currentStageStringify = JSON.stringify(this.currentStage);
       axios
-        .post(path, this.currentStage)
+        .post(path, currentStageStringify)
         .then(() => {
           console.log("Posted stage to MEA_INPUT");
-          //console.log(this.currentStage);
+          //console.log(currentStageStringify);
         })
         .catch((error) => {
           console.log(error);
