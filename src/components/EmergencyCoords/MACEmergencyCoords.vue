@@ -55,7 +55,7 @@
               </v-col>
           </v-row>
           <v-row>
-            <v-btn
+            <v-btn @click="postEmergencyCoords"
                 class="mr-4"
                 color="green"
                 type="submit"
@@ -102,6 +102,11 @@
         this.Altitude = ''
         this.$refs.observer.reset()
       },
+      postEmergencyCoords(){
+        this.Longitude = this.submit()
+        this.Latitude = this.submit()
+        this.altitude = this.submit()
+      }
     },
   }
 </script>

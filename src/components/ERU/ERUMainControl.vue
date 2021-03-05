@@ -87,7 +87,6 @@ export default {
         .post(path, this.currentStage)
         .then(() => {
           console.log("Posted stage to ERU");
-          //console.log(this.currentStage);
         })
         .catch((error) => {
           console.log(error);

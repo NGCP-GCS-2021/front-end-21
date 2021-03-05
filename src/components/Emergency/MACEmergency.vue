@@ -32,7 +32,7 @@
       </v-card>
     </v-dialog>
     <div>
-      <p>Emegerncy Stop Activated: {{ activated }}</p>
+      <p>Emergency Stop Activated: {{ activated }}</p>
     </div>
   </div>
 </template>
@@ -46,6 +46,12 @@ export default {
       e_stop: {
         Stop: true,
       },
+      e_stop_coordinates: {
+        e_stop_alt: this.altitude,
+        e_stop_lat: this.latitude,
+        e_stop_lng: this.longitude
+      },
+
       // e_stop: {
       //   title: "Stop",
       //   value: true,
@@ -67,6 +73,22 @@ export default {
           console.log(error);
         });
     },
+    postEmergencyCoords(){
+      this.postEmergencyCoords({
+        
+      })
+      const path = "http://127.0.0.1:5000/MAC";
+      axios
+        .post(path, this.altitude)
+        .post(path, this.latitude)
+        .post(path, this.longitude)
+        .then(() => {
+          console.log("Posted Latitude and longitude to MAC");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   },
 };
 </script>

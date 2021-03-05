@@ -96,6 +96,9 @@ export default {
           console.error(error);
         });
     },
+    getLongLat(){
+
+    }
   },
   mounted() {
     this.getMACData();
