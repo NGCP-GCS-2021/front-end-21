@@ -23,7 +23,7 @@
             <v-row class="d-flex" align="auto"> 
               <v-col cols="6" class="ml-0 pl-3">
                 <v-card class="pa-1" style="width: 100%;" >
-                  <SearchArea />
+                  <MACSearchArea />
                 </v-card>
               </v-col>
               <v-col cols="6" class="d-flex">
@@ -35,12 +35,12 @@
             <v-row align="auto">
               <v-col class="d-flex">
                 <v-card class="pa-1" style="width: 100%;" >
-                  <ControlForm />
+                  <MACControl />
                 </v-card>
               </v-col>
               <v-col class="d-flex">
                 <v-card class="pa-1">
-                    <MACEmergencyCoords />
+                    <MACHome />
                 </v-card>
               </v-col>
             </v-row>
@@ -60,26 +60,26 @@
 <script>
 
 import MACStatus from '@/components/MAC/MACStatus.vue'
-import ControlForm from '@/components/ControlForm.vue'
+import MACControl from '@/components/MAC/MACControl.vue'
 import GeofenceForm from '@/components/GeofenceForm.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
-import MACEmergencyCoords from '@/components/EmergencyCoords/MACEmergencyCoords.vue'
+import MACHome from '@/components/MAC/MACHome.vue'
 import EvacuationZone from '@/components/EvacuationZone.vue'
 import ERUDrop from '@/components/MAC/ERUDrop.vue'
-import SearchArea from '@/components/MAC/SearchArea.vue'
+import MACSearchArea from '@/components/MAC/MACSearchArea.vue'
 
 export default {
   name: '',
 
   components: {
     MACStatus,
-    ControlForm,
+    MACControl,
     GeofenceForm,
     GeneralStage,
-    MACEmergencyCoords,
+    MACHome,
     EvacuationZone,
     ERUDrop,
-    SearchArea
+    MACSearchArea
   },
 
   data(){

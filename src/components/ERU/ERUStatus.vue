@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     getERUData() {
-      const path = "http://127.0.0.1:5000/ERU";
+      const path = "http://127.0.0.1:5000/ERU_XBEE";
       axios
         .get(path)
         .then((res) => {

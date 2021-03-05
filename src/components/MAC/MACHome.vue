@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h1 class="font-weight-light">ERU Drop Location</h1>
+    <h1 class="font-weight-light">Travel to/Home Coordinates</h1>
     <validation-observer ref="observer" v-slot="{ invalid }">
       <form @submit.prevent="submit">
         <v-container>
           <v-row>
-            <v-col cols="6">
+            <v-col cols="4">
               <validation-provider
                 v-slot="{ errors }"
                 name="Latitude"
@@ -23,7 +23,7 @@
                 ></v-text-field>
               </validation-provider>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="4">
               <validation-provider
                 v-slot="{ errors }"
                 name="Longitude"
@@ -40,6 +40,23 @@
                 ></v-text-field>
               </validation-provider>
             </v-col>
+            <v-col cols="4">
+              <validation-provider
+                v-slot="{ errors }"
+                name="Altitude"
+                :rules="{
+                  required: true,
+                  regex: /^\d*\.?\d*$/,
+                }"
+              >
+                <v-text-field
+                  v-model="Altitude"
+                  :error-messages="errors"
+                  label="Altidude"
+                  required
+                ></v-text-field>
+              </validation-provider>
+            </v-col>
           </v-row>
           <v-row>
             <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
@@ -48,7 +65,6 @@
             <v-btn @click="clear"> Clear </v-btn>
           </v-row>
         </v-container>
-        <p></p>
       </form>
     </validation-observer>
   </div>
@@ -81,36 +97,39 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  data: () => ({
-    drop_loc: {},
-    Latitude: "",
-    Longitude: "",
-  }),
+  data() {
+    return {
+      travelTo: {},
+      Longitude: "",
+      Latitude: "",
+      Altitude: "",
+    };
+  },
 
   methods: {
     submit() {
       this.$refs.observer.validate();
-      this.postDropLoc();
+      this.postTravelTo();
     },
     clear() {
       this.Longitude = "";
       this.Latitude = "";
+      this.Altitude = "";
       this.$refs.observer.reset();
     },
-
-    postDropLoc() {
-      this.drop_loc = JSON.stringify({
-        Drop_loc_lat: parseFloat(this.Latitude),
-        Drop_loc_lng: parseFloat(this.Longitude),
+    postTravelTo() {
+      this.travelTo = JSON.stringify({
+        Travel_to_lat: parseFloat(this.Latitude),
+        Travel_to_lng: parseFloat(this.Longitude),
+        Travel_to_alt: parseFloat(this.Altitude),
       });
       const path = "http://127.0.0.1:5000/MAC_INPUT";
+      // console.log(this.travelTo);
       axios
-        .post(path, this.drop_loc, {
-          headers: { "Content-Type": "application/json" },
-        })
+        .post(path, this.travelTo) //removed header
         .then(() => {
-          console.log("Posted ERU Drop coordinates to MAC_INPUT");
-          console.log(this.drop_loc);
+          console.log("Posted Travel to/Home coordinates to MAC_INPUT");
+          console.log(this.travelTo);
         })
         .catch((error) => {
           console.log(error.response);
