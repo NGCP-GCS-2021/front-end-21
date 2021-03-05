@@ -83,6 +83,8 @@ export default {
   },
   data: () => ({
     drop_loc: {},
+    Longitude: "",
+    Latitude: "",
   }),
 
   methods: {

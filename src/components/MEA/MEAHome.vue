@@ -100,6 +100,8 @@ export default {
   data() {
     return {
       travelTo: {},
+      Latitude: "",
+      Longitude: "",
     };
   },
 

@@ -23,7 +23,7 @@
             <v-row class="d-flex" align="auto"> 
               <v-col cols="6" class="ml-0 pl-3">
                 <v-card class="pa-1" style="width: 100%;" >
-                  <SearchArea />
+                  <MACSearchArea />
                 </v-card>
               </v-col>
               <v-col cols="6" class="d-flex">
@@ -66,7 +66,7 @@ import GeneralStage from '@/components/GeneralStage.vue'
 import MACHome from '@/components/MAC/MACHome.vue'
 import EvacuationZone from '@/components/EvacuationZone.vue'
 import ERUDrop from '@/components/MAC/ERUDrop.vue'
-import SearchArea from '@/components/MAC/SearchArea.vue'
+import MACSearchArea from '@/components/MAC/MACSearchArea.vue'
 
 export default {
   name: '',
@@ -79,7 +79,7 @@ export default {
     MACHome,
     EvacuationZone,
     ERUDrop,
-    SearchArea
+    MACSearchArea
   },
 
   data: () => ({

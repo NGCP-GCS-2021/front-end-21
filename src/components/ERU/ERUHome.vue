@@ -83,6 +83,8 @@ export default {
   data() {
     return {
       travelTo: {},
+      Longitude: "",
+      Latitude: "",
     };
   },
 
