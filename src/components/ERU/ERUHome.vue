@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="font-weight-light">Emergency Coordinates</h1>
+    <h1 class="font-weight-light">Travel to/Home Coordinates</h1>
     <validation-observer ref="observer" v-slot="{ invalid }">
       <form @submit.prevent="submit">
         <v-container>
@@ -11,6 +11,7 @@
                 name="Latitude"
                 :rules="{
                   required: true,
+                  regex: /^\d*\.?\d*$/,
                 }"
                 class="pa-0 ma-0"
               >
@@ -28,6 +29,7 @@
                 name="Longitude"
                 :rules="{
                   required: true,
+                  regex: /^\d*\.?\d*$/,
                 }"
               >
                 <v-text-field
@@ -52,7 +54,8 @@
 </template>
 
 <script>
-import { required, minValue, maxValue } from "vee-validate/dist/rules";
+import axios from "axios";
+import { required, regex, between } from "vee-validate/dist/rules";
 import {
   extend,
   ValidationObserver,
@@ -67,22 +70,52 @@ extend("required", {
   message: "{_field_} cannot be empty",
 });
 
+extend("regex", {
+  ...regex,
+  message: "Numbers Only",
+});
+
 export default {
   components: {
     ValidationProvider,
     ValidationObserver,
   },
-  data: () => ({
-  }),
+  data() {
+    return {
+      travelTo: {},
+      Longitude: "",
+      Latitude: "",
+    };
+  },
 
   methods: {
     submit() {
       this.$refs.observer.validate();
+      this.postTravelTo();
     },
     clear() {
       this.Longitude = "";
       this.Latitude = "";
       this.$refs.observer.reset();
+    },
+    postTravelTo() {
+      this.travelTo = JSON.stringify({
+        Travel_to_lat: parseFloat(this.Latitude),
+        Travel_to_lng: parseFloat(this.Longitude),
+      });
+      const path = "http://127.0.0.1:5000/ERU_INPUT";
+      // console.log(this.travelTo);
+      axios
+        .post(path, this.travelTo, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then(() => {
+          console.log("Posted Travel to/Home coordinates to ERU_INPUT");
+          console.log(this.travelTo);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
     },
   },
 };
