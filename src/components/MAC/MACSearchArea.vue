@@ -100,6 +100,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import { required, minValue } from "vee-validate/dist/rules";
 import {
   extend,
@@ -162,6 +163,16 @@ export default {
 
     postSearchArea() {
       this.Search_area.Search_area.Coordinates = this.Coordinates;
+
+      for (let i = 0; i < this.Search_area.Search_area.Coordinates.length; i++) {
+        this.Search_area.Search_area.Coordinates[i].lat = parseFloat(
+          this.Search_area.Search_area.Coordinates[i].lat
+        );
+        this.Search_area.Search_area.Coordinates[i].lng = parseFloat(
+          this.Search_area.Search_area.Coordinates[i].lng
+        );
+      }
+
       const searchAreaStringify = JSON.stringify(this.Search_area);
 
       const path = "http://127.0.0.1:5000/MAC_INPUT";
