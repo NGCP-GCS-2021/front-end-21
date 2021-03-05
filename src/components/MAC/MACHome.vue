@@ -126,9 +126,7 @@ export default {
       const path = "http://127.0.0.1:5000/MAC_INPUT";
       // console.log(this.travelTo);
       axios
-        .post(path, this.travelTo, {
-          headers: { "Content-Type": "application/json" },
-        })
+        .post(path, this.travelTo) //removed header
         .then(() => {
           console.log("Posted Travel to/Home coordinates to MAC_INPUT");
           console.log(this.travelTo);

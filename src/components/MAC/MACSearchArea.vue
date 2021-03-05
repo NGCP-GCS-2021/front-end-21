@@ -8,7 +8,7 @@
         style="height: 250px; overflow-y: hidden; overflow-x: hidden"
       >
         <v-container>
-          <v-form v-for="(input, k) in inputs" :key="k">
+          <v-form v-for="(input, k) in Coordinates" :key="k">
             <v-row>
               <v-col cols="5">
                 <validation-provider
@@ -20,7 +20,7 @@
                   class="pa-0 ma-0"
                 >
                   <v-text-field
-                    v-model="input.longitude"
+                    v-model="input.lng"
                     :error-messages="errors"
                     label="Latitude"
                     required
@@ -36,7 +36,7 @@
                   }"
                 >
                   <v-text-field
-                    v-model="input.latitude"
+                    v-model="input.lat"
                     :error-messages="errors"
                     label="Longitude"
                     required
@@ -48,7 +48,7 @@
                   class="mt-2"
                   color="green"
                   @click="add(k)"
-                  v-show="k == inputs.length - 1"
+                  v-show="k == Coordinates.length - 1"
                   >mdi-plus-circle</v-icon
                 >
               </v-col>
@@ -57,7 +57,7 @@
                   class="mt-2"
                   color="red"
                   @click="remove(k)"
-                  v-show="k || (!k && inputs.length > 1)"
+                  v-show="k || (!k && Coordinates.length > 1)"
                   >mdi-minus-circle</v-icon
                 >
               </v-col>
@@ -67,12 +67,10 @@
             <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
               Submit
             </v-btn>
-            <v-btn @click="dialog = true">
-              Clear
-            </v-btn>
-            <div>
-              <h3>inputs: {{ inputs }}</h3>
-            </div>
+            <v-btn @click="dialog = true"> Clear </v-btn>
+            <!-- <div>
+              <h3>Coordinates: {{ Coordinates }}</h3>
+            </div> -->
           </v-row>
         </v-container>
       </form>
@@ -124,27 +122,60 @@ export default {
   },
   data: () => ({
     dialog: false,
-    inputs: [
+    Coordinates: [
       {
-        longitude: "",
-        latitude: "",
+        lng: "",
+        lat: "",
       },
     ],
-    Coordinates: [],
+    Search_area: {
+      Search_area: {
+        Coordinates: [],
+      },
+    },
   }),
 
   methods: {
     submit() {
       this.$refs.observer.validate();
+      this.postSearchArea();
     },
     add() {
-      this.inputs.push({
-        longitude: "",
-        latitude: "",
+      this.Coordinates.push({
+        lng: "",
+        lat: "",
       });
     },
     remove() {
-      this.inputs.pop();
+      this.Coordinates.pop();
+    },
+    clear() {
+      this.Coordinates = [
+        {
+          lng: "",
+          lat: "",
+        },
+      ];
+      //  !!!!!!   do we want to clear the search area on MAC's side as well?
+      //            most likely not since MAC might need geofence to function
+    },
+
+    postSearchArea() {
+      this.Search_area.Search_area.Coordinates = this.Coordinates;
+      const searchAreaStringify = JSON.stringify(this.Search_area);
+
+      const path = "http://127.0.0.1:5000/MAC_INPUT";
+      axios
+        .post(path, searchAreaStringify, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then(() => {
+          console.log("Posted Search Area coordinates to MAC_INPUT");
+          console.log(searchAreaStringify);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
     },
   },
 };
