@@ -1,9 +1,22 @@
 <template>
   <div>
-    <h1 class="font-weight-light" pa-0 ma-0>Search Area</h1>
+    <v-container>
+      <v-row>
+        <v-col>
+          <h1 class="font-weight-light" pa-0 ma-0>Search Area</h1>
+        </v-col>
+        <v-col align="center">
+          <v-container>
+          <PolygonToggle></PolygonToggle>
+          </v-container>
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <v-container>
+      <v-row>
     <validation-observer ref="observer" v-slot="{ invalid }">
       <form class="scrollable" @submit.prevent="submit" style="height: 250px; overflow-y: hidden; overflow-x: hidden">
-        <PolygonToggle />
         <v-container>
           <v-form v-for="(input, k) in Coordinates" :key="k">
             <v-row>
@@ -72,6 +85,9 @@
         </v-container>
       </form>
     </validation-observer>
+      </v-row>
+    </v-container>
+    
     <v-dialog v-model="dialog" max-width="425">
       <v-card>
         <v-card-title class="headline">
@@ -98,7 +114,7 @@
 
 <script>
 import axios from "axios";
-import PolygonToggle from '@/components/PolygonToggle.vue';
+import PolygonToggle from '@/components/MAC/PolygonToggle.vue';
 import { required, minValue } from "vee-validate/dist/rules";
 import {
   extend,
