@@ -7,6 +7,7 @@
         @submit.prevent="submit"
         style="height: 250px; overflow-y: hidden; overflow-x: hidden"
       >
+        <PolygonToggle />
         <v-container>
           <v-form v-for="(input, k) in Coordinates" :key="k">
             <v-row>
@@ -101,6 +102,7 @@
 
 <script>
 import axios from "axios";
+import PolygonToggle from '@/components/PolygonToggle.vue';
 import { required, minValue } from "vee-validate/dist/rules";
 import {
   extend,
@@ -120,6 +122,7 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
+    PolygonToggle
   },
   data: () => ({
     dialog: false,
@@ -133,7 +136,7 @@ export default {
       Search_area: {
         Coordinates: [],
       },
-    },
+    }
   }),
 
   methods: {
