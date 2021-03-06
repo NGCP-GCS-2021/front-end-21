@@ -49,9 +49,9 @@
                 }"
               >
                 <v-text-field
-                    v-model="Altitude"
+                    v-model="Radius"
                     :error-messages="errors"
-                    label="Altidude"
+                    label="Radius"
                     required
                 ></v-text-field>
               </validation-provider>
@@ -101,7 +101,7 @@ export default {
       travelTo: {},
       Longitude: "",
       Latitude: "",
-      Altitude: "",
+      Radius: "",
     };
   },
 
@@ -113,14 +113,14 @@ export default {
     clear() {
       this.Longitude = "";
       this.Latitude = "";
-      this.Altitude = "";
+      this.Radius = "";
       this.$refs.observer.reset();
     },
     postTravelTo() {
       this.travelTo = JSON.stringify({
         Travel_to_lat: parseFloat(this.Latitude),
         Travel_to_lng: parseFloat(this.Longitude),
-        Travel_to_alt: parseFloat(this.Altitude),
+        Travel_to_alt: parseFloat(this.Radius),
       });
       const path = "http://127.0.0.1:5000/MAC_INPUT";
       // console.log(this.travelTo);

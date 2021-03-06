@@ -71,28 +71,6 @@
     </form>
   </validation-observer>
   </div>
-
-<!--  <v-dialog v-model="dialog" max-width="425">-->
-<!--    <v-card>-->
-<!--      <v-card-title class="headline">-->
-<!--        <v-icon large color="red" class="pr-3">mdi-alert</v-icon>-->
-<!--        <h3 class="font-weight-light text-center red&#45;&#45;text" justify="center">-->
-<!--          Clear Search Area?-->
-<!--        </h3>-->
-<!--      </v-card-title>-->
-<!--      <v-card-text justify="center">-->
-<!--        Warning: All MAC Search Area Coordinates will be deleted.-->
-<!--      </v-card-text>-->
-
-<!--      <v-card-actions>-->
-<!--        <v-spacer></v-spacer>-->
-
-<!--        <v-btn color="secondary" text @click="dialog = false"> Cancel </v-btn>-->
-
-<!--        <v-btn color="primary" text @click="clear"> Clear </v-btn>-->
-<!--      </v-card-actions>-->
-<!--    </v-card>-->
-<!--  </v-dialog>-->
 </template>
 
 <script>
@@ -171,9 +149,7 @@
             this.Search_area.Search_area.Coordinates[i].lng
         );
       }
-
       const searchAreaStringify = JSON.stringify(this.Search_area);
-
       const path = "http://127.0.0.1:5000/MAC_INPUT";
       axios
           .post(path, searchAreaStringify)
