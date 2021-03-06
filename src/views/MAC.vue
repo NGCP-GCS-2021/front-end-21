@@ -9,6 +9,9 @@
         </v-col>
         <v-col :cols="6">
           <v-container fluid flex>
+            <MACServerBar />
+          </v-container>
+          <v-container fluid flex>
             <v-row class="pb-3">
               <GeneralStage />
             </v-row>
@@ -64,6 +67,7 @@ import MACControl from '@/components/MAC/MACControl.vue'
 import GeofenceForm from '@/components/GeofenceForm.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
 import MACHome from '@/components/MAC/MACHome.vue'
+import MACServerBar from '@/components/MAC/MACServerBar.vue'
 import EvacuationZone from '@/components/EvacuationZone.vue'
 import ERUDrop from '@/components/MAC/ERUDrop.vue'
 import MACSearchArea from '@/components/MAC/MACSearchArea.vue'
@@ -79,7 +83,8 @@ export default {
     MACHome,
     EvacuationZone,
     ERUDrop,
-    MACSearchArea
+    MACSearchArea,
+    MACServerBar
   },
 
   data: () => ({

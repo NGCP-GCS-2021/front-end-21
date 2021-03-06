@@ -9,6 +9,9 @@
         </v-col>
         <v-col :cols="6">
           <v-container fluid flex>
+            <ERUServerBar />
+          </v-container>
+          <v-container fluid flex>
             <v-row class="pb-3">
               <GeneralStage />
             </v-row>
@@ -58,6 +61,7 @@ import ERUControl from '@/components/ERU/ERUControl.vue'
 import GeofenceForm from '@/components/GeofenceForm.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
 import ERUHome from '@/components/ERU/ERUHome.vue'
+import ERUServerBar from '@/components/ERU/ERUServerBar.vue'
 import EvacuationZone from '@/components/EvacuationZone.vue'
 
 export default {
@@ -70,6 +74,7 @@ export default {
     GeneralStage,
     ERUHome,
     EvacuationZone,
+    ERUServerBar
   },
 
   data: () => ({

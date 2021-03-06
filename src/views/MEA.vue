@@ -10,6 +10,9 @@
         </v-col>
         <v-col :cols="6">
           <v-container fluid flex>
+            <MEAServerBar />
+          </v-container>
+          <v-container fluid flex>
             <v-row class="pb-3">
               <GeneralStage />
             </v-row>
@@ -57,6 +60,7 @@ import MEAControl from "@/components/MEA/MEAControl.vue";
 import GeofenceForm from "@/components/GeofenceForm.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
 import MEAHome from "@/components/MEA/MEAHome.vue";
+import MEAServerBar from "@/components/MEA/MEAServerBar.vue";
 import EvacuationZone from "@/components/EvacuationZone.vue";
 
 export default {
@@ -69,6 +73,7 @@ export default {
     GeneralStage,
     MEAHome,
     EvacuationZone,
+    MEAServerBar
   },
 
   data: () => ({

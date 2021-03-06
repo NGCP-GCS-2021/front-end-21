@@ -8,6 +8,22 @@
           </v-card>
         </v-col>
         <v-col :cols="4">
+          <v-row class="px-2" >
+              <v-col :cols="12">
+                <v-progress-linear 
+                  color="green"
+                  class="px-1"
+                  v-model="value"
+                  :active="show"
+                  :indeterminate="query"
+                  :query="true"
+                  >
+                </v-progress-linear>
+              </v-col>
+          </v-row>
+          <v-row class="px-5 pb-1">
+            <h4>Data Updated {{ }} ago</h4>
+          </v-row>
             <v-container>
               <v-row class="pa-2 mb-3" >
                 <GeneralStage />
@@ -92,6 +108,30 @@ import MACStatus from '@/components/MAC/MACStatus.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
 
 export default {
+  data () {
+      return {
+        value: 0,
+        query: false,
+        show: true,
+        interval: 0,
+      }
+    },
+
+    mounted () {
+      this.queryAndIndeterminate()
+    },
+
+    beforeDestroy () {
+      clearInterval(this.interval)
+    },
+
+    methods: {
+      queryAndIndeterminate () {
+        this.query = true
+        this.show = true
+        this.value = 0
+      },
+    },
   name: '',
   components: {
     MACEmergency,
