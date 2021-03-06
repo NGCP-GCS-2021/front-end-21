@@ -95,12 +95,12 @@
         <v-card-title class="headline">
           <v-icon large color="red" class="pr-3">mdi-alert</v-icon>
           <h3 class="font-weight-light text-center red--text" justify="center">
-            Clear Geofence (Keep Out)?
+            Delete Geofence (Keep Out)?
           </h3>
         </v-card-title>
         <v-card-text justify="center">
           Warning: All {{ vehicle }} Geofence (Keep Out) Coordinates will be
-          cleared.
+          deleted.
         </v-card-text>
 
         <v-card-actions>
@@ -175,6 +175,7 @@ export default {
         },
       ];
       this.deleteKeepOut();
+      this.dialog = false;
       //  !!!!!!   do we want to clear the search area on MAC's side as well?
       //            most likely not since MAC might need geofence to function
     },
