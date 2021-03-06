@@ -1,11 +1,20 @@
 <template>
   <v-card class="pa-2" width="100%">
-    <h1 class="font-weight-regular text-center display-2">Select a Vehicle:</h1>
+    <h1 class="font-weight-light text-center">Select a Vehicle:</h1>
     <v-card-actions class="justify-center">
-      <v-btn-toggle v-model="vehicleSelect" background-color="primary">
-        <v-btn value="MAC" @click="selectMAC"> MAC </v-btn>
-        <v-btn value="ERU" @click="selectERU"> ERU </v-btn>
-        <v-btn value="MEA" @click="selectMEA"> MEA </v-btn>
+      <v-btn-toggle v-model="vehicleSelect" >
+        <v-btn value="MAC" @click="selectMAC">
+          <h1 class="font-weight-light">MAC</h1>
+          <v-icon color="green">mdi-airplane</v-icon>
+        </v-btn>
+        <v-btn value="ERU" @click="selectERU">
+          <h1 class="font-weight-light">ERU</h1>
+          <v-icon color="orange">mdi-car-lifted-pickup</v-icon>
+        </v-btn>
+        <v-btn value="MEA" @click="selectMEA">
+          <h1 class="font-weight-light">MEA</h1>
+          <v-icon color="purple">mdi-quadcopter</v-icon>
+        </v-btn>
       </v-btn-toggle>
     </v-card-actions>
   </v-card>
