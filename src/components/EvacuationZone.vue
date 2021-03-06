@@ -1,8 +1,9 @@
 <template>
   <div>
     <h1 class="font-weight-light">Evacuation Zone</h1>
+    <!-- <h3>Current Data: {{ Longitude }}, {{ Latitude }}</h3> -->
     <validation-observer ref="observer" v-slot="{ invalid }">
-      <form @submit.prevent="submit">
+      <form @submit.prevent="submit" style="height: 150px;">
         <v-container>
           <v-row>
             <v-col cols="6">
@@ -134,7 +135,8 @@ export default {
         .catch((error) => {
           console.log(error.response);
         });
-    },
+    }, 
+
   },
 };
 </script>

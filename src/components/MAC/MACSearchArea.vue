@@ -167,7 +167,11 @@ export default {
     postSearchArea() {
       this.Search_area.Search_area.Coordinates = this.Coordinates;
 
-      for (let i = 0; i < this.Search_area.Search_area.Coordinates.length; i++) {
+      for (
+        let i = 0;
+        i < this.Search_area.Search_area.Coordinates.length;
+        i++
+      ) {
         this.Search_area.Search_area.Coordinates[i].lat = parseFloat(
           this.Search_area.Search_area.Coordinates[i].lat
         );
@@ -180,9 +184,7 @@ export default {
 
       const path = "http://127.0.0.1:5000/MAC_INPUT";
       axios
-        .post(path, searchAreaStringify, {
-          headers: { "Content-Type": "application/json" },
-        })
+        .post(path, searchAreaStringify)
         .then(() => {
           console.log("Posted Search Area coordinates to MAC_INPUT");
           console.log(searchAreaStringify);
