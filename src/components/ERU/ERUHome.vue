@@ -2,7 +2,7 @@
   <div>
     <h1 class="font-weight-light">Travel to/Home Coordinates</h1>
     <validation-observer ref="observer" v-slot="{ invalid }">
-      <form @submit.prevent="submit">
+      <form @submit.prevent="submit" style="height: 150px;">
         <v-container>
           <v-row>
             <v-col cols="4">

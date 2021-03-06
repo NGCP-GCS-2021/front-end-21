@@ -40,11 +40,6 @@
                   <ERUControl />
                 </v-card>
               </v-col>
-              <v-col>
-                <v-card class="pa-1">
-                    <GeofenceForm />
-                </v-card>
-              </v-col>
             </v-row>
 
           </v-container>
@@ -58,7 +53,6 @@
 
 import ERUStatus from '@/components/ERU/ERUStatus.vue'
 import ERUControl from '@/components/ERU/ERUControl.vue'
-import GeofenceForm from '@/components/GeofenceForm.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
 import ERUHome from '@/components/ERU/ERUHome.vue'
 import ERUServerBar from '@/components/ERU/ERUServerBar.vue'
@@ -70,7 +64,6 @@ export default {
   components: {
     ERUStatus,
     ERUControl,
-    GeofenceForm,
     GeneralStage,
     ERUHome,
     EvacuationZone,

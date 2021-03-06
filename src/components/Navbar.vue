@@ -11,6 +11,7 @@
             <router-link to ="/mac"><h1 class="font-weight-light">MAC</h1></router-link>
             <router-link to ="/eru"><h1 class="font-weight-light">ERU</h1></router-link>
             <router-link to ="/mea"><h1 class="font-weight-light">MEA</h1></router-link>
+            <router-link to ="/geofence"><h1 class="font-weight-light">Geofence</h1></router-link>
         </v-app-bar>
     </nav>
 </template>

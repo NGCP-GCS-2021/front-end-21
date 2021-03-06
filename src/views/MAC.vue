@@ -47,11 +47,6 @@
                 </v-card>
               </v-col>
             </v-row>
-            <v-row>
-              <v-card class="pa-1 ml-3 mr-3" style="width: 100%;">
-              <GeofenceForm />
-              </v-card>
-            </v-row>
             </v-container>
           </v-container>
         </v-col>
@@ -64,7 +59,6 @@
 
 import MACStatus from '@/components/MAC/MACStatus.vue'
 import MACControl from '@/components/MAC/MACControl.vue'
-import GeofenceForm from '@/components/GeofenceForm.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
 import MACHome from '@/components/MAC/MACHome.vue'
 import MACServerBar from '@/components/MAC/MACServerBar.vue'
@@ -78,7 +72,6 @@ export default {
   components: {
     MACStatus,
     MACControl,
-    GeofenceForm,
     GeneralStage,
     MACHome,
     EvacuationZone,

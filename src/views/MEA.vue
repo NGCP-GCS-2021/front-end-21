@@ -29,8 +29,8 @@
                   <EvacuationZone />
                 </v-card>
               </v-col>
-              <v-col cols="6">
-                <v-card class="pa-1">
+              <v-col cols="6" class="ml-0 pl-3">
+                <v-card class="pa-1" style="width: 100%">
                   <MEAHome />
                 </v-card>
               </v-col>
@@ -39,11 +39,6 @@
               <v-col class="d-flex">
                 <v-card class="pa-1" style="width: 100%">
                   <MEAControl />
-                </v-card>
-              </v-col>
-              <v-col>
-                <v-card class="pa-1">
-                  <GeofenceForm />
                 </v-card>
               </v-col>
             </v-row>
@@ -57,7 +52,6 @@
 <script>
 import MEAStatus from "@/components/MEA/MEAStatus.vue";
 import MEAControl from "@/components/MEA/MEAControl.vue";
-import GeofenceForm from "@/components/GeofenceForm.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
 import MEAHome from "@/components/MEA/MEAHome.vue";
 import MEAServerBar from "@/components/MEA/MEAServerBar.vue";
@@ -69,7 +63,6 @@ export default {
   components: {
     MEAStatus,
     MEAControl,
-    GeofenceForm,
     GeneralStage,
     MEAHome,
     EvacuationZone,
