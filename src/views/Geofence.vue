@@ -88,7 +88,12 @@ export default {
   }),
   methods: {
     setVehicle(vehicle) {
-      this.vehicle = vehicle;
+      if (vehicle != null) {
+        this.vehicle = vehicle;
+      } else {
+        this.resetKeepIn();
+        this.resetKeepOut();
+      }
     },
     deleteKeepIn(keepIn) {
       //console.log(this.keepInArray);
@@ -112,7 +117,7 @@ export default {
         const last = this.keepInArray[index];
         this.keepInArray.push(last + 1);
       } else {
-        this.keepInArray = [1];
+        this.resetKeepIn();
       }
     },
     addKeepOut() {
@@ -121,9 +126,15 @@ export default {
         const last = this.keepOutArray[index];
         this.keepOutArray.push(last + 1);
       } else {
-        this.keepOutArray = [1];
+        this.resetKeepOut();
       }
     },
+    resetKeepIn() {
+      this.keepInArray = [1];
+    },
+    resetKeepOut() {
+      this.keepOutArray = [1];
+    }
   },
 };
 </script>

@@ -149,6 +149,7 @@ export default {
     Geofence: {
       Geofence: {
         Coordinates: [],
+        Keep_in: false,
       },
     },
   }),
@@ -193,12 +194,24 @@ export default {
       }
 
       const geofenceStringify = JSON.stringify(this.Geofence);
-
-      const path = "http://127.0.0.1:5000/MAC_INPUT";
+      let path = "";
+      if (this.vehicle == "MAC") {
+        path = "http://127.0.0.1:5000/MAC_INPUT";
+      } else if (this.vehicle == "ERU") {
+        path = "http://127.0.0.1:5000/ERU_INPUT";
+      } else if (this.vehicle == "MEA") {
+        path = "http://127.0.0.1:5000/ERU_INPUT";
+      }
       axios
         .post(path, geofenceStringify)
         .then(() => {
-          console.log("Posted Geofence (Keep Out) coordinates to MAC_INPUT");
+          if (this.vehicle == "MAC") {
+            console.log("Posted Geofence (Keep In) coordinates to MAC_INPUT");
+          } else if (this.vehicle == "ERU") {
+            console.log("Posted Geofence (Keep In) coordinates to ERU_INPUT");
+          } else if (this.vehicle == "MEA") {
+            console.log("Posted Geofence (Keep In) coordinates to MEA_INPUT");
+          }
           console.log(geofenceStringify);
         })
         .catch((error) => {
