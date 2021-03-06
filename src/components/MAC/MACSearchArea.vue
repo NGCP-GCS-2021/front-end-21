@@ -7,87 +7,24 @@
         </v-col>
         <v-col align="center">
           <v-container>
-          <PolygonToggle></PolygonToggle>
+          <PolygonToggle @selected="selectShape"/>
           </v-container>
         </v-col>
       </v-row>
     </v-container>
 
-    <v-container>
-      <v-row>
-    <validation-observer ref="observer" v-slot="{ invalid }">
-      <form class="scrollable" @submit.prevent="submit" style="height: 250px; overflow-y: hidden; overflow-x: hidden">
-        <v-container>
-          <v-form v-for="(input, k) in Coordinates" :key="k">
-            <v-row>
-              <v-col cols="5">
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="Latitude"
-                  :rules="{
-                    required: true,
-                  }"
-                  class="pa-0 ma-0"
-                >
-                  <v-text-field
-                    v-model="input.lng"
-                    :error-messages="errors"
-                    label="Latitude"
-                    required
-                  ></v-text-field>
-                </validation-provider>
-              </v-col>
-              <v-col cols="5">
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="Longitude"
-                  :rules="{
-                    required: true,
-                  }"
-                >
-                  <v-text-field
-                    v-model="input.lat"
-                    :error-messages="errors"
-                    label="Longitude"
-                    required
-                  ></v-text-field>
-                </validation-provider>
-              </v-col>
-              <v-col :cols="1">
-                <v-icon
-                  class="mt-2"
-                  color="green"
-                  @click="add(k)"
-                  v-show="k == Coordinates.length - 1"
-                  >mdi-plus-circle</v-icon
-                >
-              </v-col>
-              <v-col :cols="1">
-                <v-icon
-                  class="mt-2"
-                  color="red"
-                  @click="remove(k)"
-                  v-show="k || (!k && Coordinates.length > 1)"
-                  >mdi-minus-circle</v-icon
-                >
-              </v-col>
-            </v-row>
-          </v-form>
-          <v-row>
-            <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
-              Submit
-            </v-btn>
-            <v-btn @click="dialog = true"> Clear </v-btn>
-            <!-- <div>
-              <h3>Coordinates: {{ Coordinates }}</h3>
-            </div> -->
-          </v-row>
-        </v-container>
-      </form>
-    </validation-observer>
+    <v-container v-if="shape === 'polygon'">
+      <v-row >
+        <PolygonForm/>
       </v-row>
     </v-container>
-    
+
+    <v-container v-if="shape === 'circle'">
+      <v-row >
+        <CircleForm/>
+      </v-row>
+    </v-container>
+
     <v-dialog v-model="dialog" max-width="425">
       <v-card>
         <v-card-title class="headline">
@@ -115,6 +52,8 @@
 <script>
 import axios from "axios";
 import PolygonToggle from '@/components/MAC/PolygonToggle.vue';
+import PolygonForm from "@/components/MAC/PolygonForm";
+import CircleForm from "@/components/MAC/CircleForm";
 import { required, minValue } from "vee-validate/dist/rules";
 import {
   extend,
@@ -132,6 +71,8 @@ extend("required", {
 
 export default {
   components: {
+    CircleForm,
+    PolygonForm,
     ValidationProvider,
     ValidationObserver,
     PolygonToggle
@@ -148,7 +89,8 @@ export default {
       Search_area: {
         Coordinates: [],
       },
-    }
+    },
+    shape: null
   }),
 
   methods: {
@@ -175,7 +117,6 @@ export default {
       //  !!!!!!   do we want to clear the search area on MAC's side as well?
       //            most likely not since MAC might need geofence to function
     },
-
     postSearchArea() {
       this.Search_area.Search_area.Coordinates = this.Coordinates;
 
@@ -204,6 +145,10 @@ export default {
         .catch((error) => {
           console.log(error.response);
         });
+    },
+    selectShape(shape){
+      this.shape = shape;
+      console.log(this.shape)
     },
   },
 };
