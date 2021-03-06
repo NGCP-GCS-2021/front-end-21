@@ -2,11 +2,7 @@
   <div>
     <h1 class="font-weight-light" pa-0 ma-0>Search Area</h1>
     <validation-observer ref="observer" v-slot="{ invalid }">
-      <form
-        class="scrollable"
-        @submit.prevent="submit"
-        style="height: 250px; overflow-y: hidden; overflow-x: hidden"
-      >
+      <form class="scrollable" @submit.prevent="submit" style="height: 250px; overflow-y: hidden; overflow-x: hidden">
         <PolygonToggle />
         <v-container>
           <v-form v-for="(input, k) in Coordinates" :key="k">
