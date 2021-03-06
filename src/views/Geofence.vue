@@ -4,21 +4,26 @@
       <v-row align="auto">
         <v-col :cols="6" class="d-flex">
           <v-card>
-            <v-img height="100%" src="../assets/map.png"></v-img>
+            <v-img src="../assets/map.png" style="height: 950px;"></v-img>
             <!---Needs to be replaced by map component--->
           </v-card>
         </v-col>
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row class="pb-3">
-              <GeofenceVehicleSelect />
+              <GeofenceVehicleSelect @selected="setVehicle"/>
             </v-row>
-            <v-row>
-              <v-card class="pa-1" style="width: 100%">
-                <v-container fluid flex>
-                  <MACStatus />
-                </v-container>
-              </v-card>
+            <v-row class="d-flex" align="auto" v-if="vehicle">
+              <v-col cols="6" class="ml-0 pl-3">
+                <v-card class="pa-1" style="width: 100%">
+                  <GeofenceKeepIn :vehicle="vehicle"/>
+                </v-card>
+              </v-col>
+              <v-col cols="6" class="d-flex">
+                <v-card class="pa-1" style="width: 100%">
+                  <GeofenceKeepOut :vehicle="vehicle"/>
+                </v-card>
+              </v-col>
             </v-row>
           </v-container>
         </v-col>
@@ -29,19 +34,25 @@
 
 <script>
 import GeofenceVehicleSelect from "@/components/Geofence/GeofenceVehicleSelect.vue";
-import MACStatus from "@/components/MAC/MACStatus.vue";
-import GeneralStage from "@/components/GeneralStage.vue";
+import GeofenceKeepIn from "@/components/Geofence/GeofenceKeepIn.vue";
+import GeofenceKeepOut from "@/components/Geofence/GeofenceKeepOut.vue";
+
 export default {
   name: "",
 
   components: {
     GeofenceVehicleSelect,
-    MACStatus,
-    GeneralStage,
+    GeofenceKeepIn,
+    GeofenceKeepOut,
   },
 
   data: () => ({
-    //
+    vehicle: null,
   }),
+  methods: {
+    setVehicle(vehicle) {
+      this.vehicle = vehicle;
+    }
+  }
 };
 </script>
