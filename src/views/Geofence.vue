@@ -11,7 +11,8 @@
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row class="pb-3">
-              <GeofenceVehicleSelect @selected="setVehicle" />
+              <GeofenceVehicleSelect @selected="setVehicle" /> 
+              <!-- setVehicle("MAC") -->
             </v-row>
 
             <v-container
@@ -89,11 +90,11 @@ export default {
   methods: {
     setVehicle(vehicle) {
       if (vehicle != null) {
-        this.vehicle = vehicle;
       } else {
         this.resetKeepIn();
         this.resetKeepOut();
       }
+      this.vehicle = vehicle;
     },
     deleteKeepIn(keepIn) {
       //console.log(this.keepInArray);
@@ -134,7 +135,7 @@ export default {
     },
     resetKeepOut() {
       this.keepOutArray = [1];
-    }
+    },
   },
 };
 </script>
