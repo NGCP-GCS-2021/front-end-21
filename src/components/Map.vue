@@ -137,7 +137,6 @@ export default {
         },
         
         addCircle: function(lng, lat, radius, numPoints, name, color, opacity) {
-            // TODO: Needs testing
             // Adds a circle to the map at the specified coordinate
             // Lng lat in DEGREES
             // Radius in METERS
