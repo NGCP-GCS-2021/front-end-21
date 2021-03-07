@@ -11,7 +11,7 @@
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row class="pb-3">
-              <GeofenceVehicleSelect @selected="setVehicle" />
+              <VehicleSelect @selected="setVehicle" />
               <!-- setVehicle("MAC") -->
             </v-row>
 
@@ -19,27 +19,27 @@
               <v-row class="d-flex" align="auto">
                 <v-col cols="6" class="ml-0 pl-3">
                   <v-card class="pa-1" style="width: 100%; height: 420px">
-                    <GeofenceKeepIn
+                    <KeepIn
                       :vehicle="vehicle"
                       @addToKeepIn="addToKeepIn"
                     />
                   </v-card>
                   <v-card class="mt-2 pa-1" style="height: 300px">
-                    <GeofenceKeepInCart
+                    <KeepInCart
                       :vehicle="vehicle"
-                      ref="GeofenceKeepInCart"
+                      ref="KeepInCart"
                     />
                   </v-card>
                 </v-col>
                 <v-col cols="6" class="ml-0 pl-3">
                   <v-card class="pa-1" style="width: 100%">
-                    <GeofenceKeepOut
+                    <KeepOut
                       :vehicle="vehicle"
                       @addToKeepOut="addToKeepOut"
                     />
                   </v-card>
                   <v-card class="mt-2 pa-1" style="width: 100%">
-                    <GeofenceKeepOutCart :vehicle="vehicle" ref="GeofenceKeepOutCart"/>
+                    <KeepOutCart :vehicle="vehicle" ref="KeepOutCart"/>
                   </v-card>
                 </v-col>
               </v-row>
@@ -52,21 +52,21 @@
 </template>
 
 <script>
-import GeofenceVehicleSelect from "@/components/Geofence/GeofenceVehicleSelect.vue";
-import GeofenceKeepIn from "@/components/Geofence/GeofenceKeepIn.vue";
-import GeofenceKeepInCart from "@/components/Geofence/GeofenceKeepInCart.vue";
-import GeofenceKeepOut from "@/components/Geofence/GeofenceKeepOut.vue";
-import GeofenceKeepOutCart from "@/components/Geofence/GeofenceKeepOutCart.vue";
+import VehicleSelect from "@/components/Geofence/VehicleSelect.vue";
+import KeepIn from "@/components/Geofence/KeepIn.vue";
+import KeepInCart from "@/components/Geofence/KeepInCart.vue";
+import KeepOut from "@/components/Geofence/KeepOut.vue";
+import KeepOutCart from "@/components/Geofence/KeepOutCart.vue";
 
 export default {
   name: "",
 
   components: {
-    GeofenceVehicleSelect,
-    GeofenceKeepIn,
-    GeofenceKeepInCart,
-    GeofenceKeepOut,
-    GeofenceKeepOutCart,
+    VehicleSelect,
+    KeepIn,
+    KeepInCart,
+    KeepOut,
+    KeepOutCart,
   },
 
   data: () => ({
@@ -78,10 +78,10 @@ export default {
       this.vehicle = vehicle;
     },
     addToKeepIn(coordinates) {
-      this.$refs.GeofenceKeepInCart.addCoordinates(coordinates);
+      this.$refs.KeepInCart.addCoordinates(coordinates);
     },
     addToKeepOut(coordinates) {
-      this.$refs.GeofenceKeepOutCart.addCoordinates(coordinates);
+      this.$refs.KeepOutCart.addCoordinates(coordinates);
     },
   },
 };
