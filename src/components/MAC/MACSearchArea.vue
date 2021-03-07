@@ -101,6 +101,9 @@
 
 <script>
 import axios from "axios";
+import PolygonToggle from '@/components/MAC/PolygonToggle.vue';
+import PolygonForm from "@/components/MAC/PolygonForm";
+import CircleForm from "@/components/MAC/CircleForm";
 import { required, minValue } from "vee-validate/dist/rules";
 import {
   extend,
@@ -118,8 +121,11 @@ extend("required", {
 
 export default {
   components: {
+    CircleForm,
+    PolygonForm,
     ValidationProvider,
     ValidationObserver,
+    PolygonToggle
   },
   data: () => ({
     dialog: false,
@@ -134,6 +140,7 @@ export default {
         Coordinates: [],
       },
     },
+    shape: null
   }),
 
   methods: {
@@ -160,7 +167,6 @@ export default {
       //  !!!!!!   do we want to clear the search area on MAC's side as well?
       //            most likely not since MAC might need geofence to function
     },
-
     postSearchArea() {
       this.Search_area.Search_area.Coordinates = this.Coordinates;
 
@@ -189,6 +195,10 @@ export default {
         .catch((error) => {
           console.log(error.response);
         });
+    },
+    selectShape(shape){
+      this.shape = shape;
+      console.log(this.shape)
     },
   },
 };
