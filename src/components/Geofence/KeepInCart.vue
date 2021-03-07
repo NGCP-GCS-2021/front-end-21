@@ -106,42 +106,44 @@ export default {
       //console.log(this.CoordinatesArray);
     },
     postGeofenceKeepIn() {
-      this.Geofence.Geofence.Coordinates = this.CoordinatesArray;
+      for (let i = 0; i < this.CoordinatesArray.length; i++) {
+        this.Geofence.Geofence.Coordinates = this.CoordinatesArray[i];
 
-      for (let i = 0; i < this.Geofence.Geofence.Coordinates.length; i++) {
-        this.Geofence.Geofence.Coordinates[i].lat = parseFloat(
-          this.Geofence.Geofence.Coordinates[i].lat
-        );
-        this.Geofence.Geofence.Coordinates[i].lng = parseFloat(
-          this.Geofence.Geofence.Coordinates[i].lng
-        );
-      }
+        for (let i = 0; i < this.Geofence.Geofence.Coordinates.length; i++) {
+          this.Geofence.Geofence.Coordinates[i].lat = parseFloat(
+            this.Geofence.Geofence.Coordinates[i].lat
+          );
+          this.Geofence.Geofence.Coordinates[i].lng = parseFloat(
+            this.Geofence.Geofence.Coordinates[i].lng
+          );
+        }
 
-      const geofenceStringify = JSON.stringify(this.Geofence);
-      let path = "";
-      if (this.vehicle == "MAC") {
-        path = "http://127.0.0.1:5000/MAC_INPUT";
-      } else if (this.vehicle == "ERU") {
-        path = "http://127.0.0.1:5000/ERU_INPUT";
-      } else if (this.vehicle == "MEA") {
-        path = "http://127.0.0.1:5000/ERU_INPUT";
+        const geofenceStringify = JSON.stringify(this.Geofence);
+        let path = "";
+        if (this.vehicle == "MAC") {
+          path = "http://127.0.0.1:5000/MAC_INPUT";
+        } else if (this.vehicle == "ERU") {
+          path = "http://127.0.0.1:5000/ERU_INPUT";
+        } else if (this.vehicle == "MEA") {
+          path = "http://127.0.0.1:5000/ERU_INPUT";
+        }
+        axios
+          .post(path, geofenceStringify)
+          .then(() => {
+            if (this.vehicle == "MAC") {
+              console.log("Posted Geofence (Keep In) coordinates to MAC_INPUT");
+            } else if (this.vehicle == "ERU") {
+              console.log("Posted Geofence (Keep In) coordinates to ERU_INPUT");
+            } else if (this.vehicle == "MEA") {
+              console.log("Posted Geofence (Keep In) coordinates to MEA_INPUT");
+            }
+            console.log(geofenceStringify);
+          })
+          .catch((error) => {
+            console.log(geofenceStringify);
+            console.log(error.response);
+          });
       }
-      axios
-        .post(path, geofenceStringify)
-        .then(() => {
-          if (this.vehicle == "MAC") {
-            console.log("Posted Geofence (Keep In) coordinates to MAC_INPUT");
-          } else if (this.vehicle == "ERU") {
-            console.log("Posted Geofence (Keep In) coordinates to ERU_INPUT");
-          } else if (this.vehicle == "MEA") {
-            console.log("Posted Geofence (Keep In) coordinates to MEA_INPUT");
-          }
-          console.log(geofenceStringify);
-        })
-        .catch((error) => {
-          console.log(geofenceStringify);
-          console.log(error.response);
-        });
     },
   },
 };

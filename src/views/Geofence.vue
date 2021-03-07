@@ -38,7 +38,7 @@
                       @addToKeepOut="addToKeepOut"
                     />
                   </v-card>
-                  <v-card class="mt-2 pa-1" style="width: 100%">
+                  <v-card class="mt-2 pa-1" style="height: 300px">
                     <KeepOutCart :vehicle="vehicle" ref="KeepOutCart"/>
                   </v-card>
                 </v-col>
