@@ -5,88 +5,89 @@
         <v-col>
           <h2 class="font-weight-light" pa-0 ma-0>Keep In: {{ vehicle }}</h2>
         </v-col>
-        <v-col align="center">
-          <v-btn @click="dialog = true" color="red"> Delete </v-btn>
-        </v-col>
       </v-row>
       <validation-observer ref="observer" v-slot="{ invalid }">
         <form
           class="scrollable"
           @submit.prevent="submit"
-          style="height: 400px; overflow-y: hidden; overflow-x: hidden"
+          style="height: 315px; overflow-y: hidden; overflow-x: hidden"
         >
           <v-container>
             <v-form v-for="(input, k) in Coordinates" :key="k">
-              <v-row>
-                <v-col cols="5">
-                  <validation-provider
-                    v-slot="{ errors }"
-                    name="Latitude"
-                    :rules="{
-                      required: true,
-                    }"
-                    class="pa-0 ma-0"
-                  >
-                    <v-text-field
-                      v-model="input.lng"
-                      :error-messages="errors"
-                      label="Latitude"
-                      required
-                    ></v-text-field>
-                  </validation-provider>
-                </v-col>
-                <v-col cols="5">
-                  <validation-provider
-                    v-slot="{ errors }"
-                    name="Longitude"
-                    :rules="{
-                      required: true,
-                    }"
-                  >
-                    <v-text-field
-                      v-model="input.lat"
-                      :error-messages="errors"
-                      label="Longitude"
-                      required
-                    ></v-text-field>
-                  </validation-provider>
-                </v-col>
-                <v-col :cols="1">
-                  <v-icon
-                    class="mt-2"
-                    color="green"
-                    @click="add(k)"
-                    v-show="k == Coordinates.length - 1"
-                    >mdi-plus-circle</v-icon
-                  >
-                </v-col>
-                <v-col :cols="1">
-                  <v-icon
-                    class="mt-2"
-                    color="red"
-                    @click="remove(k)"
-                    v-show="k || (!k && Coordinates.length > 1)"
-                    >mdi-minus-circle</v-icon
-                  >
-                </v-col>
-              </v-row>
+              <v-container>
+                <v-row>
+                  <v-col cols="5">
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="Latitude"
+                      :rules="{
+                        required: true,
+                      }"
+                      class="pa-0 ma-0"
+                    >
+                      <v-text-field
+                        v-model="input.lat"
+                        :error-messages="errors"
+                        label="Latitude"
+                        required
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+                  <v-col cols="5">
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="Longitude"
+                      :rules="{
+                        required: true,
+                      }"
+                    >
+                      <v-text-field
+                        v-model="input.lng"
+                        :error-messages="errors"
+                        label="Longitude"
+                        required
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+                  <v-col :cols="1" align="center">
+                    <v-icon
+                      class="mt-2"
+                      color="green"
+                      @click="add(k)"
+                      v-show="k == Coordinates.length - 1"
+                      >mdi-plus-circle</v-icon
+                    >
+                  </v-col>
+                  <v-col :cols="1" align="center">
+                    <v-icon
+                      class="mt-2"
+                      color="red"
+                      @click="remove(k)"
+                      v-show="k || (!k && Coordinates.length > 1)"
+                      >mdi-minus-circle</v-icon
+                    >
+                  </v-col>
+                </v-row>
+              </v-container>
             </v-form>
-            <v-row>
-              <v-btn
-                class="mr-4"
-                color="green"
-                type="submit"
-                :disabled="invalid"
-              >
-                Submit
-              </v-btn>
-              <!-- <v-btn @click="dialog = true"> Clear </v-btn> -->
-              <!-- <div>
-              <h3>Coordinates: {{ Coordinates }}</h3>
-            </div> -->
-            </v-row>
           </v-container>
         </form>
+        <v-row>
+          <v-col align="center"
+            ><v-btn
+              class="mr-4"
+              color="green"
+              type="submit"
+              :disabled="invalid"
+              @click="submit"
+            >
+              Add to List
+            </v-btn>
+          </v-col>
+          <v-col align="center">
+            <v-btn @click="dialog = true" color="red"> Clear </v-btn>
+          </v-col>
+        </v-row>
       </validation-observer>
     </v-container>
     <v-dialog v-model="dialog" max-width="425">
@@ -94,12 +95,12 @@
         <v-card-title class="headline">
           <v-icon large color="red" class="pr-3">mdi-alert</v-icon>
           <h3 class="font-weight-light text-center red--text" justify="center">
-            Delete Geofence (Keep In)?
+            Clear Keep In: {{ vehicle }}?
           </h3>
         </v-card-title>
         <v-card-text justify="center">
-          Warning: All {{ vehicle }} Geofence (Keep In) Coordinates will be
-          deleted.
+          Warning: Current {{ vehicle }} Geofence (Keep In) inputs
+          will be cleared.
         </v-card-text>
 
         <v-card-actions>
@@ -115,7 +116,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { required, minValue } from "vee-validate/dist/rules";
 import {
   extend,
@@ -136,7 +136,7 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  props: ["vehicle", "keepIn"],
+  props: ["vehicle"],
   data: () => ({
     dialog: false,
     Coordinates: [
@@ -145,18 +145,13 @@ export default {
         lat: "",
       },
     ],
-    Geofence: {
-      Geofence: {
-        Keep_in: true,
-        Coordinates: [],
-      },
-    },
   }),
 
   methods: {
     submit() {
       this.$refs.observer.validate();
-      this.postGeofenceKeepIn();
+      this.$emit("addToKeepIn", this.Coordinates);
+      this.clear();
     },
     add() {
       this.Coordinates.push({
@@ -174,55 +169,12 @@ export default {
           lat: "",
         },
       ];
-      this.deleteKeepIn();
       this.dialog = false;
-      //  !!!!!!   do we want to clear the search area on MAC's side as well?
-      //            most likely not since MAC might need geofence to function
-    },
-
-    postGeofenceKeepIn() {
-      this.Geofence.Geofence.Coordinates = this.Coordinates;
-
-      for (let i = 0; i < this.Geofence.Geofence.Coordinates.length; i++) {
-        this.Geofence.Geofence.Coordinates[i].lat = parseFloat(
-          this.Geofence.Geofence.Coordinates[i].lat
-        );
-        this.Geofence.Geofence.Coordinates[i].lng = parseFloat(
-          this.Geofence.Geofence.Coordinates[i].lng
-        );
-      }
-
-      const geofenceStringify = JSON.stringify(this.Geofence);
-      let path = "";
-      if (this.vehicle == "MAC") {
-        path = "http://127.0.0.1:5000/MAC_INPUT";
-      } else if (this.vehicle == "ERU") {
-        path = "http://127.0.0.1:5000/ERU_INPUT";
-      } else if (this.vehicle == "MEA") {
-        path = "http://127.0.0.1:5000/ERU_INPUT";
-      }
-      axios
-        .post(path, geofenceStringify)
-        .then(() => {
-          if (this.vehicle == "MAC") {
-            console.log("Posted Geofence (Keep In) coordinates to MAC_INPUT");
-          } else if (this.vehicle == "ERU") {
-            console.log("Posted Geofence (Keep In) coordinates to ERU_INPUT");
-          } else if (this.vehicle == "MEA") {
-            console.log("Posted Geofence (Keep In) coordinates to MEA_INPUT");
-          }
-          console.log(geofenceStringify);
-        })
-        .catch((error) => {
-          console.log(error.response);
-        });
-    },
-    deleteKeepIn() {
-      this.$emit("deleteKeepIn", this.keepIn);
     },
   },
 };
 </script>
+
 <style>
 .scrollable:hover,
 .scrollable:active,
