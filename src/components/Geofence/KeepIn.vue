@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col>
-          <h2 class="font-weight-light" pa-0 ma-0>Keep In: {{ vehicle }}</h2>
+          <h2 class="font-weight-light" pa-0 ma-0>Keep In Area: {{ vehicle }}</h2>
         </v-col>
       </v-row>
       <validation-observer ref="observer" v-slot="{ invalid }">
