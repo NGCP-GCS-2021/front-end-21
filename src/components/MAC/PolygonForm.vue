@@ -154,7 +154,7 @@
       axios
           .post(path, searchAreaStringify)
           .then(() => {
-            console.log("Posted Search Area coordinates to MAC_INPUT");
+            console.log("Posted Search Area coordinates to MAC_INPUT for Polygon");
             console.log(searchAreaStringify);
           })
           .catch((error) => {
