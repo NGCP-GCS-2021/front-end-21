@@ -134,23 +134,6 @@
       //  !!!!!!   do we want to clear the search area on MAC's side as well?
       //            most likely not since MAC might need geofence to function
     },
-    postTravelTo() {
-      this.travelTo = JSON.stringify({
-        Travel_to_Lat: parseFloat(this.latitude),
-        Travel_to_Lng: parseFloat(this.latitude)
-      });
-      const path = "http://127.0.0.1:5000/MAC_INPUT"
-      axios
-          .post(path, this.travelTo) //removed header
-          .then(() => {
-            console.log("Posted Travel to/Home coordinates to MAC_INPUT");
-            console.log("CHECKING TO SEE IF postTravelTO IS WORKING!")
-            console.log(this.travelTo);
-          })
-          .catch((error) => {
-            console.log(error.response);
-          });
-    },
     postSearchArea() {
       this.Search_area.Search_area.Coordinates = this.Coordinates;
 

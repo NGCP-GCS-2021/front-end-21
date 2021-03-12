@@ -108,7 +108,7 @@ export default {
   methods: {
     submit() {
       this.$refs.observer.validate();
-      this.postTravelTo();
+      this.postSearchArea();
     },
     clear() {
       this.Longitude = "";
