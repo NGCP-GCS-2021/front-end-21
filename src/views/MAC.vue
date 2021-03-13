@@ -4,7 +4,7 @@
       <v-row align="auto">
         <v-col :cols="6" class="d-flex">
           <v-card>
-              <v-img height=100% src="../assets/map.png"></v-img> <!---Needs to be replaced by map component--->
+              <v-img height="900px" src="../assets/map.png"></v-img> <!---Needs to be replaced by map component--->
           </v-card>
         </v-col>
         <v-col :cols="6">
@@ -22,7 +22,7 @@
             <v-container class="mt-5 pt-5 scrollable" style="height: 515px; overflow-y: hidden; ">
             <v-row class="d-flex" align="auto"> 
               <v-col cols="6" class="ml-0 pl-3">
-                <v-card class="pa-1" style="width: 100%;" >
+                <v-card class="pa-1" style="width: 100%; height: 260px" >
                   <MACSearchArea />
                 </v-card>
               </v-col>

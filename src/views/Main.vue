@@ -4,7 +4,7 @@
       <v-row align="auto">
         <v-col :cols="8" class="d-flex">
           <v-card>
-            <v-img height="100%" src="../assets/map.png"></v-img>
+            <v-img height="950px" src="../assets/map.png"></v-img>
             <!---Needs to be replaced by map component--->
           </v-card>
         </v-col>
