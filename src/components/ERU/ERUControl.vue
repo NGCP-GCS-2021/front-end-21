@@ -9,6 +9,7 @@
         label="Select Mission Stage"
         item-text="stage"
         item-value="id"
+        return-object
         required
       ></v-select>
       <v-btn color="green" class="mr-5" @click="postCurrentStage">
@@ -90,13 +91,14 @@ export default {
   methods: {
     postCurrentStage() {
       const path = "http://127.0.0.1:5000/ERU_INPUT";
-      this.currentStage.Perform_stage = this.select - 1;
+      this.currentStage.Perform_stage = this.select.id - 1;
       const currentStageStringify = JSON.stringify(this.currentStage);
       axios
         .post(path, currentStageStringify)
         .then(() => {
           console.log("Posted stage to ERU_INPUT");
           //console.log(currentStageStringify);
+          this.$emit("setGeneralStage", this.select.stage, "ERU");
         })
         .catch((error) => {
           console.log(error.response);
