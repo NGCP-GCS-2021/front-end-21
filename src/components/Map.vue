@@ -5,7 +5,7 @@
 <script>
 import mapboxgl from 'mapbox-gl'
 import * as conversions from '@/libraries/Conversions.js'
-import MapboxDraw from "@mapbox/mapbox-gl-draw"
+import MapboxDraw from '@mapbox/mapbox-gl-draw'
 import {
     CircleMode,
     DragCircleMode,
@@ -64,7 +64,7 @@ export default {
     },
     methods: {
         makeMap: function() {
-            // Creates and adds a mapbox to the element with id "map"
+            // Creates and adds a mapbox to the element with id 'map'
             mapboxgl.accessToken = 'pk.eyJ1IjoiaGxpbjkxIiwiYSI6ImNrbDQ2MjY4NzE0ZXEycHFpaXBya2tvN3gifQ.Tqa8iLUqXeKZQ8SmhLoRtg';
             var map = null;
             if (this.SW_bound_lat != null && this.SW_bound_long != null
@@ -94,7 +94,7 @@ export default {
             }
             map.doubleClickZoom.disable();
             const draw = new MapboxDraw({
-                defaultMode: "drag_circle",
+                defaultMode: 'drag_circle',
                 userProperties: true,
                 modes: {
                     ...MapboxDraw.modes,
@@ -105,6 +105,13 @@ export default {
                 }
             });
             map.addControl(draw);
+            // TODO: Decide on appropriate draw.create and draw.update listeners
+            map.on('draw.create', function (e) {
+                console.log(e.features);
+            });
+            map.on('draw.update', function (e) {
+                console.log(e.features);
+            });
             return map;
         },
         
@@ -135,14 +142,23 @@ export default {
             }
             return points;
         },
-        
-        addCircle: function(lng, lat, radius, numPoints, name, color, opacity) {
-            // Adds a circle to the map at the specified coordinate
-            // Lng lat in DEGREES
-            // Radius in METERS
+
+        addPoly: function(coords, name, color, opacity) {
+            // Add a list of coordinates as a polygon with the given layer name, color, and opacity
+            // If the given layer name is already used, nothing will be added
+            // coords is a list of lng lat pairs in DEGREES
             // Opacity is from 0 to 1.0
-            var coords = this.approxCircle(lng, lat, radius, numPoints);
-            this.map.addSource(name, {
+            if (coords.length < 3) {
+                console.warn('Map.vue: addPoly: tried to add polygon with less than 3 points');
+                return;
+            }
+            if (this.map.getLayer(name)) {
+                console.warn('Map.vue: addPoly: given layer name already exists');
+                return;
+            }
+            // We will use the convention that the source associated with layer name n
+            // is n_source
+            this.map.addSource(name + '_source', {
                 'type': 'geojson',
                 'data': {
                     'type': 'Feature',
@@ -153,15 +169,25 @@ export default {
                 }
             });
             this.map.addLayer({
-                'id': name + '_layer',
+                'id': name,
                 'type': 'fill',
-                'source': name,
+                'source': name + '_source',
                 'layout': {},
                 'paint': {
                     'fill-color': color,
                     'fill-opacity': opacity
                 }
             });
+        },
+        
+        addCircle: function(lng, lat, radius, numPoints, name, color, opacity) {
+            // Adds a circle to the map at the specified coordinate with the given layer name, color, and opacity
+            // If the given layer name is already used, nothing will be added
+            // Lng lat in DEGREES
+            // Radius in METERS
+            // Opacity is from 0 to 1.0
+            var coords = this.approxCircle(lng, lat, radius, numPoints);
+            this.addPoly(coords, name, color, opacity);
         },
         
         addCoord: function(lng, lat) {
@@ -184,12 +210,38 @@ export default {
                 properties: {},
                 type: 'Feature'
             };
+        },
+
+        removeLayer: function(name) {
+            // Remove a layer and its associated source from the map if it exists
+            if (this.map.getLayer(name)) {
+                this.map.removeLayer(name);
+                this.map.removeSource(name+'_source');
+            } else {
+                console.warn('Map.vue: removeLayer: tried to remove non-existent layer');
+            }
+        },
+
+        setVisibility: function(name, visible) {
+            // Toggle the visibility of the layer if it exists
+            // Pass true for visible to set visibility to visible
+            // Pass false to set visibility to none
+            if (this.map.getLayer(name)) {
+                if (visible) {
+                    this.map.setLayoutProperty(name, 'visibility', 'visible');
+                } else {
+                    this.map.setLayoutProperty(name, 'visibility', 'none');
+                }
+            } else {
+                console.warn('Map.vue: setVisibility: tried to set visibility of non-existent layer');
+            }
         }
+        // TODO: Add method for editing a layer's source (look at getSource() in mapbox-gl JS API)
     },
     data: {
         function() {
             return {
-                map: null
+                map: null // Reference to the mapbox object
             };
         }
     },
