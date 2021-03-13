@@ -80,11 +80,11 @@
         <v-card-title class="headline">
           <v-icon large color="red" class="pr-3">mdi-alert</v-icon>
           <h3 class="font-weight-light text-center red--text" justify="center">
-            Delete All Geofences (Keep In)?
+            Delete All Geofences?
           </h3>
         </v-card-title>
         <v-card-text justify="center">
-          Warning: Current {{ vehicle }} Geofences (Keep In) will be deleted.
+          Warning: Current {{ vehicle }} Geofences will be deleted.
         </v-card-text>
 
         <v-card-actions>
