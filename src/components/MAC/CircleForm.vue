@@ -3,60 +3,62 @@
     <validation-observer ref="observer" v-slot="{ invalid }">
       <form @submit.prevent="submit">
         <v-container>
-          <v-row>
-            <v-col cols="4">
-              <validation-provider
-                  v-slot="{ errors }"
-                  name="Latitude"
-                  :rules="{
-                  required: true,
-                  regex: /^\d*\.?\d*$/,
-                }"
-                  class="pa-0 ma-0"
-              >
-                <v-text-field
-                    v-model="Latitude"
-                    :error-messages="errors"
-                    label="Latitude"
-                    required
-                ></v-text-field>
-              </validation-provider>
-            </v-col>
-            <v-col cols="4">
-              <validation-provider
-                  v-slot="{ errors }"
-                  name="Longitude"
-                  :rules="{
-                  required: true,
-                  regex: /^\d*\.?\d*$/,
-                }"
-              >
-                <v-text-field
-                    v-model="Longitude"
-                    :error-messages="errors"
-                    label="Longitude"
-                    required
-                ></v-text-field>
-              </validation-provider>
-            </v-col>
-            <v-col cols="4">
-              <validation-provider
-                  v-slot="{ errors }"
-                  name="Altitude"
-                  :rules="{
-                  required: true,
-                  regex: /^\d*\.?\d*$/,
-                }"
-              >
-                <v-text-field
-                    v-model="Radius"
-                    :error-messages="errors"
-                    label="Radius"
-                    required
-                ></v-text-field>
-              </validation-provider>
-            </v-col>
-          </v-row>
+          <v-form v-for="(input, k) in Coordinates" :key="k">
+            <v-row>
+              <v-col cols="4">
+                <validation-provider
+                    v-slot="{ errors }"
+                    name="Latitude"
+                    :rules="{
+                    required: true,
+                    regex: /^\d*\.?\d*$/,
+                  }"
+                    class="pa-0 ma-0"
+                >
+                  <v-text-field
+                      v-model="input.lat"
+                      :error-messages="errors"
+                      label="Latitude"
+                      required
+                  ></v-text-field>
+                </validation-provider>
+              </v-col>
+              <v-col cols="4">
+                <validation-provider
+                    v-slot="{ errors }"
+                    name="Longitude"
+                    :rules="{
+                    required: true,
+                    regex: /^\d*\.?\d*$/,
+                  }"
+                >
+                  <v-text-field
+                      v-model="input.lng"
+                      :error-messages="errors"
+                      label="Longitude"
+                      required
+                  ></v-text-field>
+                </validation-provider>
+              </v-col>
+              <v-col cols="4">
+                <validation-provider
+                    v-slot="{ errors }"
+                    name="Radius"
+                    :rules="{
+                    required: true,
+                    regex: /^\d*\.?\d*$/,
+                  }"
+                >
+                  <v-text-field
+                      v-model="input.rad"
+                      :error-messages="errors"
+                      label="Radius"
+                      required
+                  ></v-text-field>
+                </validation-provider>
+              </v-col>
+            </v-row>
+          </v-form>
           <v-row>
             <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
               Submit
