@@ -11,7 +11,7 @@
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row class="pb-3">
-              <GeneralStage />
+              <GeneralStage ref="GeneralStage" />
             </v-row>
             <v-row>
               <v-card class="pa-1" style="width: 100%">
@@ -35,7 +35,7 @@
             <v-row class="mt-3" align="auto">
               <v-col class="d-flex">
                 <v-card class="pa-1" style="width: 100%">
-                  <MEAControl />
+                  <MEAControl @setGeneralStage="setGeneralStage" />
                 </v-card>
               </v-col>
             </v-row>
@@ -67,5 +67,11 @@ export default {
   data: () => ({
     //
   }),
+  methods: {
+    setGeneralStage(stage, vehicle) {
+      this.$refs.GeneralStage.stage = stage;
+      this.$refs.GeneralStage.vehicle = vehicle;
+    },
+  },
 };
 </script>

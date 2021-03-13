@@ -33,15 +33,15 @@
                   <v-row class="d-flex" align="auto">
                     <v-col cols="6" class="ml-0 pl-3">
                       <KeepInCart
-                        :vehicle="vehicle"
                         :keepInEmpty="keepInEmpty"
+                        @setKeepInEmpty="setKeepInEmpty"
                         ref="KeepInCart"
                       />
                     </v-col>
                     <v-col cols="6" class="ml-0 pl-3">
                       <KeepOutCart
-                        :vehicle="vehicle"
                         :keepOutEmpty="keepOutEmpty"
+                        @setKeepOutEmpty="setKeepOutEmpty"
                         ref="KeepOutCart"
                       />
                     </v-col>
@@ -245,6 +245,12 @@ export default {
           console.log(error.response);
         });
     },
+    setKeepInEmpty(value) {
+      this.keepInEmpty = value;
+    },
+    setKeepOutEmpty(value) {
+      this.keepOutEmpty = value;
+    }
   },
 };
 </script>
