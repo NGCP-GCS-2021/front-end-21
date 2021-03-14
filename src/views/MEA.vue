@@ -11,7 +11,12 @@
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row class="pb-3">
-              <GeneralStage ref="GeneralStage" />
+              <GeneralStage
+                :stage="stage"
+                :vehicle="vehicle"
+                :updatedStage="updatedStage"
+                :updatedVehicle="updatedVehicle"
+              />
             </v-row>
             <v-row>
               <v-card class="pa-1" style="width: 100%">
@@ -55,7 +60,7 @@ import EvacuationZone from "@/components/EvacuationZone.vue";
 
 export default {
   name: "",
-
+  props: ["stage", "vehicle"],
   components: {
     MEAStatus,
     MEAControl,
@@ -65,12 +70,14 @@ export default {
   },
 
   data: () => ({
-    //
+    updatedStage: null,
+    updatedVehicle: null,
   }),
   methods: {
     setGeneralStage(stage, vehicle) {
-      this.$refs.GeneralStage.stage = stage;
-      this.$refs.GeneralStage.vehicle = vehicle;
+      this.$emit("setGeneralStage", stage, vehicle);
+      this.updatedStage = stage;
+      this.updatedVehicle = vehicle;
     },
   },
 };
