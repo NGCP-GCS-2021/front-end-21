@@ -87,7 +87,6 @@ export default {
         .post(path, currentStageStringify)
         .then(() => {
           console.log("Posted stage to MEA_INPUT");
-          //send stage and vehicle to router
           this.$emit("setGeneralStage", this.select.stage, "MEA");
         })
         .catch((error) => {

@@ -11,7 +11,12 @@
         <v-col :cols="4">
           <v-container>
             <v-row class="pa-2 mb-3">
-              <GeneralStage />
+              <GeneralStage
+                :stage="stage"
+                :vehicle="vehicle"
+                :updatedStage="updatedStage"
+                :updatedVehicle="updatedVehicle"
+              />
             </v-row>
             <div
               class="scrollable"
@@ -35,7 +40,7 @@
                     <MACStatus />
                     <v-row justify="center">
                       <v-col :cols="5" class="mx-2 px-0">
-                        <MACMainControl />
+                        <MACMainControl @setGeneralStage="setGeneralStage" />
                       </v-col>
                       <v-col :cols="5" class="mx-2 px-0">
                         <MACEmergency />
@@ -60,7 +65,7 @@
                     <ERUStatus />
                     <v-row justify="center">
                       <v-col :cols="5" class="mx-2 px-0">
-                        <ERUMainControl />
+                        <ERUMainControl @setGeneralStage="setGeneralStage" />
                       </v-col>
                       <v-col :cols="5" class="mx-2 px-0">
                         <ERUEmergency />
@@ -83,7 +88,7 @@
                     <MEAStatus />
                     <v-row justify="center">
                       <v-col :cols="5" class="mx-2 px-0">
-                        <MEAMainControl />
+                        <MEAMainControl @setGeneralStage="setGeneralStage" />
                       </v-col>
                       <v-col :cols="5" class="mx-2 px-0">
                         <MEAEmergency />
@@ -115,6 +120,7 @@ import GeneralStage from "@/components/GeneralStage.vue";
 
 export default {
   name: "",
+  props: ["stage", "vehicle"],
   components: {
     MACEmergency,
     ERUEmergency,
@@ -126,6 +132,17 @@ export default {
     ERUStatus,
     MACStatus,
     GeneralStage,
+  },
+  data: () => ({
+    updatedStage: null,
+    updatedVehicle: null,
+  }),
+  methods: {
+    setGeneralStage(stage, vehicle) {
+      this.$emit("setGeneralStage", stage, vehicle);
+      this.updatedStage = stage;
+      this.updatedVehicle = vehicle;
+    },
   },
 };
 </script>

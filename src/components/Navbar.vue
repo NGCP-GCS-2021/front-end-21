@@ -38,19 +38,19 @@
 export default {
   data() {
     return {
-      stage: "A stage",
-      vehicle: "A vehicle",
+      stage: "[Stage]",
+      vehicle: "[Vehicle]",
     };
   },
   methods: {
     setGeneralStage(stage, vehicle) {
       this.stage = stage;
       this.vehicle = vehicle;
-      console.log(stage);
-      console.log("a nice hot cup of tea");
+      //console.log(stage);
+      //console.log("a nice hot cup of tea");
       this.$forceUpdate();
     },
-  }
+  },
 };
 </script>
 

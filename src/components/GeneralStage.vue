@@ -22,8 +22,8 @@
     <h2 align="center">
       "Failure is only the opportunity to begin again." - Uncle Iroh
     </h2>
-    <p>Stage: {{ stage }}</p>
-    <p>Vehicle: {{ vehicle }}</p>
+    <!-- <p>Stage: {{ stage }}</p>
+    <p>Vehicle: {{ vehicle }}</p> -->
   </v-card>
 </template>
 
