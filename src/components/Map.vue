@@ -112,6 +112,16 @@ export default {
             map.on('draw.update', function (e) {
                 console.log(e.features);
             });
+
+            // Markers
+            var marker1 = new mapboxgl.Marker()
+                .setLngLat([this.center_long, this.center_lat])
+                .addTo(map);
+
+            var marker2 = new mapboxgl.Marker({color: 'red'})
+                .setLngLat([(this.center_long+0.002), (this.center_lat-0.002)])
+                .addTo(map);
+
             return map;
         },
         
