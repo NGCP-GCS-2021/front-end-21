@@ -10,7 +10,7 @@
           v-bind="attrs"
           v-on="on"
           class="mx-2"
-          >VEHICLE CONTROL<v-icon x-large>mdi-gamepad-square</v-icon></v-btn
+          >STAGE SELECTION<v-icon x-large>mdi-select-marker</v-icon></v-btn
         >
       </template>
 
