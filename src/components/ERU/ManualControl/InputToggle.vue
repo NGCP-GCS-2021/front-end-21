@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="font-weight-light text-center">Select an Input:</h1>
-    <v-card-actions class="justify-center">
+    <!-- <v-card-actions class="justify-center">
       <v-btn-toggle v-model="inputSelect">
         <v-btn value="keyboard" @click="selectKeyboard">
           <h1 class="font-weight-light">Keyboard</h1>
@@ -12,6 +12,13 @@
           <v-icon color="blue">mdi-controller-classic-outline</v-icon>
         </v-btn>
       </v-btn-toggle>
-    </v-card-actions>
+    </v-card-actions> -->
   </div>
 </template>
+
+<script>
+export default {
+  props: ["keyboardSelected", "controllerDisabled"],
+  data: () => ({}),
+};
+</script>

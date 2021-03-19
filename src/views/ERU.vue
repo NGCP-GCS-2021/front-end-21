@@ -8,66 +8,71 @@
             <!---Needs to be replaced by map component--->
           </v-card>
         </v-col>
-        <v-col :cols="6" v-if="!manualControlView">
-          <v-container fluid flex>
-            <v-row class="pb-3">
-              <GeneralStage
-                :stage="stage"
-                :vehicle="vehicle"
-                :updatedStage="updatedStage"
-                :updatedVehicle="updatedVehicle"
-              />
-            </v-row>
+        <template v-if="!manualControlView">
+          <v-col :cols="6">
+            <v-container fluid flex>
+              <v-row class="pb-3">
+                <GeneralStage
+                  :stage="stage"
+                  :vehicle="vehicle"
+                  :updatedStage="updatedStage"
+                  :updatedVehicle="updatedVehicle"
+                />
+              </v-row>
+              <v-row>
+                <v-card class="pa-1" style="width: 100%">
+                  <v-container fluid flex>
+                    <ERUStatus />
+                  </v-container>
+                </v-card>
+              </v-row>
+              <v-row class="pt-0" align="auto">
+                <v-col cols="6" class="ml-0 pl-3">
+                  <v-card class="pa-1" style="width: 100%">
+                    <EvacuationZone />
+                  </v-card>
+                </v-col>
+                <v-col cols="6">
+                  <v-card class="pa-1">
+                    <ERUHome />
+                  </v-card>
+                </v-col>
+              </v-row>
+              <v-row class="pt-0" align="auto">
+                <v-col cols="6">
+                  <v-card class="pa-1" style="width: 100%">
+                    <ERUControl @setGeneralStage="setGeneralStage" />
+                  </v-card>
+                </v-col>
+                <v-col cols="6">
+                  <v-card class="pa-1" style="width: 100%; height: 100%">
+                    <ManualControl @goToManual="setManualControlView" />
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-col>
+        </template>
+        <template v-if="manualControlView">
+          <v-col :cols="6">
             <v-row>
-              <v-card class="pa-1" style="width: 100%">
-                <v-container fluid flex>
-                  <ERUStatus />
-                </v-container>
+              <v-card width="100%">
+                <v-card-actions class="justify-center">
+                  <v-container>
+                    <v-row justify="center">
+                      <BackButton @back="setManualControlView" />
+                      <InputToggle
+                        :keyboardSelected="keyboardSelected"
+                        :controllerDisabled="controllerDisabled"
+                      />
+                      <PowerButton />
+                    </v-row>
+                  </v-container>
+                </v-card-actions>
               </v-card>
             </v-row>
-            <v-row class="pt-0" align="auto">
-              <v-col cols="6" class="ml-0 pl-3">
-                <v-card class="pa-1" style="width: 100%">
-                  <EvacuationZone />
-                </v-card>
-              </v-col>
-              <v-col cols="6">
-                <v-card class="pa-1">
-                  <ERUHome />
-                </v-card>
-              </v-col>
-            </v-row>
-            <v-row class="pt-0" align="auto">
-              <v-col cols="6">
-                <v-card class="pa-1" style="width: 100%">
-                  <ERUControl @setGeneralStage="setGeneralStage" />
-                </v-card>
-              </v-col>
-              <v-col cols="6">
-                <v-card class="pa-1" style="width: 100%; height: 100%">
-                  <ManualControl
-                    @activateManualControlView="activateManualControlView"
-                  />
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-col>
-        <v-col :cols="6" v-if="manualControlView">
-          <v-row>
-            <v-card width="100%">
-              <v-card-actions class="justify-center">
-                <v-container>
-                  <v-row justify="center">
-                    <BackButton />
-                    <InputToggle />
-                    <PowerButton />
-                  </v-row>
-                </v-container>
-              </v-card-actions>
-            </v-card>
-          </v-row>
-        </v-col>
+          </v-col>
+        </template>
       </v-row>
     </v-container>
   </div>
@@ -102,6 +107,9 @@ export default {
     updatedStage: null,
     updatedVehicle: null,
     manualControlView: false,
+    keyboardSelected: true,
+    controllerSelected: false,
+    controllerDisabled: true,
   }),
   methods: {
     setGeneralStage(stage, vehicle) {
@@ -109,11 +117,8 @@ export default {
       this.updatedStage = stage;
       this.updatedVehicle = vehicle;
     },
-    // toggleManualControlView() {
-    //   this.manualControlView = !this.manualControlView;
-    // },
-    activateManualControlView() {
-      this.manualControlView = true;
+    setManualControlView(value) {
+      this.manualControlView = value;
     },
   },
 };

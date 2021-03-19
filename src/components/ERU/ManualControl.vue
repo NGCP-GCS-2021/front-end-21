@@ -11,7 +11,7 @@
             dark
             color="primary"
             justify="center"
-            @click="activateManualControlView"
+            @click="goToManual"
             >GO TO MANUAL CONTROL<v-icon x-large
               >mdi-gamepad-square</v-icon
             ></v-btn
@@ -24,9 +24,11 @@
 
 <script>
 export default {
+  data: () => ({}),
   methods: {
-    activateManualControlView() {
-      this.$emit("activateManualControlView");
+    goToManual() {
+      this.$emit("goToManual", true);
+      console.log(true);
     },
   },
 };

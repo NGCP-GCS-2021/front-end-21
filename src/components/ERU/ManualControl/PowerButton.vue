@@ -5,3 +5,9 @@
     </v-btn>
   </v-card-actions>
 </template>
+
+<script>
+export default {
+  data: () => ({}),
+};
+</script>
