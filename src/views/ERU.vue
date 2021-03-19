@@ -56,10 +56,15 @@
         <v-col :cols="6" v-if="manualControlView">
           <v-row>
             <v-card width="100%">
-              <v-row>
-                <PowerButton />
-                <InputToggle />
-              </v-row>
+              <v-card-actions class="justify-center">
+                <v-container>
+                  <v-row justify="center">
+                    <BackButton />
+                    <InputToggle />
+                    <PowerButton />
+                  </v-row>
+                </v-container>
+              </v-card-actions>
             </v-card>
           </v-row>
         </v-col>
@@ -77,6 +82,7 @@ import EvacuationZone from "@/components/EvacuationZone.vue";
 import ManualControl from "@/components/ERU/ManualControl.vue";
 import PowerButton from "@/components/ERU/ManualControl/PowerButton.vue";
 import InputToggle from "@/components/ERU/ManualControl/InputToggle.vue";
+import BackButton from "@/components/ERU/ManualControl/BackButton.vue";
 
 export default {
   name: "",
@@ -90,6 +96,7 @@ export default {
     ManualControl,
     PowerButton,
     InputToggle,
+    BackButton,
   },
   data: () => ({
     updatedStage: null,
