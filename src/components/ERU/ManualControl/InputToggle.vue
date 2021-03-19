@@ -9,7 +9,7 @@
         </v-btn>
         <v-btn value="controller" @click="selectController">
           <h1 class="font-weight-light">Controller</h1>
-          <v-icon color="green">mdi-controller-classic-outline</v-icon>
+          <v-icon color="blue">mdi-controller-classic-outline</v-icon>
         </v-btn>
       </v-btn-toggle>
     </v-card-actions>
