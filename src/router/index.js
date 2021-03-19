@@ -12,22 +12,26 @@ const routes = [
   {
     path: '/',
     name: 'Main',
-    component: Main
+    component: Main,
+    props: true,
   },
   {
     path: '/mac',
     name: 'MAC',
-    component: MAC
+    component: MAC,
+    props: true,
   },
   {
     path: '/eru',
     name: 'ERU',
-    component: ERU
+    component: ERU,
+    props: true,
   },
   {
     path: '/mea',
     name: 'MEA',
-    component: MEA
+    component: MEA,
+    props: true,
   },
   {
     path: '/geofence',

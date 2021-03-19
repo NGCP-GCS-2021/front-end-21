@@ -53,7 +53,6 @@ import axios from "axios";
 export default {
   data: () => ({
     dialog: false,
-    valid: true,
     currentStage: {
       Perform_stage: null,
     },
@@ -98,7 +97,6 @@ export default {
         .post(path, currentStageStringify)
         .then(() => {
           console.log("Posted stage to ERU_INPUT");
-          //console.log(currentStageStringify);
           this.$emit("setGeneralStage", this.select.stage, "ERU");
         })
         .catch((error) => {

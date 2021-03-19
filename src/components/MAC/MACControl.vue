@@ -16,7 +16,7 @@
         Submit
       </v-btn>
       <!-- <v-btn @click="clear"> Clear </v-btn> -->
-      <v-dialog v-model="dialog" max-width="425">
+      <!-- <v-dialog v-model="dialog" max-width="425">
         <v-card>
           <v-card-title class="headline">
             <v-icon large color="red" class="pr-3">mdi-alert</v-icon>
@@ -41,7 +41,7 @@
             <v-btn color="primary" text @click="dialog = false"> Undo </v-btn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
+      </v-dialog> -->
     </v-form>
   </div>
 </template>
@@ -52,13 +52,6 @@ import axios from "axios";
 export default {
   data: () => ({
     menu: false,
-    // stages: [
-    //   "Standby",
-    //   "Minimum Altitude Climb",
-    //   "Search For Hiker",
-    //   "ERU Drop",
-    //   "Return Home",
-    // ],
     currentStage: {
       Perform_stage: null,
     },
@@ -95,7 +88,6 @@ export default {
         .post(path, currentStageStringify)
         .then(() => {
           console.log("Posted stage to MAC_INPUT");
-          console.log(currentStageStringify);
           this.$emit("setGeneralStage", this.select.stage, "MAC");
         })
         .catch((error) => {

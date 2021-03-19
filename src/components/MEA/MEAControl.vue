@@ -87,7 +87,7 @@ export default {
         .post(path, currentStageStringify)
         .then(() => {
           console.log("Posted stage to MEA_INPUT");
-          this.$emit("setGeneralStage", this.select.stage, "MEA"); //setGeneralStage(this.select.stage, "MEA")
+          this.$emit("setGeneralStage", this.select.stage, "MEA");
         })
         .catch((error) => {
           console.log(error.response);
