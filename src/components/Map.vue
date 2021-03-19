@@ -142,7 +142,7 @@ export default {
             }
             return points;
         },
-
+        
         addPoly: function(coords, name, color, opacity) {
             // Add a list of coordinates as a polygon with the given layer name, color, and opacity
             // If the given layer name is already used, nothing will be added
@@ -190,26 +190,30 @@ export default {
             this.addPoly(coords, name, color, opacity);
         },
         
-        addCoord: function(lng, lat) {
-            // Taken from CurrentMap.html
-            var point = new mapboxgl.Point(lng, lat);
-            var marker = new mapboxgl.Marker()
-                .setLngLat([lng,lat])
-                .setPopup(new mapboxgl.Popup().setHTML(lng + ',' + lat))
-                .addTo(this.map); // add the marker to the map
-            
-            return {
-                center: [lng, lat],
-                geometry: {
-                    type: 'Point',
-                    coordinates: [lng, lat]
-                },
-                
-                place_name: 'Lat: ' + lat + ' Lng: ' + lng,
-                place_type: ['coordinate'],
-                properties: {},
-                type: 'Feature'
-            };
+        addCoord: function(name, lng, lat) {
+            var vm = this;
+            vm.map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', function(error, image) {
+                if (error)  throw error;
+                vm.map.addImage('custom_marker', image);
+                vm.map.addSource(name + '_source', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [lng, lat]
+                        }
+                    }
+                });
+                vm.map.addLayer({
+                    'id': name,
+                    'source': name + '_source',
+                    'type': 'symbol',
+                    'layout': {
+                        'icon-image': 'custom_marker',
+                    }
+                });
+            });
         },
 
         removeLayer: function(name) {
@@ -238,7 +242,8 @@ export default {
         },
         
         editLayerSourceGeo: function(name, type, coords) {
-            // TODO: Needs testing
+            // TODO: Experimental function. Not tested
+            // with consistent interface for caller
             let validType = new Map([
                 ['Point', true],
                 ['LineString', true],
@@ -259,11 +264,45 @@ export default {
             if (type == 'Polygon') {
                 coords = [coords];
             }
-            let geo = getSource(name + '_source').data.geometry;
+            let geo = this.map.getSource(name + '_source').data.geometry;
             geo.type = type;
             geo.coordinates = coords;
+        },
+
+        editPolySource: function(name, coords) {
+            // Currently assumes that coords is valid
+            // TODO: Needs testing
+            if (!this.map.getLayer(name)) {
+                console.warn('Map.vue: editPolySource: invalid layer name passed');
+                return;
+            }
+            let geo = this.map.getSource(name + '_source').data.geometry;
+            if (geo.type != 'Polygon') {
+                console.warn('Map.vue: editPolySource: target source is not a Polygon');
+                return;
+            }
+            geo.coordinates = coords;
+        },
+
+        editLayerColor: function(name, color) {
+            // TODO: Needs testing
+            if (this.map.getLayer(name)) {
+                this.map.setPaintProperty(name, 'fill-color', color);
+            } else {
+                console.warn('Map.vue: editLayerColor: tried to edit non-existent layer');
+            }
+        },
+
+        editLayerOpacity: function(name, opacity) {
+            // TODO: Needs testing
+            if (this.map.getLayer(name)) {
+                this.map.setPaintProperty(name, 'fill-opacity', opacity);
+            } else {
+                console.warn('Map.vue: editLayerOpacity: tried to edit non-existent layer');
+            }
         }
     },
+    
     data: {
         function() {
             return {
@@ -279,9 +318,10 @@ export default {
             vm.addCircle(vm.center_long, vm.center_lat, 40, 16, "test2", "black", 0.8);
             vm.addCircle(vm.center_long, vm.center_lat, 50, 16, "test3", "black", 0.8);
             vm.setVisibility("test1", false);
+            vm.setVisibility("test2", false);
             vm.removeLayer("test3");
+            vm.addCoord("test_point", vm.center_long, vm.center_lat);
         });
-        
     },
     template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
 }
