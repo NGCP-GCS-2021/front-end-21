@@ -223,7 +223,7 @@ export default {
         },
 
         setVisibility: function(name, visible) {
-            // Toggle the visibility of the layer if it exists
+            // Set the visibility of the layer if it exists
             // Pass true for visible to set visibility to visible
             // Pass false to set visibility to none
             if (this.map.getLayer(name)) {
@@ -235,8 +235,34 @@ export default {
             } else {
                 console.warn('Map.vue: setVisibility: tried to set visibility of non-existent layer');
             }
+        },
+        
+        editLayerSourceGeo: function(name, type, coords) {
+            // TODO: Needs testing
+            let validType = new Map([
+                ['Point', true],
+                ['LineString', true],
+                ['Polygon', true]
+            ]);
+            if (!validType[type]) {
+                console.warn('Map.vue: editLayerSourceGeo: invalid type passed');
+                return;
+            }
+            if (!this.map.getLayer(name)) {
+                console.warn('Map.vue: editLayerSourceGeo: invalid layer name passed');
+                return;
+            }
+            if (type == 'Point' && coords.length > 1) {
+                console.warn('Map.vue: editLayerSourceGeo: too many coords passed for type Point');
+                return;
+            }
+            if (type == 'Polygon') {
+                coords = [coords];
+            }
+            let geo = getSource(name + '_source').data.geometry;
+            geo.type = type;
+            geo.coordinates = coords;
         }
-        // TODO: Add method for editing a layer's source (look at getSource() in mapbox-gl JS API)
     },
     data: {
         function() {
@@ -252,6 +278,8 @@ export default {
             vm.addCircle(vm.center_long, vm.center_lat, 20, 16, "test1", "black", 0.8);
             vm.addCircle(vm.center_long, vm.center_lat, 40, 16, "test2", "black", 0.8);
             vm.addCircle(vm.center_long, vm.center_lat, 50, 16, "test3", "black", 0.8);
+            vm.setVisibility("test1", false);
+            vm.removeLayer("test3");
         });
         
     },
