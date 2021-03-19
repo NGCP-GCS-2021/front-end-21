@@ -27,7 +27,7 @@
               >
             </h4>
             <v-container>
-              <v-col :cols="3">
+              <v-col>
                 <v-row v-for="(Coordinates, j) in Coordinates" :key="j">
                   <h4 class="font-weight-light" pa-0 ma-0>
                     <code

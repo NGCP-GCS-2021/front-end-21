@@ -8,7 +8,7 @@
             <!---Needs to be replaced by map component--->
           </v-card>
         </v-col>
-        <v-col :cols="6">
+        <v-col :cols="6" v-if="!manualControlView">
           <v-container fluid flex>
             <v-row class="pb-3">
               <GeneralStage
@@ -37,14 +37,29 @@
                 </v-card>
               </v-col>
             </v-row>
-            <v-row class="mt-3" align="auto">
-              <v-col class="d-flex">
+            <v-row class="pt-0" align="auto">
+              <v-col cols="6">
                 <v-card class="pa-1" style="width: 100%">
                   <ERUControl @setGeneralStage="setGeneralStage" />
                 </v-card>
               </v-col>
+              <v-col cols="6">
+                <v-card class="pa-1" style="width: 100%; height: 100%">
+                  <ManualControl
+                    @activateManualControlView="activateManualControlView"
+                  />
+                </v-card>
+              </v-col>
             </v-row>
           </v-container>
+        </v-col>
+        <v-col :cols="6" v-if="manualControlView">
+          <v-row>
+            <v-card width="100%">
+              <PowerButton />
+              <InputToggle />
+            </v-card>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
@@ -57,6 +72,9 @@ import ERUControl from "@/components/ERU/ERUControl.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
 import ERUHome from "@/components/ERU/ERUHome.vue";
 import EvacuationZone from "@/components/EvacuationZone.vue";
+import ManualControl from "@/components/ERU/ManualControl.vue";
+import PowerButton from "@/components/ERU/ManualControl/PowerButton.vue";
+import InputToggle from "@/components/ERU/ManualControl/InputToggle.vue";
 
 export default {
   name: "",
@@ -67,16 +85,26 @@ export default {
     GeneralStage,
     ERUHome,
     EvacuationZone,
+    ManualControl,
+    PowerButton,
+    InputToggle,
   },
   data: () => ({
     updatedStage: null,
     updatedVehicle: null,
+    manualControlView: false,
   }),
   methods: {
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
       this.updatedStage = stage;
       this.updatedVehicle = vehicle;
+    },
+    // toggleManualControlView() {
+    //   this.manualControlView = !this.manualControlView;
+    // },
+    activateManualControlView() {
+      this.manualControlView = true;
     },
   },
 };
