@@ -56,8 +56,10 @@
         <v-col :cols="6" v-if="manualControlView">
           <v-row>
             <v-card width="100%">
-              <PowerButton />
-              <InputToggle />
+              <v-row>
+                <PowerButton />
+                <InputToggle />
+              </v-row>
             </v-card>
           </v-row>
         </v-col>

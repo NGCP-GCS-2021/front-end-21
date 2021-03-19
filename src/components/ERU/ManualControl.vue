@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <h1 class="font-weight-light">Manual Control</h1>
+      <h1 class="font-weight-regular text-center display-2">Manual Control</h1>
     </v-row>
     <v-row align="center" width="100%" justify="center">
       <v-card-actions class="justify-center">
