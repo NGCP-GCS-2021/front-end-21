@@ -9,7 +9,22 @@
         </v-col>
         <v-col :cols="6">
           <v-container fluid flex>
-            <ERUServerBar />
+            <v-row class="" >
+              <v-col :cols="12">
+                <v-progress-linear 
+                  color="green"
+                  class="px-1"
+                  v-model="value"
+                  :active="show"
+                  :indeterminate="query"
+                  :query="true"
+                  >
+                </v-progress-linear>
+              </v-col>
+            </v-row>
+            <v-row class="px-3 pb-1">
+              <h4>Data Updated {{ }} ago</h4>
+            </v-row>
           </v-container>
           <v-container fluid flex>
             <v-row class="pb-3">
@@ -55,10 +70,33 @@ import ERUStatus from '@/components/ERU/ERUStatus.vue'
 import ERUControl from '@/components/ERU/ERUControl.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
 import ERUHome from '@/components/ERU/ERUHome.vue'
-import ERUServerBar from '@/components/ERU/ERUServerBar.vue'
 import EvacuationZone from '@/components/EvacuationZone.vue'
 
 export default {
+  data () {
+      return {
+        value: 0,
+        query: false,
+        show: true,
+        interval: 0,
+      }
+    },
+
+    mounted () {
+      this.queryAndIndeterminate()
+    },
+
+    beforeDestroy () {
+      clearInterval(this.interval)
+    },
+
+    methods: {
+      queryAndIndeterminate () {
+        this.query = true
+        this.show = true
+        this.value = 0
+    },
+  },
   name: '',
 
   components: {
@@ -67,12 +105,7 @@ export default {
     GeneralStage,
     ERUHome,
     EvacuationZone,
-    ERUServerBar
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>
 

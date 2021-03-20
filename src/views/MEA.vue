@@ -10,7 +10,22 @@
         </v-col>
         <v-col :cols="6">
           <v-container fluid flex>
-            <MEAServerBar />
+            <v-row >
+              <v-col :cols="12">
+                <v-progress-linear 
+                  color="green"
+                  class="px-1"
+                  v-model="value"
+                  :active="show"
+                  :indeterminate="query"
+                  :query="true"
+                  >
+                </v-progress-linear>
+              </v-col>
+            </v-row>
+            <v-row class="px-3 pb-1">
+                <h4>Data Updated {{ }} ago</h4>
+            </v-row>
           </v-container>
           <v-container fluid flex>
             <v-row class="pb-3">
@@ -54,10 +69,33 @@ import MEAStatus from "@/components/MEA/MEAStatus.vue";
 import MEAControl from "@/components/MEA/MEAControl.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
 import MEAHome from "@/components/MEA/MEAHome.vue";
-import MEAServerBar from "@/components/MEA/MEAServerBar.vue";
 import EvacuationZone from "@/components/EvacuationZone.vue";
 
 export default {
+  data () {
+      return {
+        value: 0,
+        query: false,
+        show: true,
+        interval: 0,
+      }
+  },
+
+  /*mounted () {
+    this.queryAndIndeterminate()
+  },*/
+
+  beforeDestroy () {
+    clearInterval(this.interval)
+  },
+
+  methods: {
+    queryAndIndeterminate () {
+      this.query = true
+      this.show = true
+      this.value = 0
+    },
+  },
   name: "",
 
   components: {
@@ -66,11 +104,6 @@ export default {
     GeneralStage,
     MEAHome,
     EvacuationZone,
-    MEAServerBar
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>

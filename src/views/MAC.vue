@@ -9,7 +9,22 @@
         </v-col>
         <v-col :cols="6">
           <v-container fluid flex>
-            <MACServerBar />
+            <v-row>
+              <v-col :cols="12">
+                <v-progress-linear 
+                  color="green"
+                  class="px-1"
+                  v-model="value"
+                  :active="show"
+                  :indeterminate="query"
+                  :query="true"
+                  >
+                </v-progress-linear>
+              </v-col>
+            </v-row>
+            <v-row class="px-3 pb-1">
+              <h4>Data Updated {{ }} ago</h4>
+            </v-row>
           </v-container>
           <v-container fluid flex>
             <v-row class="pb-3">
@@ -61,12 +76,35 @@ import MACStatus from '@/components/MAC/MACStatus.vue'
 import MACControl from '@/components/MAC/MACControl.vue'
 import GeneralStage from '@/components/GeneralStage.vue'
 import MACHome from '@/components/MAC/MACHome.vue'
-import MACServerBar from '@/components/MAC/MACServerBar.vue'
 import EvacuationZone from '@/components/EvacuationZone.vue'
 import ERUDrop from '@/components/MAC/ERUDrop.vue'
 import MACSearchArea from '@/components/MAC/MACSearchArea.vue'
 
 export default {
+  data () {
+      return {
+        value: 0,
+        query: false,
+        show: true,
+        interval: 0,
+      }
+    },
+
+  mounted () {
+    this.queryAndIndeterminate()
+  },
+
+  beforeDestroy () {
+    clearInterval(this.interval)
+  },
+
+  methods: {
+    queryAndIndeterminate () {
+      this.query = true
+      this.show = true
+      this.value = 0
+    },
+  },
   name: '',
 
   components: {
@@ -77,12 +115,7 @@ export default {
     EvacuationZone,
     ERUDrop,
     MACSearchArea,
-    MACServerBar
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>
 
