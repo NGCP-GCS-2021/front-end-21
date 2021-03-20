@@ -28,9 +28,10 @@
 
 <script>
 export default {
-  props: ["keyboardSelected", "controllerDisabled", "buttonsActivated"],
+  props: ["keyboardSelected", "buttonsActivated", "controllerSelected"],
   data: () => ({
-    inputSelect: 0,
+    //inputSelect: 0,
+    controllerDisabled: true,
   }),
   methods: {
     selectedKeyboard() {
@@ -38,7 +39,12 @@ export default {
     },
     selectedController() {
       this.$emit("inputSelected", "controller");
-    }
-  }
+    },
+  },
+  mounted() {
+    setTimeout(() => {
+      console.log(navigator.getGamepads());
+    }, 1000);
+  },
 };
 </script>

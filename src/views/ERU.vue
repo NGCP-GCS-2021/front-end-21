@@ -12,17 +12,17 @@
           <v-col :cols="6">
             <v-container fluid flex>
               <v-row class="pb-3">
-                <GeneralStage
+                <!-- <GeneralStage
                   :stage="stage"
                   :vehicle="vehicle"
                   :updatedStage="updatedStage"
                   :updatedVehicle="updatedVehicle"
-                />
+                /> -->
               </v-row>
               <v-row>
                 <v-card class="pa-1" style="width: 100%">
                   <v-container fluid flex>
-                    <ERUStatus />
+                    <!-- <ERUStatus /> -->
                   </v-container>
                 </v-card>
               </v-row>
@@ -68,10 +68,13 @@
                     <v-col>
                       <InputToggle
                         :keyboardSelected="keyboardSelected"
-                        :controllerDisabled="controllerDisabled"
                         :buttonsActivated="buttonsActivated"
+                        :controllerSelected="controllerSelected"
                         @inputSelected="setInput"
                       />
+                    </v-col>
+                    <v-col>
+                      <CheckController />
                     </v-col>
                     <v-col>
                       <PowerButton @activate="setButtonsActivated" />
@@ -99,6 +102,7 @@ import PowerButton from "@/components/ERU/ManualControl/PowerButton.vue";
 import InputToggle from "@/components/ERU/ManualControl/InputToggle.vue";
 import BackButton from "@/components/ERU/ManualControl/BackButton.vue";
 import MaxSpeed from "@/components/ERU/ManualControl/MaxSpeed.vue";
+import CheckController from "@/components/ERU/ManualControl/CheckController.vue";
 
 export default {
   name: "",
@@ -114,6 +118,7 @@ export default {
     InputToggle,
     BackButton,
     MaxSpeed,
+    CheckController,
   },
   data: () => ({
     updatedStage: null,
@@ -121,7 +126,6 @@ export default {
     manualControlView: false,
     keyboardSelected: true,
     controllerSelected: false,
-    controllerDisabled: false,
     input: null,
     buttonsActivated: false,
   }),
