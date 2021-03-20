@@ -57,18 +57,28 @@
           <v-col :cols="6">
             <v-row>
               <v-card width="100%">
-                <v-card-actions class="justify-center">
-                  <v-container>
-                    <v-row justify="center">
-                      <BackButton @back="setManualControlView" />
+                <v-container fluid-flex>
+                  <v-row>
+                    <v-col col="1">
+                      <BackButton
+                        @back="setManualControlView"
+                        @deactivate="setButtonsActivated"
+                      />
+                    </v-col>
+                    <v-col>
                       <InputToggle
                         :keyboardSelected="keyboardSelected"
                         :controllerDisabled="controllerDisabled"
+                        :buttonsActivated="buttonsActivated"
+                        @inputSelected="setInput"
                       />
-                      <PowerButton />
-                    </v-row>
-                  </v-container>
-                </v-card-actions>
+                    </v-col>
+                    <v-col>
+                      <PowerButton @activate="setButtonsActivated" />
+                    </v-col>
+                  </v-row>
+                  <MaxSpeed />
+                </v-container>
               </v-card>
             </v-row>
           </v-col>
@@ -88,6 +98,7 @@ import ManualControl from "@/components/ERU/ManualControl.vue";
 import PowerButton from "@/components/ERU/ManualControl/PowerButton.vue";
 import InputToggle from "@/components/ERU/ManualControl/InputToggle.vue";
 import BackButton from "@/components/ERU/ManualControl/BackButton.vue";
+import MaxSpeed from "@/components/ERU/ManualControl/MaxSpeed.vue";
 
 export default {
   name: "",
@@ -102,6 +113,7 @@ export default {
     PowerButton,
     InputToggle,
     BackButton,
+    MaxSpeed,
   },
   data: () => ({
     updatedStage: null,
@@ -109,7 +121,9 @@ export default {
     manualControlView: false,
     keyboardSelected: true,
     controllerSelected: false,
-    controllerDisabled: true,
+    controllerDisabled: false,
+    input: null,
+    buttonsActivated: true,
   }),
   methods: {
     setGeneralStage(stage, vehicle) {
@@ -119,6 +133,12 @@ export default {
     },
     setManualControlView(value) {
       this.manualControlView = value;
+    },
+    setInput(input) {
+      this.input = input;
+    },
+    setButtonsActivated(value) {
+      this.buttonsActivated = value;
     },
   },
 };

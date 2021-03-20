@@ -12,7 +12,7 @@ export default {
   methods: {
     back() {
       this.$emit("back", false);
-      console.log(false);
+      this.$emit("deactivate", true)
     },
   },
 };
