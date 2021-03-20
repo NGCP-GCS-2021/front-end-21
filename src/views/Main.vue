@@ -4,33 +4,29 @@
       <v-row align="auto">
         <v-col :cols="8" class="d-flex">
           <v-card>
-            <v-img height="100%" src="../assets/map.png"></v-img>
+            <v-img height="950px" src="../assets/map.png"></v-img>
             <!---Needs to be replaced by map component--->
           </v-card>
         </v-col>
         <v-col :cols="4">
-          <v-row class="px-2" >
-              <v-col :cols="12">
-                <v-progress-linear 
-                  color="green"
-                  class="px-1"
-                  v-model="value"
-                  :active="show"
-                  :indeterminate="query"
-                  :query="true"
-                  >
-                </v-progress-linear>
-              </v-col>
-          </v-row>
-          <v-row class="px-5 pb-1">
-            <h4>Data Updated {{ }} ago</h4>
-          </v-row>
-            <v-container>
-              <v-row class="pa-2 mb-3" >
-                <GeneralStage />
-              </v-row>
-              <div class="scrollable" style=" height: 800px !important; overflow-y: hidden; overflow-x: hidden;">
-              <v-row class="pa-2" >
+          <v-container>
+            <v-row class="pa-2 mb-3">
+              <GeneralStage
+                :stage="stage"
+                :vehicle="vehicle"
+                :updatedStage="updatedStage"
+                :updatedVehicle="updatedVehicle"
+              />
+            </v-row>
+            <div
+              class="scrollable"
+              style="
+                height: 800px !important;
+                overflow-y: hidden;
+                overflow-x: hidden;
+              "
+            >
+              <v-row class="pa-2">
                 <v-card class="pa-2" width="100%">
                   <v-container>
                     <v-row justify="center" class="pb-2">
@@ -44,7 +40,7 @@
                     <MACStatus />
                     <v-row justify="center">
                       <v-col :cols="5" class="mx-2 px-0">
-                        <MACMainControl />
+                        <MACMainControl @setGeneralStage="setGeneralStage" />
                       </v-col>
                       <v-col :cols="5" class="mx-2 px-0">
                         <MACEmergency />
@@ -69,7 +65,7 @@
                     <ERUStatus />
                     <v-row justify="center">
                       <v-col :cols="5" class="mx-2 px-0">
-                        <ERUMainControl />
+                        <ERUMainControl @setGeneralStage="setGeneralStage" />
                       </v-col>
                       <v-col :cols="5" class="mx-2 px-0">
                         <ERUEmergency />
@@ -92,7 +88,7 @@
                     <MEAStatus />
                     <v-row justify="center">
                       <v-col :cols="5" class="mx-2 px-0">
-                        <MEAMainControl />
+                        <MEAMainControl @setGeneralStage="setGeneralStage" />
                       </v-col>
                       <v-col :cols="5" class="mx-2 px-0">
                         <MEAEmergency />
@@ -148,6 +144,7 @@ export default {
       },
     },
   name: "",
+  props: ["stage", "vehicle"],
   components: {
     MACEmergency,
     ERUEmergency,
@@ -159,6 +156,17 @@ export default {
     ERUStatus,
     MACStatus,
     GeneralStage,
+  },
+  data: () => ({
+    updatedStage: null,
+    updatedVehicle: null,
+  }),
+  methods: {
+    setGeneralStage(stage, vehicle) {
+      this.$emit("setGeneralStage", stage, vehicle);
+      this.updatedStage = stage;
+      this.updatedVehicle = vehicle;
+    },
   },
 };
 </script>

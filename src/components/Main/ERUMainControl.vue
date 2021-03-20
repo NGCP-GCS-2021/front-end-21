@@ -10,7 +10,7 @@
           v-bind="attrs"
           v-on="on"
           class="mx-2"
-          >VEHICLE CONTROL<v-icon x-large>mdi-gamepad-square</v-icon></v-btn
+          >STAGE SELECTION<v-icon x-large>mdi-select-marker</v-icon></v-btn
         >
       </template>
 
@@ -23,6 +23,7 @@
           label="Select Mission Stage"
           item-text="stage"
           item-value="id"
+          return-object
           required
         ></v-select>
 
@@ -81,13 +82,13 @@ export default {
     postCurrentStage() {
       this.menu = false;
       const path = "http://127.0.0.1:5000/ERU_INPUT";
-      this.currentStage.Perform_stage = this.select - 1;
+      this.currentStage.Perform_stage = this.select.id - 1;
       const currentStageStringify = JSON.stringify(this.currentStage);
       axios
         .post(path, currentStageStringify)
         .then(() => {
           console.log("Posted stage to ERU_INPUT");
-          //console.log(currentStageStringify);
+          this.$emit("setGeneralStage", this.select.stage, "ERU");
         })
         .catch((error) => {
           console.log(error);

@@ -47,7 +47,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
@@ -67,6 +66,9 @@ export default {
           console.error(error);
         });
     },
+    getLongLat(){
+
+    }
   },
   mounted() {
     this.getMACData();
@@ -74,7 +76,7 @@ export default {
   updated() {
     this.getMACData();
   },
-  
+
 };
 </script>
 

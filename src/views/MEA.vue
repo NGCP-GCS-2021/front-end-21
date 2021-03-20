@@ -29,7 +29,12 @@
           </v-container>
           <v-container fluid flex>
             <v-row class="pb-3">
-              <GeneralStage />
+              <GeneralStage
+                :stage="stage"
+                :vehicle="vehicle"
+                :updatedStage="updatedStage"
+                :updatedVehicle="updatedVehicle"
+              />
             </v-row>
             <v-row>
               <v-card class="pa-1" style="width: 100%">
@@ -53,7 +58,7 @@
             <v-row class="mt-3" align="auto">
               <v-col class="d-flex">
                 <v-card class="pa-1" style="width: 100%">
-                  <MEAControl />
+                  <MEAControl @setGeneralStage="setGeneralStage" />
                 </v-card>
               </v-col>
             </v-row>
@@ -97,13 +102,25 @@ export default {
     },
   },
   name: "",
-
+  props: ["stage", "vehicle"],
   components: {
     MEAStatus,
     MEAControl,
     GeneralStage,
     MEAHome,
     EvacuationZone,
+  },
+
+  data: () => ({
+    updatedStage: null,
+    updatedVehicle: null,
+  }),
+  methods: {
+    setGeneralStage(stage, vehicle) {
+      this.$emit("setGeneralStage", stage, vehicle);
+      this.updatedStage = stage;
+      this.updatedVehicle = vehicle;
+    },
   },
 };
 </script>

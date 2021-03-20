@@ -9,13 +9,14 @@
         label="Select Mission Stage"
         item-text="stage"
         item-value="id"
+        return-object
         required
       ></v-select>
       <v-btn color="green" class="mr-5" @click="postCurrentStage">
         Submit
       </v-btn>
       <!-- <v-btn @click="clear"> Clear </v-btn> -->
-      <v-dialog v-model="dialog" max-width="425">
+      <!-- <v-dialog v-model="dialog" max-width="425">
         <v-card>
           <v-card-title class="headline">
             <v-icon large color="red" class="pr-3">mdi-alert</v-icon>
@@ -40,7 +41,7 @@
             <v-btn color="primary" text @click="dialog = false"> Undo </v-btn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
+      </v-dialog> -->
     </v-form>
   </div>
 </template>
@@ -80,13 +81,13 @@ export default {
   methods: {
     postCurrentStage() {
       const path = "http://127.0.0.1:5000/MEA_INPUT";
-      this.currentStage.Perform_stage = this.select - 1;
+      this.currentStage.Perform_stage = this.select.id - 1;
       const currentStageStringify = JSON.stringify(this.currentStage);
       axios
         .post(path, currentStageStringify)
         .then(() => {
           console.log("Posted stage to MEA_INPUT");
-          //console.log(currentStageStringify);
+          this.$emit("setGeneralStage", this.select.stage, "MEA");
         })
         .catch((error) => {
           console.log(error.response);

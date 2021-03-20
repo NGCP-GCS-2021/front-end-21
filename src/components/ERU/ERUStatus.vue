@@ -48,7 +48,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   //either props or in data MOST LIKELY DATA
   data() {
