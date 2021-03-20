@@ -11,7 +11,7 @@ export default {
   data: () => ({}),
   methods: {
     activate() {
-      this.$emit("activate", false);
+      this.$emit("activate", true);
     },
   },
 };

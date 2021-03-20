@@ -6,7 +6,7 @@
         <v-btn
           value="keyboard"
           :color="inputSelect == 'keyboard' ? 'primary' : ''"
-          :disabled="buttonsActivated"
+          :disabled="!buttonsActivated"
           @click="selectKeyboard"
         >
           <h1 class="font-weight-light">Keyboard</h1>
@@ -15,7 +15,7 @@
         <v-btn
           value="controller"
           :color="inputSelect == 'controller' ? 'primary' : ''"
-          :disabled="controllerDisabled || buttonsActivated"
+          :disabled="controllerDisabled || !buttonsActivated"
           @click="selectController"
         >
           <h1 class="font-weight-light">Controller</h1>
