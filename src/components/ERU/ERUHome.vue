@@ -5,7 +5,7 @@
       <form @submit.prevent="submit" style="height: 150px;">
         <v-container>
           <v-row>
-            <v-col cols="4">
+            <v-col cols="6">
               <validation-provider
                 v-slot="{ errors }"
                 name="Latitude"
@@ -23,7 +23,7 @@
                 ></v-text-field>
               </validation-provider>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="6">
               <validation-provider
                 v-slot="{ errors }"
                 name="Longitude"
