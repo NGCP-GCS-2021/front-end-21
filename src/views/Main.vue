@@ -2,12 +2,9 @@
   <div class="home">
     <v-container fill-height fluid class="pa-2 mt-1">
       <v-row align="auto">
-        <v-col :cols="8" class="d-flex">
-          <v-card>
-            <v-img height="950px" src="../assets/map.png"></v-img>
-            <!---Needs to be replaced by map component--->
-          </v-card>
-        </v-col>
+        <Map cols="col col-8" center_lat="33.932116" center_long="-117.630109" zoom="9"
+           SW_bound_lat="33.93154919990249" SW_bound_long="-117.63616828159178"
+           NE_bound_lat="33.93569086311143" NE_bound_long="-117.6263621141112" />
         <v-col :cols="4">
           <v-container>
             <v-row class="pa-2 mb-3">
@@ -117,8 +114,33 @@ import MEAStatus from "@/components/MEA/MEAStatus.vue";
 import ERUStatus from "@/components/ERU/ERUStatus.vue";
 import MACStatus from "@/components/MAC/MACStatus.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
+import Map from '@/components/Map.vue';
 
 export default {
+  data () {
+      return {
+        value: 0,
+        query: false,
+        show: true,
+        interval: 0,
+      }
+    },
+
+    mounted () {
+      this.queryAndIndeterminate()
+    },
+
+    beforeDestroy () {
+      clearInterval(this.interval)
+    },
+
+    methods: {
+      queryAndIndeterminate () {
+        this.query = true
+        this.show = true
+        this.value = 0
+      },
+    },
   name: "",
   props: ["stage", "vehicle"],
   components: {
@@ -132,6 +154,7 @@ export default {
     ERUStatus,
     MACStatus,
     GeneralStage,
+    Map
   },
   data: () => ({
     updatedStage: null,
@@ -148,9 +171,7 @@ export default {
 </script>
 
 <style>
-.scrollable:hover,
-.scrollable:active,
-.scrollable:focus {
-  overflow-y: auto !important;
+.scrollable:hover, .scrollable:active, .scrollable:focus {
+    overflow-y: auto !important;
 }
 </style>

@@ -15,7 +15,7 @@
                   class="pa-0 ma-0"
               >
                 <v-text-field
-                    v-model="input.lng"
+                    v-model="input.lat"
                     :error-messages="errors"
                     label="Latitude"
                     required
@@ -31,7 +31,7 @@
                   }"
               >
                 <v-text-field
-                    v-model="input.lat"
+                    v-model="input.lng"
                     :error-messages="errors"
                     label="Longitude"
                     required
@@ -154,7 +154,7 @@
       axios
           .post(path, searchAreaStringify)
           .then(() => {
-            console.log("Posted Search Area coordinates to MAC_INPUT");
+            console.log("Posted Search Area coordinates to MAC_INPUT for Polygon");
             console.log(searchAreaStringify);
           })
           .catch((error) => {

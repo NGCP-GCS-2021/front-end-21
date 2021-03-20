@@ -24,7 +24,7 @@
               class="font-weight-light text-center red--text"
               justify="center"
             >
-              Undo Mission Stage Subsmission?
+              Undo Mission Stage Submission?
             </h5>
           </v-card-title>
           <v-card-text justify="center">
@@ -39,6 +39,7 @@
             </v-btn>
 
             <v-btn color="primary" text @click="dialog = false"> Undo </v-btn>
+            
           </v-card-actions>
         </v-card>
       </v-dialog>

@@ -61,6 +61,7 @@ export default {
         .get(path)
         .then((res) => {
           this.mea_data = res.data.MEA;
+          console.log(new Date().getTime());
         })
         .catch((error) => {
           console.error(error);

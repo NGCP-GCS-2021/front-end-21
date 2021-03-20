@@ -2,12 +2,9 @@
   <div class="mea">
     <v-container fill-height fluid flex class="pa-2 mt-3 d-flex">
       <v-row align="auto">
-        <v-col :cols="6" class="d-flex">
-          <v-card>
-            <v-img height="100%" src="../assets/map.png"></v-img>
-            <!---Needs to be replaced by map component--->
-          </v-card>
-        </v-col>
+        <Map cols="col col-6" center_lat="33.932116" center_long="-117.630109" zoom="9"
+           SW_bound_lat="33.93154919990249" SW_bound_long="-117.63616828159178"
+           NE_bound_lat="33.93569086311143" NE_bound_long="-117.6263621141112" />
         <template v-if="!manualControlView">
           <v-col :cols="6">
             <v-container fluid flex>
@@ -54,9 +51,9 @@
           </v-col>
         </template>
         <template v-if="manualControlView">
-          <v-col :cols="6">
+          <v-col :cols="6" pa-5>
             <v-row>
-              <v-card width="100%">
+              <v-card ma-5 pa-2 width="100%">
                 <v-container fluid-flex>
                   <v-row>
                     <v-col col="1">
@@ -84,6 +81,13 @@
                 </v-container>
               </v-card>
             </v-row>
+            <v-row v-if="input==='keyboard'">
+              <v-card width = 100%>
+                <v-container fluid-flex>
+                  <SimpleKeyboard @onChange="onChange" @onKeyPress="onKeyPress" :input="input"/>
+                </v-container> 
+              </v-card>
+            </v-row>
           </v-col>
         </template>
       </v-row>
@@ -103,6 +107,8 @@ import InputToggle from "@/components/ERU/ManualControl/InputToggle.vue";
 import BackButton from "@/components/ERU/ManualControl/BackButton.vue";
 import MaxSpeed from "@/components/ERU/ManualControl/MaxSpeed.vue";
 import CheckController from "@/components/ERU/ManualControl/CheckController.vue";
+import SimpleKeyboard from "@/components/ERU/ManualControl/Keyboard/SimpleKeyboard";
+import Map from '@/components/Map.vue';
 
 export default {
   name: "",
@@ -119,6 +125,8 @@ export default {
     BackButton,
     MaxSpeed,
     CheckController,
+    SimpleKeyboard,
+    Map
   },
   data: () => ({
     updatedStage: null,

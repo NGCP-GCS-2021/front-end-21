@@ -24,7 +24,7 @@
               class="font-weight-light text-center red--text"
               justify="center"
             >
-              Undo Mission Stage Subsmission?
+              Undo Mission Stage Submission?
             </h5>
           </v-card-title>
           <v-card-text justify="center">
@@ -92,6 +92,7 @@ export default {
         })
         .catch((error) => {
           console.log(error.response);
+
         });
     },
   },
