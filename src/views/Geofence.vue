@@ -2,12 +2,9 @@
   <div class="mea">
     <v-container fill-height fluid flex class="pa-2 mt-3 d-flex">
       <v-row align="auto">
-        <v-col :cols="6">
-          <v-card>
-            <v-img src="../assets/map.png" style="height: 870px"></v-img>
-            <!---Needs to be replaced by map component--->
-          </v-card>
-        </v-col>
+        <Map cols="col col-6" center_lat="33.932116" center_long="-117.630109" zoom="9"
+           SW_bound_lat="33.93154919990249" SW_bound_long="-117.63616828159178"
+           NE_bound_lat="33.93569086311143" NE_bound_long="-117.6263621141112" />
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row class="pb-3">
@@ -106,6 +103,7 @@ import KeepInCart from "@/components/Geofence/KeepInCart.vue";
 import KeepOut from "@/components/Geofence/KeepOut.vue";
 import KeepOutCart from "@/components/Geofence/KeepOutCart.vue";
 import axios from "axios";
+import Map from '@/components/Map.vue';
 
 export default {
   name: "",
@@ -116,6 +114,7 @@ export default {
     KeepInCart,
     KeepOut,
     KeepOutCart,
+    Map
   },
 
   data: () => ({

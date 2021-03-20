@@ -114,7 +114,7 @@ import MEAStatus from "@/components/MEA/MEAStatus.vue";
 import ERUStatus from "@/components/ERU/ERUStatus.vue";
 import MACStatus from "@/components/MAC/MACStatus.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
-import Map from '@/components/Map.vue'
+import Map from '@/components/Map.vue';
 
 export default {
   data () {
