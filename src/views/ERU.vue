@@ -84,7 +84,7 @@
             <v-row v-if="input==='keyboard'" style="padding-top:1%;">
               <v-card width = 100%>
                 <v-container fluid-flex>
-                    <!---keyboard stuff--->
+                  <SimpleKeyboard @onChange="onChange" @onKeyPress="onKeyPress" :input="input"/>
                 </v-container> 
               </v-card>
             </v-row>
@@ -106,6 +106,7 @@ import PowerButton from "@/components/ERU/ManualControl/PowerButton.vue";
 import InputToggle from "@/components/ERU/ManualControl/InputToggle.vue";
 import BackButton from "@/components/ERU/ManualControl/BackButton.vue";
 import MaxSpeed from "@/components/ERU/ManualControl/MaxSpeed.vue";
+import SimpleKeyboard from "@/components/ERU/ManualControl/Keyboard/SimpleKeyboard";
 
 export default {
   name: "",
@@ -121,6 +122,7 @@ export default {
     InputToggle,
     BackButton,
     MaxSpeed,
+    SimpleKeyboard,
   },
   data: () => ({
     updatedStage: null,

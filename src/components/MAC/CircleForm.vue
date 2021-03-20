@@ -3,60 +3,62 @@
     <validation-observer ref="observer" v-slot="{ invalid }">
       <form @submit.prevent="submit">
         <v-container>
-          <v-row>
-            <v-col cols="4">
-              <validation-provider
-                  v-slot="{ errors }"
-                  name="Latitude"
-                  :rules="{
-                  required: true,
-                  regex: /^\d*\.?\d*$/,
-                }"
-                  class="pa-0 ma-0"
-              >
-                <v-text-field
-                    v-model="Latitude"
-                    :error-messages="errors"
-                    label="Latitude"
-                    required
-                ></v-text-field>
-              </validation-provider>
-            </v-col>
-            <v-col cols="4">
-              <validation-provider
-                  v-slot="{ errors }"
-                  name="Longitude"
-                  :rules="{
-                  required: true,
-                  regex: /^\d*\.?\d*$/,
-                }"
-              >
-                <v-text-field
-                    v-model="Longitude"
-                    :error-messages="errors"
-                    label="Longitude"
-                    required
-                ></v-text-field>
-              </validation-provider>
-            </v-col>
-            <v-col cols="4">
-              <validation-provider
-                  v-slot="{ errors }"
-                  name="Altitude"
-                  :rules="{
-                  required: true,
-                  regex: /^\d*\.?\d*$/,
-                }"
-              >
-                <v-text-field
-                    v-model="Radius"
-                    :error-messages="errors"
-                    label="Radius"
-                    required
-                ></v-text-field>
-              </validation-provider>
-            </v-col>
-          </v-row>
+          <v-form v-for="(input, k) in Coordinates" :key="k">
+            <v-row>
+              <v-col cols="4">
+                <validation-provider
+                    v-slot="{ errors }"
+                    name="Latitude"
+                    :rules="{
+                    required: true,
+                    regex: /^\d*\.?\d*$/,
+                  }"
+                    class="pa-0 ma-0"
+                >
+                  <v-text-field
+                      v-model="input.lat"
+                      :error-messages="errors"
+                      label="Latitude"
+                      required
+                  ></v-text-field>
+                </validation-provider>
+              </v-col>
+              <v-col cols="4">
+                <validation-provider
+                    v-slot="{ errors }"
+                    name="Longitude"
+                    :rules="{
+                    required: true,
+                    regex: /^\d*\.?\d*$/,
+                  }"
+                >
+                  <v-text-field
+                      v-model="input.lng"
+                      :error-messages="errors"
+                      label="Longitude"
+                      required
+                  ></v-text-field>
+                </validation-provider>
+              </v-col>
+              <v-col cols="4">
+                <validation-provider
+                    v-slot="{ errors }"
+                    name="Radius"
+                    :rules="{
+                    required: true,
+                    regex: /^\d*\.?\d*$/,
+                  }"
+                >
+                  <v-text-field
+                      v-model="input.rad"
+                      :error-messages="errors"
+                      label="Radius"
+                      required
+                  ></v-text-field>
+                </validation-provider>
+              </v-col>
+            </v-row>
+          </v-form>
           <v-row>
             <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
               Submit
@@ -96,39 +98,95 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  data() {
-    return {
-      travelTo: {},
-      Longitude: "",
-      Latitude: "",
-      Radius: "",
-    };
-  },
+  name: "CircleForm",
+  data: ()=> ({
+    // return: {
+    //   travelTo: {},
+    //   Longitude: "",
+    //   Latitude: "",
+    //   Radius: "",
+    // }
+    dialog: false,
+    Coordinates: [
+      {
+        lng: "",
+        lat: "",
+        rad: "",
+      }
+    ],
+    Search_area: {
+      Search_area: {
+        Coordinates: [],
+      },
+    }
+  }),
 
   methods: {
     submit() {
       this.$refs.observer.validate();
-      this.postTravelTo();
+      this.postSearchArea();
+    },
+    add() {
+      this.Coordinates.push({
+        lng: "",
+        lat: "",
+        rad: "",
+      });
+    },
+    remove(){
+      this.Coordinates.pop();
     },
     clear() {
-      this.Longitude = "";
-      this.Latitude = "";
-      this.Radius = "";
-      this.$refs.observer.reset();
+      this.Coordinates = [
+          {
+            lng: "",
+            lat: "",
+            rad: "",
+          },
+      ];
     },
-    postTravelTo() {
-      this.travelTo = JSON.stringify({
-        Travel_to_lat: parseFloat(this.Latitude),
-        Travel_to_lng: parseFloat(this.Longitude),
-        Travel_to_alt: parseFloat(this.Radius),
-      });
+    postSearchArea() {
+      // this.travelTo = JSON.stringify({
+      //   Travel_to_lat: parseFloat(this.Latitude),
+      //   Travel_to_lng: parseFloat(this.Longitude),
+      //   Travel_to_alt: parseFloat(this.Radius),
+      // });
+      // const path = "http://127.0.0.1:5000/MAC_INPUT";
+      // // console.log(this.travelTo);
+      // axios
+      //     .post(path, this.travelTo) //removed header
+      //     .then(() => {
+      //       console.log("Posted Travel to/Home coordinates to MAC_INPUT");
+      //       console.log(this.travelTo);
+      //     })
+      //     .catch((error) => {
+      //       console.log(error.response);
+      //     });
+
+      this.Search_area.Search_area.Coordinates = this.Coordinates;
+      for(
+          let i = 0;
+          i < this.Search_area.Search_area.Coordinates.length;
+          i++
+      ) {
+        this.Search_area.Search_area.Coordinates[i].lat = parseFloat(
+            this.Search_area.Search_area.Coordinates[i].lat
+        );
+        this.Search_area.Search_area.Coordinates[i].lng = parseFloat(
+            this.Search_area.Search_area.Coordinates[i].lng
+        );
+        this.Search_area.Search_area.Coordinates[i].rad = parseFloat(
+            this.Search_area.Search_area.Coordinates[i].rad
+        )
+      }
+
+      const searchAreaStringify = JSON.stringify(this.Search_area);
       const path = "http://127.0.0.1:5000/MAC_INPUT";
-      // console.log(this.travelTo);
       axios
-          .post(path, this.travelTo) //removed header
+          .post(path, searchAreaStringify)
           .then(() => {
-            console.log("Posted Travel to/Home coordinates to MAC_INPUT");
-            console.log(this.travelTo);
+            console.log("Posted Search Area coordinates to MAC_INPUT for Circle");
+            console.log(searchAreaStringify);
           })
           .catch((error) => {
             console.log(error.response);
