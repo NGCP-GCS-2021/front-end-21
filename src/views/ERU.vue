@@ -123,7 +123,7 @@ export default {
     controllerSelected: false,
     controllerDisabled: false,
     input: null,
-    buttonsActivated: true,
+    buttonsActivated: false,
   }),
   methods: {
     setGeneralStage(stage, vehicle) {
