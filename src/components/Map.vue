@@ -93,25 +93,26 @@ export default {
                 });
             }
             map.doubleClickZoom.disable();
-            const draw = new MapboxDraw({
-                defaultMode: 'drag_circle',
-                userProperties: true,
-                modes: {
-                    ...MapboxDraw.modes,
-                    draw_circle  : CircleMode,
-                    drag_circle  : DragCircleMode,
-                    direct_select: DirectMode,
-                    simple_select: SimpleSelectMode
-                }
-            });
-            map.addControl(draw);
-            // TODO: Decide on appropriate draw.create and draw.update listeners
-            map.on('draw.create', function (e) {
-                console.log(e.features);
-            });
-            map.on('draw.update', function (e) {
-                console.log(e.features);
-            });
+            // TODO: Deal with interactive drawing later if we have time
+            // const draw = new MapboxDraw({
+            //     defaultMode: 'drag_circle',
+            //     userProperties: true,
+            //     modes: {
+            //         ...MapboxDraw.modes,
+            //         draw_circle  : CircleMode,
+            //         drag_circle  : DragCircleMode,
+            //         direct_select: DirectMode,
+            //         simple_select: SimpleSelectMode
+            //     }
+            // });
+            // map.addControl(draw);
+            // // TODO: Decide on appropriate draw.create and draw.update listeners
+            // map.on('draw.create', function (e) {
+            //     console.log(e.features);
+            // });
+            // map.on('draw.update', function (e) {
+            //     console.log(e.features);
+            // });
             return map;
         },
         
@@ -240,34 +241,6 @@ export default {
                 console.warn('Map.vue: setVisibility: tried to set visibility of non-existent layer');
             }
         },
-        
-        editLayerSourceGeo: function(name, type, coords) {
-            // TODO: Experimental function. Not tested
-            // with consistent interface for caller
-            let validType = new Map([
-                ['Point', true],
-                ['LineString', true],
-                ['Polygon', true]
-            ]);
-            if (!validType[type]) {
-                console.warn('Map.vue: editLayerSourceGeo: invalid type passed');
-                return;
-            }
-            if (!this.map.getLayer(name)) {
-                console.warn('Map.vue: editLayerSourceGeo: invalid layer name passed');
-                return;
-            }
-            if (type == 'Point' && coords.length > 1) {
-                console.warn('Map.vue: editLayerSourceGeo: too many coords passed for type Point');
-                return;
-            }
-            if (type == 'Polygon') {
-                coords = [coords];
-            }
-            let geo = this.map.getSource(name + '_source').data.geometry;
-            geo.type = type;
-            geo.coordinates = coords;
-        },
 
         editPolySource: function(name, coords) {
             // Currently assumes that coords is valid
@@ -284,8 +257,22 @@ export default {
             geo.coordinates = coords;
         },
 
-        editLayerColor: function(name, color) {
+        editPointSource: function(name, coord) {
+            // Currently assumes that coord is valid
             // TODO: Needs testing
+            if (!this.map.getLayer(name)) {
+                console.warn('Map.vue: editPointSource: invalid layer name passed');
+                return;
+            }
+            let geo = this.map.getSource(name + '_source').data.geometry;
+            if (geo.type != 'Point') {
+                console.warn('Map.vue: editPointSource: target source is not a Point');
+                return;
+            }
+            geo.coordinates = coord;
+        },
+
+        editLayerColor: function(name, color) {
             if (this.map.getLayer(name)) {
                 this.map.setPaintProperty(name, 'fill-color', color);
             } else {
@@ -312,13 +299,14 @@ export default {
     },
     mounted() {
         this.map = this.makeMap();
+        // For testing
         var vm = this;
         this.map.on('load', function() {
             vm.addCircle(vm.center_long, vm.center_lat, 20, 16, "test1", "black", 0.8);
             vm.addCircle(vm.center_long, vm.center_lat, 40, 16, "test2", "black", 0.8);
             vm.addCircle(vm.center_long, vm.center_lat, 50, 16, "test3", "black", 0.8);
-            vm.setVisibility("test1", false);
-            vm.setVisibility("test2", false);
+            vm.editLayerOpacity("test1", 0);
+            vm.editLayerColor("test2", "red");
             vm.removeLayer("test3");
             vm.addCoord("test_point", vm.center_long, vm.center_lat);
         });
