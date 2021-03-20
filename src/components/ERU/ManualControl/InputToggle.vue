@@ -7,7 +7,7 @@
           value="keyboard"
           :color="inputSelect == 'keyboard' ? 'primary' : ''"
           :disabled="!buttonsActivated"
-          @click="selectKeyboard"
+          @click="selectedKeyboard"
         >
           <h1 class="font-weight-light">Keyboard</h1>
           <v-icon color="purple">mdi-keyboard-outline</v-icon>
@@ -16,7 +16,7 @@
           value="controller"
           :color="inputSelect == 'controller' ? 'primary' : ''"
           :disabled="controllerDisabled || !buttonsActivated"
-          @click="selectController"
+          @click="selectedController"
         >
           <h1 class="font-weight-light">Controller</h1>
           <v-icon color="blue">mdi-controller-classic-outline</v-icon>

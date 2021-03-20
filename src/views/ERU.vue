@@ -136,6 +136,7 @@ export default {
     },
     setInput(input) {
       this.input = input;
+      console.log(this.input);
     },
     setButtonsActivated(value) {
       this.buttonsActivated = value;
