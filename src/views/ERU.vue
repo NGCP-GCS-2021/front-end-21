@@ -85,6 +85,13 @@
                 </v-container> 
               </v-card>
             </v-row>
+            <v-row v-if="input==='keyboard'" style="padding-top:1%;">
+              <v-card width = 100%>
+                <v-container fluid-flex>
+                  <h1 class="font-weight-light">Controls: </h1>
+                </v-container> 
+              </v-card>
+            </v-row>
           </v-col>
         </template>
       </v-row>
@@ -159,4 +166,4 @@ export default {
 .scrollable:focus {
   overflow-y: auto !important;
 }
-</style>
+</style
