@@ -54,9 +54,9 @@
           </v-col>
         </template>
         <template v-if="manualControlView">
-          <v-col :cols="6">
+          <v-col :cols="6" pa-5>
             <v-row>
-              <v-card width="100%">
+              <v-card ma-5 pa-2 width="100%">
                 <v-container fluid-flex>
                   <v-row>
                     <v-col col="1">
@@ -79,6 +79,13 @@
                   </v-row>
                   <MaxSpeed />
                 </v-container>
+              </v-card>
+            </v-row>
+            <v-row v-if="input==='keyboard'">
+              <v-card width = 100%>
+                <v-container fluid-flex>
+                    <!---keyboard stuff--->
+                </v-container> 
               </v-card>
             </v-row>
           </v-col>
@@ -136,6 +143,7 @@ export default {
     },
     setInput(input) {
       this.input = input;
+      console.log(this.input);
     },
     setButtonsActivated(value) {
       this.buttonsActivated = value;
