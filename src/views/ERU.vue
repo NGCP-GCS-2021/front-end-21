@@ -70,9 +70,9 @@
                         @inputSelected="setInput"
                       />
                     </v-col>
-                    <v-col>
+                    <!-- <v-col>
                       <CheckController @controllerConnected="controllerConnected"/>
-                    </v-col>
+                    </v-col> -->
                     <v-col>
                       <PowerButton @activate="setButtonsActivated" />
                     </v-col>
@@ -136,7 +136,7 @@ export default {
     controllerSelected: false,
     input: null,
     buttonsActivated: false,
-    controllerConnected: false,
+    // controllerConnected: false,
   }),
   methods: {
     setGeneralStage(stage, vehicle) {
@@ -154,9 +154,9 @@ export default {
     setButtonsActivated(value) {
       this.buttonsActivated = value;
     },
-    controllerConnected() {
-      this.controllerConnected = true;
-    }
+    // controllerConnected() {
+    //   this.controllerConnected = true;
+    // }
   },
 };
 </script>
