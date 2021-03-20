@@ -71,7 +71,7 @@
                       />
                     </v-col>
                     <v-col>
-                      <CheckController />
+                      <CheckController @controllerConnected="controllerConnected"/>
                     </v-col>
                     <v-col>
                       <PowerButton @activate="setButtonsActivated" />
@@ -106,7 +106,7 @@ import PowerButton from "@/components/ERU/ManualControl/PowerButton.vue";
 import InputToggle from "@/components/ERU/ManualControl/InputToggle.vue";
 import BackButton from "@/components/ERU/ManualControl/BackButton.vue";
 import MaxSpeed from "@/components/ERU/ManualControl/MaxSpeed.vue";
-import CheckController from "@/components/ERU/ManualControl/CheckController.vue";
+import CheckController from "@/components/ERU/ManualControl/Controller/CheckController.vue";
 import SimpleKeyboard from "@/components/ERU/ManualControl/Keyboard/SimpleKeyboard";
 import Map from '@/components/Map.vue';
 
@@ -136,6 +136,7 @@ export default {
     controllerSelected: false,
     input: null,
     buttonsActivated: false,
+    controllerConnected: false,
   }),
   methods: {
     setGeneralStage(stage, vehicle) {
@@ -153,6 +154,9 @@ export default {
     setButtonsActivated(value) {
       this.buttonsActivated = value;
     },
+    controllerConnected() {
+      this.controllerConnected = true;
+    }
   },
 };
 </script>
