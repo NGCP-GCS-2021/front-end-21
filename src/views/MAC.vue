@@ -10,6 +10,24 @@
         </v-col>
         <v-col :cols="6">
           <v-container fluid flex>
+            <v-row>
+              <v-col :cols="12">
+                <v-progress-linear 
+                  color="green"
+                  class="px-1"
+                  v-model="value"
+                  :active="show"
+                  :indeterminate="query"
+                  :query="true"
+                  >
+                </v-progress-linear>
+              </v-col>
+            </v-row>
+            <v-row class="px-3 pb-1">
+              <h4>Data Updated {{ }} ago</h4>
+            </v-row>
+          </v-container>
+          <v-container fluid flex>
             <v-row class="pb-3">
               <GeneralStage
                 :stage="stage"

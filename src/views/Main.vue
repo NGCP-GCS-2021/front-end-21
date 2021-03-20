@@ -119,6 +119,30 @@ import MACStatus from "@/components/MAC/MACStatus.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
 
 export default {
+  data () {
+      return {
+        value: 0,
+        query: false,
+        show: true,
+        interval: 0,
+      }
+    },
+
+    mounted () {
+      this.queryAndIndeterminate()
+    },
+
+    beforeDestroy () {
+      clearInterval(this.interval)
+    },
+
+    methods: {
+      queryAndIndeterminate () {
+        this.query = true
+        this.show = true
+        this.value = 0
+      },
+    },
   name: "",
   props: ["stage", "vehicle"],
   components: {
