@@ -2,8 +2,7 @@
   <div>
     <h1 class="font-weight-light text-center">Select an Input:</h1>
     <h5 class="font-weight-light text-center">
-      To connect a controller, press any button 3 times and click "Detect
-      Controller"
+      To connect a controller, press any button.
     </h5>
     <v-card-actions class="justify-center">
       <v-btn-toggle v-model="inputSelect">
@@ -46,22 +45,24 @@ export default {
   },
   mounted() {
     const InputToggle = this;
+
+    //Gamepad Connected
     window.addEventListener("gamepadconnected", function (e) {
+      var gp = navigator.getGamepads()[e.gamepad.index];
       console.log(
         "Gamepad connected at index %d: %s. %d buttons, %d axes.",
-        e.gamepad.index,
-        e.gamepad.id,
-        e.gamepad.buttons.length,
-        e.gamepad.axes.length
+        gp.index,
+        gp.id,
+        gp.buttons.length,
+        gp.axes.length
       );
       InputToggle.controllerDisabled = false;
     });
+
+    //Gamepad Disconnected
     window.addEventListener("gamepaddisconnected", function (e) {
-      console.log(
-        "Gamepad disconnected from index %d: %s",
-        e.gamepad.index,
-        e.gamepad.id
-      );
+      var gp = navigator.getGamepads()[e.gamepad.index];
+      console.log("Gamepad disconnected from index %d: %s", gp.index, gp.id);
       InputToggle.controllerDisabled = true;
     });
   },
