@@ -29,7 +29,7 @@
                     name="Longitude"
                     :rules="{
                     required: true,
-                    regex: /^\d*\.?\d*$/,
+                    regex: /^-?[0-9]\d*(\.\d+)?$/,
                   }"
                 >
                   <v-text-field
@@ -46,7 +46,7 @@
                     name="Radius"
                     :rules="{
                     required: true,
-                    regex: /^\d*\.?\d*$/,
+                    regex: /^-?[0-9]\d*(\.\d+)?$/,
                   }"
                 >
                   <v-text-field
