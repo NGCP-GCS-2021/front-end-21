@@ -261,12 +261,13 @@ export default {
                 console.warn('Map.vue: editPolySource: invalid layer name passed');
                 return;
             }
-            let geo = this.map.getSource(name + '_source').data.geometry;
-            if (geo.type != 'Polygon') {
-                console.warn('Map.vue: editPolySource: target source is not a Polygon');
-                return;
-            }
-            geo.coordinates = coords;
+            this.map.getSource(name + '_source').setData({
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Polygon',
+                    'coordinates': [coords]
+                }
+            });
         },
         
         editPointSource: function(name, coord) {
@@ -276,12 +277,13 @@ export default {
                 console.warn('Map.vue: editPointSource: invalid layer name passed');
                 return;
             }
-            let geo = this.map.getSource(name + '_source').data.geometry;
-            if (geo.type != 'Point') {
-                console.warn('Map.vue: editPointSource: target source is not a Point');
-                return;
-            }
-            geo.coordinates = coord;
+            this.map.getSource(name + '_source').setData({
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': coord
+                }
+            });
         },
         
         editLayerColor: function(name, color) {
@@ -328,6 +330,8 @@ export default {
             vm.addCoord("test_point", vm.center_long, vm.center_lat);
             vm.setRotation("test_point", 90);
             vm.setRotation("test_point", 70);
+            vm.editPointSource("test_point", [-117.63052445140261, 33.93404089266308]);
+            vm.editPolySource("test2", tempCoords);
         });
     },
     template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
