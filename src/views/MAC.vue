@@ -2,9 +2,6 @@
   <div class="mea">
     <v-container fill-height fluid flex class="pa-2 mt-3 d-flex">
       <v-row align="auto">
-        <Map cols="col col-6" center_lat="33.932116" center_long="-117.630109" zoom="9"
-           SW_bound_lat="33.93154919990249" SW_bound_long="-117.63616828159178"
-           NE_bound_lat="33.93569086311143" NE_bound_long="-117.6263621141112" />
         <Map
           cols="col col-6"
           center_lat="33.932116"
@@ -127,6 +124,7 @@ export default {
       this.updatedVehicle = vehicle;
     },
     addPolygon(coordinates) {
+      this.$refs.Map.addP
       this.$refs.Map.addPoly(coordinates, "SearchArea", "red", 0.8);
     },
     addCircle(lng, lat, rad) {

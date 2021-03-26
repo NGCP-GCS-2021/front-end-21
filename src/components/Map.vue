@@ -152,6 +152,11 @@ export default {
       // If the given layer name is already used, nothing will be added
       // coords is a list of lng lat pairs in DEGREES
       // Opacity is from 0 to 1.0
+      for (let i = 0; i < this.Coordinates.length; i++)
+      {
+        temp = [];
+
+      }
       if (coords.length < 3) {
         console.warn(
           "Map.vue: addPoly: tried to add polygon with less than 3 points"
