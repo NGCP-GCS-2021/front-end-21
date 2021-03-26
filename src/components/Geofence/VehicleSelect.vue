@@ -17,7 +17,7 @@
           @click="selectERU"
         >
           <h1 class="font-weight-light">ERU</h1>
-          <v-icon color="orange">mdi-car-lifted-pickup</v-icon>
+          <v-icon color="orange">mdi-car</v-icon>
         </v-btn>
         <v-btn
           value="MEA"

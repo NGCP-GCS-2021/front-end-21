@@ -56,7 +56,7 @@
                         ERU
                       </h1>
                       <v-icon large color="orange"
-                        >mdi-car-lifted-pickup</v-icon
+                        >mdi-car</v-icon
                       >
                     </v-row>
                     <ERUStatus />
