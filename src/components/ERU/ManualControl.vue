@@ -28,7 +28,7 @@ export default {
   methods: {
     goToManual() {
       this.$emit("goToManual", true);
-      console.log(true);
+      //console.log(true);
     },
   },
 };

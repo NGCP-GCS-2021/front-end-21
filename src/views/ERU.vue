@@ -2,24 +2,31 @@
   <div class="mea">
     <v-container fill-height fluid flex class="pa-2 mt-3 d-flex">
       <v-row align="auto">
-        <Map cols="col col-6" center_lat="33.932116" center_long="-117.630109" zoom="9"
-           SW_bound_lat="33.93154919990249" SW_bound_long="-117.63616828159178"
-           NE_bound_lat="33.93569086311143" NE_bound_long="-117.6263621141112" />
+        <Map
+          cols="col col-6"
+          center_lat="33.932116"
+          center_long="-117.630109"
+          zoom="9"
+          SW_bound_lat="33.93154919990249"
+          SW_bound_long="-117.63616828159178"
+          NE_bound_lat="33.93569086311143"
+          NE_bound_long="-117.6263621141112"
+        />
         <template v-if="!manualControlView">
           <v-col :cols="6">
             <v-container fluid flex>
               <v-row class="pb-3">
-                <GeneralStage
+                <!-- <GeneralStage
                   :stage="stage"
                   :vehicle="vehicle"
                   :updatedStage="updatedStage"
                   :updatedVehicle="updatedVehicle"
-                />
+                /> -->
               </v-row>
               <v-row>
                 <v-card class="pa-1" style="width: 100%">
                   <v-container fluid flex>
-                    <ERUStatus />
+                    <!-- <ERUStatus /> -->
                   </v-container>
                 </v-card>
               </v-row>
@@ -62,14 +69,15 @@
                         @deactivate="setButtonsActivated"
                       />
                     </v-col>
-                    <v-col>
+                    <v-col cols="8">
                       <InputToggle
-                        :keyboardSelected="keyboardSelected"
-                        :controllerDisabled="controllerDisabled"
                         :buttonsActivated="buttonsActivated"
                         @inputSelected="setInput"
                       />
                     </v-col>
+                    <!-- <v-col>
+                      <CheckController @controllerConnected="controllerConnected"/>
+                    </v-col> -->
                     <v-col>
                       <PowerButton @activate="setButtonsActivated" />
                     </v-col>
@@ -78,11 +86,22 @@
                 </v-container>
               </v-card>
             </v-row>
-            <v-row v-if="input==='keyboard'" style="padding-top:1%;">
-              <v-card width = 100%>
+            <v-row v-if="input === 'keyboard'">
+              <v-card width="100%">
                 <v-container fluid-flex>
-                  <SimpleKeyboard @onChange="onChange" @onKeyPress="onKeyPress" :input="input"/>
-                </v-container> 
+                  <SimpleKeyboard
+                    @onChange="onChange"
+                    @onKeyPress="onKeyPress"
+                    :input="input"
+                  />
+                </v-container>
+              </v-card>
+            </v-row>
+            <v-row v-if="input === 'controller'">
+              <v-card width="100%">
+                <v-container fluid-flex>
+                  <Controller />
+                </v-container>
               </v-card>
             </v-row>
             <v-row v-if="input==='keyboard'" style="padding-top:1%;">
@@ -110,8 +129,10 @@ import PowerButton from "@/components/ERU/ManualControl/PowerButton.vue";
 import InputToggle from "@/components/ERU/ManualControl/InputToggle.vue";
 import BackButton from "@/components/ERU/ManualControl/BackButton.vue";
 import MaxSpeed from "@/components/ERU/ManualControl/MaxSpeed.vue";
+import CheckController from "@/components/ERU/ManualControl/Controller/CheckController.vue";
 import SimpleKeyboard from "@/components/ERU/ManualControl/Keyboard/SimpleKeyboard";
-import Map from '@/components/Map.vue';
+import Map from "@/components/Map.vue";
+import Controller from "@/components/ERU/ManualControl/Controller/Controller.vue";
 
 export default {
   name: "",
@@ -127,18 +148,18 @@ export default {
     InputToggle,
     BackButton,
     MaxSpeed,
+    CheckController,
     SimpleKeyboard,
-    Map
+    Map,
+    Controller,
   },
   data: () => ({
     updatedStage: null,
     updatedVehicle: null,
     manualControlView: false,
-    keyboardSelected: true,
-    controllerSelected: false,
-    controllerDisabled: false,
     input: null,
     buttonsActivated: false,
+    // controllerConnected: false,
   }),
   methods: {
     setGeneralStage(stage, vehicle) {
@@ -156,6 +177,9 @@ export default {
     setButtonsActivated(value) {
       this.buttonsActivated = value;
     },
+    // controllerConnected() {
+    //   this.controllerConnected = true;
+    // }
   },
 };
 </script>
