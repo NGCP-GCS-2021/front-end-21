@@ -74,7 +74,14 @@
                       <PowerButton @activate="setButtonsActivated" />
                     </v-col>
                   </v-row>
-                  <MaxSpeed />
+                  <v-row>
+                    <v-col col="6">
+                    <MaxSpeed />
+                    </v-col>
+                    <v-col v-if="input==='keyboard'" col="6">
+                      <KeyboardBars/>
+                    </v-col>
+                  </v-row>
                 </v-container>
               </v-card>
             </v-row>
@@ -89,6 +96,14 @@
               <v-card width = 100%>
                 <v-container fluid-flex>
                   <h1 class="font-weight-light">Controls: </h1>
+                  <v-row>
+                    <v-col cols=6>
+                      <img src="../assets/KeysLegendWASD.png" style="width: 100%">
+                    </v-col>
+                    <v-col cols=6>
+                      <img src="../assets/KeysLegendArrows.png" style="width: 100%">
+                    </v-col>
+                  </v-row>
                 </v-container> 
               </v-card>
             </v-row>
@@ -111,6 +126,7 @@ import InputToggle from "@/components/ERU/ManualControl/InputToggle.vue";
 import BackButton from "@/components/ERU/ManualControl/BackButton.vue";
 import MaxSpeed from "@/components/ERU/ManualControl/MaxSpeed.vue";
 import SimpleKeyboard from "@/components/ERU/ManualControl/Keyboard/SimpleKeyboard";
+import KeyboardBars from "@/components/ERU/ManualControl/Keyboard/KeyboardBars";
 import Map from '@/components/Map.vue';
 
 export default {
@@ -128,7 +144,8 @@ export default {
     BackButton,
     MaxSpeed,
     SimpleKeyboard,
-    Map
+    Map,
+    KeyboardBars
   },
   data: () => ({
     updatedStage: null,
