@@ -4,7 +4,9 @@
       <v-row align="auto">
         <Map cols="col col-6" center_lat="33.932116" center_long="-117.630109" zoom="9"
            SW_bound_lat="33.93154919990249" SW_bound_long="-117.63616828159178"
-           NE_bound_lat="33.93569086311143" NE_bound_long="-117.6263621141112" />
+           NE_bound_lat="33.93569086311143" NE_bound_long="-117.6263621141112"
+           ref="Map"
+        />
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row>
@@ -47,7 +49,8 @@
               <v-row class="d-flex" align="auto">
                 <v-col cols="6" class="ml-0 pl-3">
                   <v-card class="pa-1" style="width: 100%; height: 260px">
-                    <MACSearchArea />
+                    <MACSearchArea
+                        @addPolygon="addPolygon"/>
                   </v-card>
                 </v-col>
                 <v-col cols="6" class="d-flex">
@@ -85,6 +88,7 @@ import EvacuationZone from "@/components/EvacuationZone.vue";
 import ERUDrop from "@/components/MAC/ERUDrop.vue";
 import MACSearchArea from "@/components/MAC/MACSearchArea.vue";
 import Map from "@/components/Map.vue";
+import PolygonForm from "@/components/MAC/PolygonForm.vue";
 
 export default {
   name: "",
@@ -110,6 +114,9 @@ export default {
       this.updatedStage = stage;
       this.updatedVehicle = vehicle;
     },
+    addPolygon(coordinates){
+      this.$refs.Map.addPoly(coordinates,"Search Area", "red", 0.8)
+    }
   },
 };
 </script>
