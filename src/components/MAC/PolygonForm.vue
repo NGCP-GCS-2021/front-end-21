@@ -58,7 +58,7 @@
             </v-col>
           </v-row>
         </v-form>
-        <v-row style="height: 145px; overflow-y: hidden; overflow-x: hidden">
+        <v-row>
           <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
             Submit
           </v-btn>
@@ -136,7 +136,7 @@
     },
     postSearchArea() {
       this.Search_area.Search_area.Coordinates = this.Coordinates;
-      this.$emit("addPolygon", this.Coordinates);
+
       for (
           let i = 0;
           i < this.Search_area.Search_area.Coordinates.length;

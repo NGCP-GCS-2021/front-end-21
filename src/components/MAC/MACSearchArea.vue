@@ -15,7 +15,7 @@
 
     <v-container v-if="shape === 'polygon'">
       <v-row >
-        <PolygonForm @addPolygon="addPolygon"/>
+        <PolygonForm/>
       </v-row>
     </v-container>
 
@@ -150,9 +150,6 @@ export default {
       this.shape = shape;
       console.log(this.shape)
     },
-    addPolygon(coordinates){
-      this.$emit("addPolygon", coordinates)
-    }
   },
 };
 </script>
