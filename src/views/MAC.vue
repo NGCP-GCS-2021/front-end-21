@@ -2,28 +2,34 @@
   <div class="mea">
     <v-container fill-height fluid flex class="pa-2 mt-3 d-flex">
       <v-row align="auto">
-        <Map cols="col col-6" center_lat="33.932116" center_long="-117.630109" zoom="9"
-           SW_bound_lat="33.93154919990249" SW_bound_long="-117.63616828159178"
-           NE_bound_lat="33.93569086311143" NE_bound_long="-117.6263621141112"
-           ref="Map"
+        <Map
+          cols="col col-6"
+          center_lat="33.932116"
+          center_long="-117.630109"
+          zoom="9"
+          SW_bound_lat="33.93154919990249"
+          SW_bound_long="-117.63616828159178"
+          NE_bound_lat="33.93569086311143"
+          NE_bound_long="-117.6263621141112"
+          ref="Map"
         />
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row>
               <v-col :cols="12">
-                <v-progress-linear 
+                <v-progress-linear
                   color="green"
                   class="px-1"
                   v-model="value"
                   :active="show"
                   :indeterminate="query"
                   :query="true"
-                  >
+                >
                 </v-progress-linear>
               </v-col>
             </v-row>
             <v-row class="px-3 pb-1">
-              <h4>Data Updated {{ }} ago</h4>
+              <h4>Data Updated {{}} ago</h4>
             </v-row>
           </v-container>
           <v-container fluid flex>
@@ -50,7 +56,9 @@
                 <v-col cols="6" class="ml-0 pl-3">
                   <v-card class="pa-1" style="width: 100%; height: 260px">
                     <MACSearchArea
-                        @addPolygon="addPolygon"/>
+                      @addPolygon="addPolygon"
+                      @addCircle="addCircle"
+                    />
                   </v-card>
                 </v-col>
                 <v-col cols="6" class="d-flex">
@@ -101,7 +109,7 @@ export default {
     EvacuationZone,
     ERUDrop,
     MACSearchArea,
-    Map
+    Map,
   },
 
   data: () => ({
@@ -114,8 +122,12 @@ export default {
       this.updatedStage = stage;
       this.updatedVehicle = vehicle;
     },
-    addPolygon(coordinates){
-      this.$refs.Map.addPoly(coordinates,"Search Area", "red", 0.8)
+    addPolygon(coordinates) {
+      this.$refs.Map.addPoly(coordinates, "SearchArea", "red", 0.8);
+    },
+    addCircle(lng, lat, rad) {
+      console.log("isatMAC")
+      this.$refs.Map.addCircle(lng, lat, rad, 16, "SearchAreaCircle", "black", 0.8);
     }
   },
 };
