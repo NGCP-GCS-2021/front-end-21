@@ -1,0 +1,22 @@
+{
+    "Geofence": [
+        {
+            "Coordinates": [],
+            "Keep_in": true,
+            "Circle_inputs": {
+                "lng": null,
+                "lat": null,
+                "rad": null
+            }
+        },
+        {
+            "Coordinates": [],
+            "Keep_in": false,
+            "Circle_inputs": {
+                "lng": -124,
+                "lat": 37,
+                "rad": null
+            }
+        }
+    ]
+}

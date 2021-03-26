@@ -61,6 +61,7 @@
                     <MACSearchArea
                       @addPolygon="addPolygon"
                       @addCircle="addCircle"
+                      :circleCoords="circleCoords"
                     />
                   </v-card>
                 </v-col>
@@ -117,6 +118,7 @@ export default {
   data: () => ({
     updatedStage: null,
     updatedVehicle: null,
+    circleCoords: null,
   }),
   methods: {
     setGeneralStage(stage, vehicle) {
@@ -128,9 +130,17 @@ export default {
       this.$refs.Map.addPoly(coordinates, "SearchArea", "red", 0.8);
     },
     addCircle(lng, lat, rad) {
-      console.log("isatMAC")
-      this.$refs.Map.addCircle(lng, lat, rad, 16, "SearchAreaCircle", "black", 0.8);
-    }
+      this.circleCoords = this.$refs.Map.addCircle(
+        lng,
+        lat,
+        rad,
+        16,
+        "SearchAreaCircle",
+        "black",
+        0.8
+      );
+      console.log(this.circleCoords);
+    },
   },
 };
 </script>

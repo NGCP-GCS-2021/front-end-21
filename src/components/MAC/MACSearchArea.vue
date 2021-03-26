@@ -7,21 +7,20 @@
         </v-col>
         <v-col align="center">
           <v-container>
-          <PolygonToggle @selected="selectShape"/>
+            <PolygonToggle @selected="selectShape" />
           </v-container>
         </v-col>
       </v-row>
     </v-container>
-
     <v-container v-if="shape === 'polygon'">
-      <v-row >
-        <PolygonForm/>
+      <v-row>
+        <PolygonForm @addPolygon="addPolygon" />
       </v-row>
     </v-container>
 
     <v-container v-if="shape === 'circle'">
-      <v-row >
-        <CircleForm/>
+      <v-row>
+        <CircleForm @addCircle="addCircle" :circleCoords="circleCoords" />
       </v-row>
     </v-container>
 
@@ -51,7 +50,7 @@
 
 <script>
 import axios from "axios";
-import PolygonToggle from '@/components/MAC/PolygonToggle.vue';
+import PolygonToggle from "@/components/MAC/PolygonToggle.vue";
 import PolygonForm from "@/components/MAC/PolygonForm";
 import CircleForm from "@/components/MAC/CircleForm";
 import { required, minValue } from "vee-validate/dist/rules";
@@ -75,8 +74,9 @@ export default {
     PolygonForm,
     ValidationProvider,
     ValidationObserver,
-    PolygonToggle
+    PolygonToggle,
   },
+  props: ["circleCoords"],
   data: () => ({
     dialog: false,
     Coordinates: [
@@ -90,65 +90,19 @@ export default {
         Coordinates: [],
       },
     },
-    shape: null
+    shape: null,
   }),
 
   methods: {
-    submit() {
-      this.$refs.observer.validate();
-      this.postSearchArea();
-    },
-    add() {
-      this.Coordinates.push({
-        lng: "",
-        lat: "",
-      });
-    },
-    remove() {
-      this.Coordinates.pop();
-    },
-    clear() {
-      this.Coordinates = [
-        {
-          lng: "",
-          lat: "",
-        },
-      ];
-      //  !!!!!!   do we want to clear the search area on MAC's side as well?
-      //            most likely not since MAC might need geofence to function
-    },
-    postSearchArea() {
-      this.Search_area.Search_area.Coordinates = this.Coordinates;
-
-      for (
-        let i = 0;
-        i < this.Search_area.Search_area.Coordinates.length;
-        i++
-      ) {
-        this.Search_area.Search_area.Coordinates[i].lat = parseFloat(
-          this.Search_area.Search_area.Coordinates[i].lat
-        );
-        this.Search_area.Search_area.Coordinates[i].lng = parseFloat(
-          this.Search_area.Search_area.Coordinates[i].lng
-        );
-      }
-
-      const searchAreaStringify = JSON.stringify(this.Search_area);
-
-      const path = "http://127.0.0.1:5000/MAC_INPUT";
-      axios
-        .post(path, searchAreaStringify)
-        .then(() => {
-          console.log("Posted Search Area coordinates to MAC_INPUT");
-          console.log(searchAreaStringify);
-        })
-        .catch((error) => {
-          console.log(error.response);
-        });
-    },
-    selectShape(shape){
+    selectShape(shape) {
       this.shape = shape;
-      console.log(this.shape)
+      console.log(this.shape);
+    },
+    addPolygon(coordinates) {
+      this.$emit("addPolygon", coordinates);
+    },
+    addCircle(lng, lat, rad) {
+      this.$emit("addCircle", lng, lat, rad);
     },
   },
 };

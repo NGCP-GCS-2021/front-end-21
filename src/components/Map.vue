@@ -184,7 +184,6 @@ export default {
           "fill-opacity": opacity,
         },
       });
-      console.log("got to addpoly");
     },
 
     addCircle: function (lng, lat, radius, numPoints, name, color, opacity) {
@@ -195,6 +194,7 @@ export default {
       // Opacity is from 0 to 1.0
       var coords = this.approxCircle(lng, lat, radius, numPoints);
       this.addPoly(coords, name, color, opacity);
+      return coords;
     },
 
     addCoord: function (name, lng, lat) {
@@ -352,6 +352,7 @@ export default {
         0.8
       );
       vm.editLayerOpacity("test1", 0);
+      vm.removeLayer("test1");
       vm.editLayerColor("test2", "red");
       vm.removeLayer("test3");
       vm.removeLayer("test2");

@@ -1,0 +1,10 @@
+{
+    "Search_area": {
+        "Coordinates": [],
+        "Circle_inputs": {
+            "lng": null,
+            "lat": null,
+            "rad": null
+        }
+    }
+}
