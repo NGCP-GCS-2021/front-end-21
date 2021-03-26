@@ -193,30 +193,32 @@ export default {
         
         addCoord: function(name, lng, lat) {
             var vm = this;
-            vm.map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', function(error, image) {
+            this.map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', function(error, image) {
                 if (error)  throw error;
                 vm.map.addImage('custom_marker', image);
-                vm.map.addSource(name + '_source', {
+                
+            });
+            this.map.addSource(name + '_source', {
                     'type': 'geojson',
                     'data': {
                         'type': 'Feature',
                         'geometry': {
                             'type': 'Point',
                             'coordinates': [lng, lat]
-                        }
+                        },
                     }
                 });
-                vm.map.addLayer({
-                    'id': name,
-                    'source': name + '_source',
-                    'type': 'symbol',
-                    'layout': {
-                        'icon-image': 'custom_marker',
-                    }
-                });
+            this.map.addLayer({
+                'id': name,
+                'source': name + '_source',
+                'type': 'symbol',
+                'layout': {
+                    'icon-image': 'custom_marker',
+                    'icon-rotate': 0
+                }
             });
         },
-
+        
         removeLayer: function(name) {
             // Remove a layer and its associated source from the map if it exists
             if (this.map.getLayer(name)) {
@@ -226,7 +228,7 @@ export default {
                 console.warn('Map.vue: removeLayer: tried to remove non-existent layer');
             }
         },
-
+        
         setVisibility: function(name, visible) {
             // Set the visibility of the layer if it exists
             // Pass true for visible to set visibility to visible
@@ -241,7 +243,17 @@ export default {
                 console.warn('Map.vue: setVisibility: tried to set visibility of non-existent layer');
             }
         },
-
+        
+        setRotation: function(name, degrees) {
+            // Set the rotation of the icon on the layer with the given name
+            // Rotation is clockwise in DEGREES
+            if (this.map.getLayer(name) && this.map.getLayoutProperty(name, 'icon-image')) {
+                this.map.setLayoutProperty(name, 'icon-rotate', degrees);
+            } else {
+                console.warn('Map.vue: setRotation: tried to set rotation of non-existent layer');
+            }
+        },
+        
         editPolySource: function(name, coords) {
             // Currently assumes that coords is valid
             // TODO: Needs testing
@@ -256,7 +268,7 @@ export default {
             }
             geo.coordinates = coords;
         },
-
+        
         editPointSource: function(name, coord) {
             // Currently assumes that coord is valid
             // TODO: Needs testing
@@ -271,7 +283,7 @@ export default {
             }
             geo.coordinates = coord;
         },
-
+        
         editLayerColor: function(name, color) {
             if (this.map.getLayer(name)) {
                 this.map.setPaintProperty(name, 'fill-color', color);
@@ -279,7 +291,7 @@ export default {
                 console.warn('Map.vue: editLayerColor: tried to edit non-existent layer');
             }
         },
-
+        
         editLayerOpacity: function(name, opacity) {
             // TODO: Needs testing
             if (this.map.getLayer(name)) {
@@ -302,6 +314,11 @@ export default {
         // For testing
         var vm = this;
         this.map.on('load', function() {
+            var tempCoords = [
+                [-117.6311926970484, 33.93459532438122],
+                [-117.6314209323399, 33.93364332758927],
+                [-117.63052445140261, 33.93404089266308]
+            ];
             vm.addCircle(vm.center_long, vm.center_lat, 20, 16, "test1", "black", 0.8);
             vm.addCircle(vm.center_long, vm.center_lat, 40, 16, "test2", "black", 0.8);
             vm.addCircle(vm.center_long, vm.center_lat, 50, 16, "test3", "black", 0.8);
@@ -309,6 +326,8 @@ export default {
             vm.editLayerColor("test2", "red");
             vm.removeLayer("test3");
             vm.addCoord("test_point", vm.center_long, vm.center_lat);
+            vm.setRotation("test_point", 90);
+            vm.setRotation("test_point", 70);
         });
     },
     template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
