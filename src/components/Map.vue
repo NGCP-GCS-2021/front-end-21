@@ -179,6 +179,7 @@ export default {
                     'fill-opacity': opacity
                 }
             });
+            return coords;
         },
         
         addCircle: function(lng, lat, radius, numPoints, name, color, opacity) {
@@ -188,15 +189,15 @@ export default {
             // Radius in METERS
             // Opacity is from 0 to 1.0
             var coords = this.approxCircle(lng, lat, radius, numPoints);
-            this.addPoly(coords, name, color, opacity);
+            return this.addPoly(coords, name, color, opacity);
         },
-        
+
+        // TODO: Edit this to support drawing multiple icons
         addCoord: function(name, lng, lat) {
             var vm = this;
             this.map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', function(error, image) {
                 if (error)  throw error;
                 vm.map.addImage('custom_marker', image);
-                
             });
             this.map.addSource(name + '_source', {
                     'type': 'geojson',
