@@ -51,9 +51,9 @@
           </v-col>
         </template>
         <template v-if="manualControlView">
-          <v-col :cols="6" pa-5>
+          <v-col :cols="6" style="padding:1.5%">
             <v-row>
-              <v-card ma-5 pa-2 width="100%">
+              <v-card width="100%">
                 <v-container fluid-flex>
                   <v-row>
                     <v-col col="1">
@@ -78,10 +78,17 @@
                 </v-container>
               </v-card>
             </v-row>
-            <v-row v-if="input==='keyboard'">
+            <v-row v-if="input==='keyboard'" style="padding-top:1%;">
               <v-card width = 100%>
                 <v-container fluid-flex>
                   <SimpleKeyboard @onChange="onChange" @onKeyPress="onKeyPress" :input="input"/>
+                </v-container> 
+              </v-card>
+            </v-row>
+            <v-row v-if="input==='keyboard'" style="padding-top:1%;">
+              <v-card width = 100%>
+                <v-container fluid-flex>
+                  <h1 class="font-weight-light">Controls: </h1>
                 </v-container> 
               </v-card>
             </v-row>
@@ -159,4 +166,4 @@ export default {
 .scrollable:focus {
   overflow-y: auto !important;
 }
-</style>
+</style
