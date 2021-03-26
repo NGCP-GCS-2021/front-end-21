@@ -250,7 +250,7 @@ export default {
             if (this.map.getLayer(name) && this.map.getLayoutProperty(name, 'icon-image')) {
                 this.map.setLayoutProperty(name, 'icon-rotate', degrees);
             } else {
-                console.warn('Map.vue: setRotation: tried to set rotation of non-existent layer');
+                console.warn('Map.vue: setRotation: tried to set rotation of invalid layer');
             }
         },
         
