@@ -4,7 +4,7 @@
       <form
         class="scrollable"
         @submit.prevent="submit"
-        style="height: 250px; overflow-y: hidden; overflow-x: hidden"
+        style="height: 100px; overflow-y: hidden; overflow-x: hidden"
       >
         <v-container>
           <v-form v-for="(input, k) in Coordinates" :key="k">
@@ -62,37 +62,25 @@
               </v-col>
             </v-row>
           </v-form>
-          <v-row style="height: 145px; overflow-y: hidden; overflow-x: hidden">
-            <v-col>
-              <v-card-actions>
-                <v-btn
-                  class="mr-4"
-                  color="green"
-                  type="submit"
-                  :disabled="invalid"
-                >
-                  Submit
-                </v-btn>
-                <v-btn @click="clear"> Clear </v-btn>
-              </v-card-actions>
-            </v-col>
-            <v-col>
-              <v-card-actions class="justify-end">
-                <v-btn
-                  @click="addPolygon"
-                  color="primary"
-                  :disabled="isInvalid"
-                >
-                  Create Polygon
-                </v-btn>
-              </v-card-actions>
-            </v-col>
-            <!-- <div>
-            <h3>Coordinates: {{ Coordinates }}</h3>
-          </div> -->
-          </v-row>
         </v-container>
       </form>
+      <v-row>
+        <v-col>
+          <v-card-actions>
+            <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
+              Submit
+            </v-btn>
+            <v-btn @click="clear"> Clear </v-btn>
+          </v-card-actions>
+        </v-col>
+        <v-col>
+          <v-card-actions class="justify-end">
+            <v-btn @click="addPolygon" color="primary" :disabled="isInvalid">
+              Create Polygon
+            </v-btn>
+          </v-card-actions>
+        </v-col>
+      </v-row>
     </validation-observer>
   </div>
 </template>
