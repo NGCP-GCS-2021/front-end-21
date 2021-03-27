@@ -133,7 +133,6 @@ import PowerButton from "@/components/ERU/ManualControl/PowerButton.vue";
 import InputToggle from "@/components/ERU/ManualControl/InputToggle.vue";
 import BackButton from "@/components/ERU/ManualControl/BackButton.vue";
 import MaxSpeed from "@/components/ERU/ManualControl/MaxSpeed.vue";
-import CheckController from "@/components/ERU/ManualControl/Controller/CheckController.vue";
 import SimpleKeyboard from "@/components/ERU/ManualControl/Keyboard/SimpleKeyboard";
 import KeyboardBars from "@/components/ERU/ManualControl/Keyboard/KeyboardBars";
 import Map from '@/components/Map.vue';
@@ -152,7 +151,6 @@ export default {
     InputToggle,
     BackButton,
     MaxSpeed,
-    CheckController,
     SimpleKeyboard,
     Map,
     KeyboardBars
