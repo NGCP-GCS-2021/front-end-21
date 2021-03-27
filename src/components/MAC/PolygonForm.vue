@@ -73,7 +73,7 @@
                 >
                   Submit
                 </v-btn>
-                <v-btn @click="dialog = true"> Clear </v-btn>
+                <v-btn @click="dialog = clear"> Clear </v-btn>
               </v-card-actions>
             </v-col>
             <v-col>
@@ -162,7 +162,8 @@ export default {
           lng: "",
           lat: "",
         },
-      ];
+
+      ],this.dialog=false;
       //  !!!!!!   do we want to clear the search area on MAC's side as well?
       //            most likely not since MAC might need geofence to function
     },
@@ -205,6 +206,11 @@ export default {
       //       console.log(error.response);
       //     });
     },
+    mounted() {
+      if (coordinates != null){
+        this.Coordinates = this.coordinates;
+      }
+    }
   },
 };
 </script>
