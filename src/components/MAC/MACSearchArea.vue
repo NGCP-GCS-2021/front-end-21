@@ -104,21 +104,21 @@ export default {
     addCircle(lng, lat, rad) {
       this.$emit("addCircle", lng, lat, rad);
     },
-  },
-  getMACSearchArea() {
-    const path = "http://127.0.0.1:5000/MAC_INPUT";
-    axios
-      .get(path)
-      .then((res) => {
-        this.Search_area = res.data.Search_area;
-      })
-      .catch((error) => {
-        console.error(error.response);
-      });
+    getMACSearchArea() {
+      const path = "http://127.0.0.1:5000/MAC_INPUT";
+      axios
+        .get(path)
+        .then((res) => {
+          this.Search_area = res.data.Search_area;
+        })
+        .catch((error) => {
+          console.error(error.response);
+        });
+    },
   },
   mounted() {
     this.getMACSearchArea();
-    if (this.Search_area.Coordinates.length == 0) {
+    if (this.Search_area.Coordinates.length > 0) {
       if (this.Search_area.Circle_inputs.rad == null) {
         //Polygon
         this.shape = "polygon";
