@@ -73,7 +73,11 @@
             </v-col>
             <v-col>
               <v-card-actions class="justify-end">
-                <v-btn @click="addCircle" color="primary" :disabled="!(Latitude && Longitude && Radius)">
+                <v-btn
+                  @click="addCircle"
+                  color="primary"
+                  :disabled="!(Latitude && Longitude && Radius)"
+                >
                   Create Circle
                 </v-btn>
               </v-card-actions>
@@ -129,7 +133,7 @@ export default {
   methods: {
     submit() {
       this.$refs.observer.validate();
-      this.postTravelTo();
+      this.postSearchArea();
     },
     clear() {
       this.Longitude = "";
@@ -141,32 +145,34 @@ export default {
     addCircle() {
       this.$emit("addCircle", this.Longitude, this.Latitude, this.Radius);
     },
-    postTravelTo() {
+    postSearchArea() {
       this.addCircle();
       //setTimeout(console.log(this.circleCoords), 5000);
-      // for (
-      //     let i = 0;
-      //     i < this.Search_area.Search_area.Coordinates.length;
-      //     i++
-      // ) {
-      //   this.Search_area.Search_area.Coordinates[i].lat = parseFloat(
-      //       this.Search_area.Search_area.Coordinates[i].lat
-      //   );
-      //   this.Search_area.Search_area.Coordinates[i].lng = parseFloat(
-      //       this.Search_area.Search_area.Coordinates[i].lng
-      //   );
-      // }
-      // const searchAreaStringify = JSON.stringify(this.Search_area);
-      // const path = "http://127.0.0.1:5000/MAC_INPUT";
-      // axios
-      //     .post(path, searchAreaStringify)
-      //     .then(() => {
-      //       console.log("Posted Search Area coordinates to MAC_INPUT for Polygon");
-      //       console.log(searchAreaStringify);
-      //     })
-      //     .catch((error) => {
-      //       console.log(error.response);
-      //     });
+      for (
+        let i = 0;
+        i < this.Search_area.Search_area.Coordinates.length;
+        i++
+      ) {
+        this.Search_area.Search_area.Coordinates[i].lat = parseFloat(
+          this.Search_area.Search_area.Coordinates[i].lat
+        );
+        this.Search_area.Search_area.Coordinates[i].lng = parseFloat(
+          this.Search_area.Search_area.Coordinates[i].lng
+        );
+      }
+      const searchAreaStringify = JSON.stringify(this.Search_area);
+      const path = "http://127.0.0.1:5000/MAC_INPUT";
+      axios
+        .post(path, searchAreaStringify)
+        .then(() => {
+          console.log(
+            "Posted Search Area coordinates to MAC_INPUT for Polygon"
+          );
+          console.log(searchAreaStringify);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
     },
   },
 };

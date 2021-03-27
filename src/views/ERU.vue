@@ -16,12 +16,12 @@
           <v-col :cols="6">
             <v-container fluid flex>
               <v-row class="pb-3">
-                <!-- <GeneralStage
+                <GeneralStage
                   :stage="stage"
                   :vehicle="vehicle"
                   :updatedStage="updatedStage"
                   :updatedVehicle="updatedVehicle"
-                /> -->
+                />
               </v-row>
               <v-row>
                 <v-card class="pa-1" style="width: 100%">
