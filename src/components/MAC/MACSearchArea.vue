@@ -7,7 +7,7 @@
         </v-col>
         <v-col align="center">
           <v-container>
-            <PolygonToggle @selected="selectShape" />
+            <PolygonToggle @selected="selectShape" :ref="PolygonToggle"/>
           </v-container>
         </v-col>
       </v-row>
@@ -121,11 +121,13 @@ export default {
     if (this.Search_area.Circle_inputs.rad == null) {
       //Polygon
       this.shape = "polygon";
+      this.$refs.PolygonToggle = "polygon";
       this.$refs.PolygonForm.Coordinates = this.Search_area.Coordinates;
       this.addPolygon(this.coordinates);
     } else if (this.Search_area.Circle_inputs.rad != null) {
       //Circle
       this.shape = "circle";
+      this.$refs.PolygonToggle = "circle";
       this.$refs.CircleForm.Latitude = this.Search_area.lat;
       this.$refs.CircleForm.Longitude = this.Search_area.lng;
       this.$refs.CircleForm.Radius = this.Search_area.rad;
