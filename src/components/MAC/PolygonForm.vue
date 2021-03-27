@@ -4,7 +4,7 @@
       <form
         class="scrollable"
         @submit.prevent="submit"
-        style="height: 100px; overflow-y: hidden; overflow-x: hidden"
+        style="height: 120px; overflow-y: hidden; overflow-x: hidden"
       >
         <v-container>
           <v-form v-for="(input, k) in Coordinates" :key="k">
