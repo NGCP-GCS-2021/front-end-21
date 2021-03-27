@@ -153,16 +153,16 @@ export default {
         
         addPoly: function(coords, name, color, opacity) {
             // Add a list of coordinates as a polygon with the given layer name, color, and opacity
-            // If the given layer name is already used, nothing will be added
+            // If the given layer name is already used, nothing will be added and undefined will be returned
             // coords is a list of lng lat pairs in DEGREES
             // Opacity is from 0 to 1.0
             if (coords.length < 3) {
                 console.warn('Map.vue: addPoly: tried to add polygon with less than 3 points');
-                return;
+                return undefined;
             }
             if (this.map.getLayer(name)) {
                 console.warn('Map.vue: addPoly: given layer name already exists');
-                return;
+                return undefined;
             }
             // We will use the convention that the source associated with layer name n
             // is n_source
@@ -191,7 +191,7 @@ export default {
         
         addCircle: function(lng, lat, radius, numPoints, name, color, opacity) {
             // Adds a circle to the map at the specified coordinate with the given layer name, color, and opacity
-            // If the given layer name is already used, nothing will be added
+            // If the given layer name is already used, nothing will be added and undefined will be returned
             // Lng lat in DEGREES
             // Radius in METERS
             // Opacity is from 0 to 1.0
@@ -201,10 +201,11 @@ export default {
 
         addCoord: function(name, icon, lng, lat) {
             // Draws an icon at the specified coordinate with the given layer name
+            // Returns [lng, lat] on success, undefined on failure
             // icon is a key value that corresponds with a file path in this.icons
             if (!this.icons.has(icon)) {
                 console.warn('Map.vue: addCoord: specified icon does not exist');
-                return;
+                return undefined;
             }
             this.map.addSource(name + '_source', {
                     'type': 'geojson',
@@ -225,20 +226,25 @@ export default {
                     'icon-rotate': 0
                 }
             });
+            return [lng, lat];
         },
         
         removeLayer: function(name) {
             // Remove a layer and its associated source from the map if it exists
+            // Returns true on success, false on failure
             if (this.map.getLayer(name)) {
                 this.map.removeLayer(name);
                 this.map.removeSource(name+'_source');
+                return true;
             } else {
                 console.warn('Map.vue: removeLayer: tried to remove non-existent layer');
+                return false;
             }
         },
         
         setVisibility: function(name, visible) {
             // Set the visibility of the layer if it exists
+            // Returns true on success, false on failure
             // Pass true for visible to set visibility to visible
             // Pass false to set visibility to none
             if (this.map.getLayer(name)) {
@@ -247,31 +253,35 @@ export default {
                 } else {
                     this.map.setLayoutProperty(name, 'visibility', 'none');
                 }
+                return true;
             } else {
                 console.warn('Map.vue: setVisibility: tried to set visibility of non-existent layer');
+                return false;
             }
         },
         
         setRotation: function(name, degrees) {
             // Set the rotation of the icon on the layer with the given name
+            // Returns true on success, false on failure
             // Rotation is clockwise in DEGREES
             if (!this.map.getLayer(name)) {
                 console.warn('Map.vue: setRotation: target layer does not exist');
-                return;
+                return false;
             }
             if (!this.map.getLayoutProperty(name, 'icon-image')) {
                 console.warn('Map.vue: setRotation: target layer does not have icon-image property');
-                return;
+                return false;
             }
             this.map.setLayoutProperty(name, 'icon-rotate', degrees);
+            return true;
         },
         
         editPolySource: function(name, coords) {
             // Currently assumes that coords is valid
-            // TODO: Needs testing
+            // Returns true on success, false on failure
             if (!this.map.getLayer(name)) {
                 console.warn('Map.vue: editPolySource: invalid layer name passed');
-                return;
+                return false;
             }
             this.map.getSource(name + '_source').setData({
                 'type': 'Feature',
@@ -280,14 +290,15 @@ export default {
                     'coordinates': [coords]
                 }
             });
+            return true;
         },
         
         editPointSource: function(name, coord) {
             // Currently assumes that coord is valid
-            // TODO: Needs testing
+            // Returns true on success, false on failure
             if (!this.map.getLayer(name)) {
                 console.warn('Map.vue: editPointSource: invalid layer name passed');
-                return;
+                return false;
             }
             this.map.getSource(name + '_source').setData({
                 'type': 'Feature',
@@ -296,22 +307,28 @@ export default {
                     'coordinates': coord
                 }
             });
+            return true;
         },
         
         editLayerColor: function(name, color) {
+            // Returns true on success, false on failure
             if (this.map.getLayer(name)) {
                 this.map.setPaintProperty(name, 'fill-color', color);
+                return true;
             } else {
                 console.warn('Map.vue: editLayerColor: tried to edit non-existent layer');
+                return false;
             }
         },
         
         editLayerOpacity: function(name, opacity) {
-            // TODO: Needs testing
+            // Returns true on success, false on failure
             if (this.map.getLayer(name)) {
                 this.map.setPaintProperty(name, 'fill-opacity', opacity);
+                return true;
             } else {
                 console.warn('Map.vue: editLayerOpacity: tried to edit non-existent layer');
+                return false;
             }
         }
     },
@@ -326,7 +343,15 @@ export default {
     },
     mounted() {
         this.icons = new Map([
-            ['custom_marker', 'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png']
+            ['custom_marker', 'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png'],
+            ['eru', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/eru.png'],
+            ['evac-point', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/evac-point.png'],
+            ['geofence', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/geofence.png'],
+            ['hiker', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/hiker.png'],
+            ['home', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/home.png'],
+            ['mac', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/mac.png'],
+            ['mea', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/mea.png'],
+            ['search-area', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/search-area.png']
         ]);
         this.map = this.makeMap(this.icons);
         // For testing
@@ -343,12 +368,12 @@ export default {
             vm.editLayerOpacity("test1", 0);
             vm.editLayerColor("test2", "red");
             vm.removeLayer("test3");
-            vm.addCoord("test_point", "custom_marker", vm.center_long, vm.center_lat);
+            vm.addCoord("test_point", "eru", vm.center_long, vm.center_lat);
             vm.setRotation("test_point", 90);
             vm.setRotation("test_point", 70);
             vm.editPointSource("test_point", [-117.63052445140261, 33.93404089266308]);
             vm.editPolySource("test2", tempCoords);
-            vm.addCoord("test_point2", "custom_marker", vm.center_long, vm.center_lat);
+            vm.addCoord("test_point2", "hiker", vm.center_long, vm.center_lat);
         });
     },
     template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
