@@ -14,13 +14,17 @@
     </v-container>
     <v-container v-if="shape === 'polygon'">
       <v-row>
-        <PolygonForm @addPolygon="addPolygon" />
+        <PolygonForm @addPolygon="addPolygon" ref="PolygonForm" />
       </v-row>
     </v-container>
 
     <v-container v-if="shape === 'circle'">
       <v-row>
-        <CircleForm @addCircle="addCircle" :circleCoords="circleCoords" />
+        <CircleForm
+          @addCircle="addCircle"
+          :circleCoords="circleCoords"
+          ref="CircleForm"
+        />
       </v-row>
     </v-container>
 
@@ -85,11 +89,7 @@ export default {
         lat: "",
       },
     ],
-    Search_area: {
-      Search_area: {
-        Coordinates: [],
-      },
-    },
+    Search_area: null,
     shape: null,
   }),
 
@@ -105,25 +105,37 @@ export default {
       this.$emit("addCircle", lng, lat, rad);
     },
   },
-  mounted(){
+  getMACSearchArea() {
+    const path = "http://127.0.0.1:5000/MAC_INPUT";
+    axios
+      .get(path)
+      .then((res) => {
+        this.Search_area = res.data.Search_area;
+      })
+      .catch((error) => {
+        console.error(error.response);
+      });
+  },
+  mounted() {
     this.getMACSearchArea();
-    if(this.Search_area.Circle_inputs.rad == null){
+    if (this.Search_area.Circle_inputs.rad == null) {
       //Polygon
       this.shape = "polygon";
-      this.$refs.PolygonForm.Coordinates = this.Search_Area.Coordinates;
-      this.addPolygon(this.Coordinates);
-    } else if (this.Search_area.Circle_inputs.rad != null){
+      this.$refs.PolygonForm.Coordinates = this.Search_area.Coordinates;
+      this.addPolygon(this.coordinates);
+    } else if (this.Search_area.Circle_inputs.rad != null) {
+      //Circle
       this.shape = "circle";
-      this.$refs.CircleForm.Longitude = this.Search_area.lng;
       this.$refs.CircleForm.Latitude = this.Search_area.lat;
+      this.$refs.CircleForm.Longitude = this.Search_area.lng;
       this.$refs.CircleForm.Radius = this.Search_area.rad;
       this.addCircle(
-          this.Search_area.lng,
-          this.Search_area.lat,
-          this.Search_area.rad
+        this.Search_area.lng,
+        this.Search_area.lat,
+        this.Search_area.rad
       );
     }
-  }
+  },
 };
 </script>
 <style>

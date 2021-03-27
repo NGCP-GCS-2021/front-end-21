@@ -58,10 +58,26 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
-              Submit
-            </v-btn>
-            <v-btn @click="clear"> Clear </v-btn>
+            <v-col>
+              <v-card-actions>
+                <v-btn
+                  class="mr-4"
+                  color="green"
+                  type="submit"
+                  :disabled="invalid"
+                >
+                  Submit
+                </v-btn>
+                <v-btn @click="clear"> Clear </v-btn>
+              </v-card-actions>
+            </v-col>
+            <v-col>
+              <v-card-actions class="justify-end">
+                <v-btn @click="addCircle" color="primary" :disabled="!(Latitude && Longitude && Radius)">
+                  Create Circle
+                </v-btn>
+              </v-card-actions>
+            </v-col>
           </v-row>
         </v-container>
       </form>
@@ -104,9 +120,9 @@ export default {
           Coordinates: [],
         },
       },
-      Longitude: "-117.6311926970484",
-      Latitude: "33.93459532438122",
-      Radius: "40",
+      Longitude: "",
+      Latitude: "",
+      Radius: "",
     };
   },
 
@@ -120,10 +136,14 @@ export default {
       this.Latitude = "";
       this.Radius = "";
       this.$refs.observer.reset();
+      this.invalid = true;
+    },
+    addCircle() {
+      this.$emit("addCircle", this.Longitude, this.Latitude, this.Radius);
     },
     postTravelTo() {
-      this.$emit("addCircle", this.Longitude, this.Latitude, this.Radius);
-      setTimeout(console.log(this.circleCoords), 5000);
+      this.addCircle();
+      //setTimeout(console.log(this.circleCoords), 5000);
       // for (
       //     let i = 0;
       //     i < this.Search_area.Search_area.Coordinates.length;

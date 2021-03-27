@@ -73,7 +73,7 @@
                 >
                   Submit
                 </v-btn>
-                <v-btn @click="dialog = clear"> Clear </v-btn>
+                <v-btn @click="clear"> Clear </v-btn>
               </v-card-actions>
             </v-col>
             <v-col>
