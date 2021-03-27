@@ -63,7 +63,7 @@ export default {
         }
     },
     methods: {
-        makeMap: function() {
+        makeMap: function(images) {
             // Creates and adds a mapbox to the element with id 'map'
             mapboxgl.accessToken = 'pk.eyJ1IjoiaGxpbjkxIiwiYSI6ImNrbDQ2MjY4NzE0ZXEycHFpaXBya2tvN3gifQ.Tqa8iLUqXeKZQ8SmhLoRtg';
             var map = null;
@@ -93,10 +93,12 @@ export default {
                 });
             }
             // Load images
-            map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', function(error, image) {
-                if (error)  throw error;
-                map.addImage('custom_marker', image);
-            });
+            for (const [key, val] of images.entries()) {
+                map.loadImage(val, function(error, image) {
+                    if (error)  throw error;
+                    map.addImage(key, image);
+                }); 
+            }
             map.doubleClickZoom.disable();
             // TODO: Deal with interactive drawing later if we have time
             // const draw = new MapboxDraw({
@@ -197,13 +199,13 @@ export default {
             return this.addPoly(coords, name, color, opacity);
         },
 
-        // TODO: Edit this to support drawing multiple icons
-        addCoord: function(name, lng, lat) {
-            // var vm = this;
-            // this.map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', function(error, image) {
-            //     if (error)  throw error;
-            //     vm.map.addImage('custom_marker', image);
-            // });
+        addCoord: function(name, icon, lng, lat) {
+            // Draws an icon at the specified coordinate with the given layer name
+            // icon is a key value that corresponds with a file path in this.icons
+            if (!this.icons.has(icon)) {
+                console.warn('Map.vue: addCoord: specified icon does not exist');
+                return;
+            }
             this.map.addSource(name + '_source', {
                     'type': 'geojson',
                     'data': {
@@ -219,7 +221,7 @@ export default {
                 'source': name + '_source',
                 'type': 'symbol',
                 'layout': {
-                    'icon-image': 'custom_marker',
+                    'icon-image': icon,
                     'icon-rotate': 0
                 }
             });
@@ -317,12 +319,16 @@ export default {
     data: {
         function() {
             return {
-                map: null // Reference to the mapbox object
+                map: null, // Reference to the mapbox object
+                icon: null // Map of icon names to file paths
             };
         }
     },
     mounted() {
-        this.map = this.makeMap();
+        this.icons = new Map([
+            ['custom_marker', 'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png']
+        ]);
+        this.map = this.makeMap(this.icons);
         // For testing
         var vm = this;
         this.map.on('load', function() {
@@ -337,12 +343,12 @@ export default {
             vm.editLayerOpacity("test1", 0);
             vm.editLayerColor("test2", "red");
             vm.removeLayer("test3");
-            vm.addCoord("test_point", vm.center_long, vm.center_lat);
+            vm.addCoord("test_point", "custom_marker", vm.center_long, vm.center_lat);
             vm.setRotation("test_point", 90);
             vm.setRotation("test_point", 70);
             vm.editPointSource("test_point", [-117.63052445140261, 33.93404089266308]);
             vm.editPolySource("test2", tempCoords);
-            vm.addCoord("test_point2", vm.center_long, vm.center_lat);
+            vm.addCoord("test_point2", "custom_marker", vm.center_long, vm.center_lat);
         });
     },
     template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
