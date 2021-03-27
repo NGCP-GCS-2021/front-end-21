@@ -92,6 +92,11 @@ export default {
                     style: 'mapbox://styles/mapbox/satellite-streets-v11'
                 });
             }
+            // Load images
+            map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', function(error, image) {
+                if (error)  throw error;
+                map.addImage('custom_marker', image);
+            });
             map.doubleClickZoom.disable();
             // TODO: Deal with interactive drawing later if we have time
             // const draw = new MapboxDraw({
@@ -194,11 +199,11 @@ export default {
 
         // TODO: Edit this to support drawing multiple icons
         addCoord: function(name, lng, lat) {
-            var vm = this;
-            this.map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', function(error, image) {
-                if (error)  throw error;
-                vm.map.addImage('custom_marker', image);
-            });
+            // var vm = this;
+            // this.map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', function(error, image) {
+            //     if (error)  throw error;
+            //     vm.map.addImage('custom_marker', image);
+            // });
             this.map.addSource(name + '_source', {
                     'type': 'geojson',
                     'data': {
@@ -248,11 +253,15 @@ export default {
         setRotation: function(name, degrees) {
             // Set the rotation of the icon on the layer with the given name
             // Rotation is clockwise in DEGREES
-            if (this.map.getLayer(name) && this.map.getLayoutProperty(name, 'icon-image')) {
-                this.map.setLayoutProperty(name, 'icon-rotate', degrees);
-            } else {
-                console.warn('Map.vue: setRotation: tried to set rotation of invalid layer');
+            if (!this.map.getLayer(name)) {
+                console.warn('Map.vue: setRotation: target layer does not exist');
+                return;
             }
+            if (!this.map.getLayoutProperty(name, 'icon-image')) {
+                console.warn('Map.vue: setRotation: target layer does not have icon-image property');
+                return;
+            }
+            this.map.setLayoutProperty(name, 'icon-rotate', degrees);
         },
         
         editPolySource: function(name, coords) {
@@ -333,6 +342,7 @@ export default {
             vm.setRotation("test_point", 70);
             vm.editPointSource("test_point", [-117.63052445140261, 33.93404089266308]);
             vm.editPolySource("test2", tempCoords);
+            vm.addCoord("test_point2", vm.center_long, vm.center_lat);
         });
     },
     template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
