@@ -63,10 +63,30 @@
             </v-row>
           </v-form>
           <v-row style="height: 145px; overflow-y: hidden; overflow-x: hidden">
-            <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
-              Submit
-            </v-btn>
-            <v-btn @click="dialog = true"> Clear </v-btn>
+            <v-col>
+              <v-card-actions>
+                <v-btn
+                  class="mr-4"
+                  color="green"
+                  type="submit"
+                  :disabled="invalid"
+                >
+                  Submit
+                </v-btn>
+                <v-btn @click="dialog = true"> Clear </v-btn>
+              </v-card-actions>
+            </v-col>
+            <v-col>
+              <v-card-actions class="justify-end">
+                <v-btn
+                  @click="addPolygon"
+                  color="primary"
+                  :disabled="isInvalid"
+                >
+                  Create Polygon
+                </v-btn>
+              </v-card-actions>
+            </v-col>
             <!-- <div>
             <h3>Coordinates: {{ Coordinates }}</h3>
           </div> -->
@@ -104,16 +124,8 @@ export default {
     dialog: false,
     Coordinates: [
       {
-        lng: "-117.6311926970484",
-        lat: "33.93459532438122",
-      },
-      {
-        lng: "-117.6314209323399",
-        lat: "33.93364332758927",
-      },
-      {
-        lng: "-117.63052445140261",
-        lat: "33.93404089266308",
+        lng: "",
+        lat: "",
       },
     ],
     Search_area: {
@@ -121,6 +133,8 @@ export default {
         Coordinates: [],
       },
     },
+    isInvalid: true,
+    temptemp: [],
   }),
   methods: {
     submit() {
@@ -132,9 +146,15 @@ export default {
         lng: "",
         lat: "",
       });
+      if (this.Coordinates.length > 2) {
+        this.isInvalid = false;
+      }
     },
     remove() {
       this.Coordinates.pop();
+      if (this.Coordinates.length < 2) {
+        this.isInvalid = true;
+      }
     },
     clear() {
       this.Coordinates = [
@@ -146,15 +166,19 @@ export default {
       //  !!!!!!   do we want to clear the search area on MAC's side as well?
       //            most likely not since MAC might need geofence to function
     },
-    postSearchArea() {
-      let tempCoordinates = [];
+    addPolygon() {
+      let tempCoordinates = new Array(this.Coordinates.length);
       let temp = [];
       for (let i = 0; i < this.Coordinates.length; i++) {
-        temp = [];
-        temp.push(this.Coordinates[i].lng, this.Coordinates[i].lat);
-        tempCoordinates.push(temp);
+        temp = new Array(2);
+        temp[0] = this.Coordinates[i].lng;
+        temp[1] = this.Coordinates[i].lat;
+        tempCoordinates[i] = temp;
       }
+      this.temptemp = tempCoordinates;
       this.$emit("addPolygon", tempCoordinates);
+    },
+    postSearchArea() {
       this.Search_area.Search_area.Coordinates = this.Coordinates;
 
       // for (
