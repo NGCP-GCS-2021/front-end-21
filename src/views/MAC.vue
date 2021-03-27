@@ -124,8 +124,8 @@ export default {
       this.updatedVehicle = vehicle;
     },
     addPolygon(coordinates) {
-      this.$refs.Map.addP
-      this.$refs.Map.addPoly(coordinates, "SearchArea", "red", 0.8);
+      this.$refs.Map.removeLayer("Search Area");
+      this.$refs.Map.addPoly(coordinates, "Search Area", "red", 0.8);
     },
     addCircle(lng, lat, rad) {
       this.circleCoords = this.$refs.Map.addCircle(

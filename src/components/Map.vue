@@ -152,10 +152,14 @@ export default {
       // If the given layer name is already used, nothing will be added
       // coords is a list of lng lat pairs in DEGREES
       // Opacity is from 0 to 1.0
-      for (let i = 0; i < this.Coordinates.length; i++)
-      {
-        temp = [];
-
+      for (let i = 0; i < coords.length; i++) {
+          for (let j = 0; j < coords[i].length; j++)
+        if (coords[i][j] == null) {
+          console.warn(
+            "Map.vue: addPoly: one or more values are null"
+          );
+          return;
+        }
       }
       if (coords.length < 3) {
         console.warn(
