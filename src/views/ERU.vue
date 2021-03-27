@@ -58,9 +58,9 @@
           </v-col>
         </template>
         <template v-if="manualControlView">
-          <v-col :cols="6" pa-5>
+          <v-col :cols="6" style="padding:1.5%">
             <v-row>
-              <v-card ma-5 pa-2 width="100%">
+              <v-card width="100%">
                 <v-container fluid-flex>
                   <v-row>
                     <v-col col="1">
@@ -82,26 +82,37 @@
                       <PowerButton @activate="setButtonsActivated" />
                     </v-col>
                   </v-row>
-                  <MaxSpeed />
+                  <v-row>
+                    <v-col col="6">
+                    <MaxSpeed />
+                    </v-col>
+                    <v-col v-if="input==='keyboard'" col="6">
+                      <KeyboardBars/>
+                    </v-col>
+                  </v-row>
                 </v-container>
               </v-card>
             </v-row>
-            <v-row v-if="input === 'keyboard'">
-              <v-card width="100%">
-                <v-container fluid-flex>
-                  <SimpleKeyboard
-                    @onChange="onChange"
-                    @onKeyPress="onKeyPress"
-                    :input="input"
-                  />
-                </v-container>
-              </v-card>
-            </v-row>
-            <v-row v-if="input === 'controller'">
-              <v-card width="100%">
+            <v-row v-if="input==='keyboard'" style="padding-top:1%;">
+              <v-card width = 100%>
                 <v-container fluid-flex>
                   <Controller />
                 </v-container>
+              </v-card>
+            </v-row>
+            <v-row v-if="input==='keyboard'" style="padding-top:1%;">
+              <v-card width = 100%>
+                <v-container fluid-flex>
+                  <h1 class="font-weight-light">Controls: </h1>
+                  <v-row>
+                    <v-col cols=6>
+                      <img src="../assets/KeysLegendWASD.png" style="width: 100%">
+                    </v-col>
+                    <v-col cols=6>
+                      <img src="../assets/KeysLegendArrows.png" style="width: 100%">
+                    </v-col>
+                  </v-row>
+                </v-container> 
               </v-card>
             </v-row>
           </v-col>
@@ -124,8 +135,8 @@ import BackButton from "@/components/ERU/ManualControl/BackButton.vue";
 import MaxSpeed from "@/components/ERU/ManualControl/MaxSpeed.vue";
 import CheckController from "@/components/ERU/ManualControl/Controller/CheckController.vue";
 import SimpleKeyboard from "@/components/ERU/ManualControl/Keyboard/SimpleKeyboard";
-import Map from "@/components/Map.vue";
-import Controller from "@/components/ERU/ManualControl/Controller/Controller.vue";
+import KeyboardBars from "@/components/ERU/ManualControl/Keyboard/KeyboardBars";
+import Map from '@/components/Map.vue';
 
 export default {
   name: "",
@@ -144,7 +155,7 @@ export default {
     CheckController,
     SimpleKeyboard,
     Map,
-    Controller,
+    KeyboardBars
   },
   data: () => ({
     updatedStage: null,
@@ -183,4 +194,4 @@ export default {
 .scrollable:focus {
   overflow-y: auto !important;
 }
-</style>
+</style
