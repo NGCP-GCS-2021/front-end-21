@@ -86,5 +86,8 @@ export default {
     //console.log(navigator.getGamepads()[0]);
     this.interval = setInterval(() => this.getControllerState(), 50);
   },
+  beforeDestroy() {
+    this.clearInterval();
+  }
 };
 </script>
