@@ -31,8 +31,8 @@
                 <v-row v-for="(Coordinates, j) in Coordinates" :key="j">
                   <h4 class="font-weight-light" pa-0 ma-0>
                     <code
-                      >Coordinate {{ j + 1 }}: [{{ Coordinates[0] }},
-                      {{ Coordinates[1] }}]</code
+                      >Coordinate {{ j + 1 }}: [{{ Coordinates.lat }},
+                      {{ Coordinates.lng }}]</code
                     >
                   </h4>
                 </v-row>
