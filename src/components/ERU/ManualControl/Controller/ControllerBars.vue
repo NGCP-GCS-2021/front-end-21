@@ -80,5 +80,8 @@ export default {
   mounted() {
     this.interval = setInterval(() => this.getControllerState(), 50);
   },
+  beforeDestroy() {
+    this.clearInterval();
+  },
 };
 </script>
