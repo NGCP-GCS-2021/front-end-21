@@ -30,16 +30,12 @@
 </template>
 
 <script>
-// import KeepOutCircleForm from "@/components/Geofence/KeepOut/KeepOutCircleForm.vue";
-// import KeepOutPolygonForm from "@/components/Geofence/KeepOut/KeepOutPolygonForm.vue";
 import KeepInCircleForm from "@/components/Geofence/KeepIn/KeepInCircleForm.vue";
 import KeepInPolygonForm from "@/components/Geofence/KeepIn/KeepInPolygonForm.vue";
 import KeepInShapeToggle from "@/components/Geofence/KeepIn/KeepInShapeToggle.vue";
 export default {
   props: ["vehicle", "circleCoords"],
   components: {
-    // KeepOutCircleForm,
-    // KeepOutPolygonForm,
     KeepInCircleForm,
     KeepInPolygonForm,
     KeepInShapeToggle,

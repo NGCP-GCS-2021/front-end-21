@@ -34,8 +34,14 @@
                   </v-card>
                 </v-col>
                 <v-col cols="6" class="ml-0 pl-3">
-                  <v-card class="pa-1" style="width: 100%">
-                    <KeepOut :vehicle="vehicle" @addToKeepOut="addToKeepOut" />
+                  <v-card class="pa-1" style="width: 100%; height: 420px">
+                    <KeepOut
+                      :vehicle="vehicle"
+                      @addToKeepOut="addToKeepOut"
+                      @addKeepOutPolygon="addKeepOutPolygon"
+                      @addKeepOutCircle="addKeepOutCircle"
+                      :circleCoords="keepOutCircleCoords"
+                    />
                   </v-card>
                 </v-col>
               </v-row>
@@ -145,6 +151,7 @@ export default {
     keepInCount: 0,
     keepOutCount: 0,
     keepInCircleCoords: null,
+    keepOutCircleCoords: null,
   }),
   methods: {
     setVehicle(vehicle) {
@@ -153,7 +160,7 @@ export default {
         this.getCurrentGeofence(vehicle);
       } else {
         this.keepInEmpty = true;
-        this.keepInEmpty = true;
+        this.keepOutEmpty = true;
         this.$refs.KeepInCart.CoordinatesArray = [];
         this.$refs.KeepOutCart.CoordinatesArray = [];
       }
@@ -197,8 +204,11 @@ export default {
       this.keepInEmpty = false;
       this.keepInCount++;
     },
-    addToKeepOut(coordinates) {
+    addToKeepOut(coordinates, lng, lat, rad) {
       this.$refs.KeepOutCart.CoordinatesArray.push(coordinates);
+      let circleInputs = { lng: lng, lat: lat, rad: rad };
+      console.log(circleInputs);
+      this.$refs.KeepOutCart.CircleInputsArray.push(circleInputs);
       this.submitDisabled = false;
       this.deleteDisabled = false;
       this.keepOutEmpty = false;
@@ -290,6 +300,24 @@ export default {
       let layerName = "Keep In " + this.keepInCount;
       this.$refs.Map.removeLayer(layerName);
       this.keepInCircleCoords = this.$refs.Map.addCircle(
+        lng,
+        lat,
+        rad,
+        16,
+        layerName,
+        "black",
+        0.8
+      );
+    },
+    addKeepOutPolygon(coordinates) {
+      let layerName = "Keep Out " + this.keepOutCount;
+      this.$refs.Map.removeLayer(layerName);
+      this.$refs.Map.addPoly(coordinates, layerName, "green", 0.8);
+    },
+    addKeepOutCircle(lng, lat, rad) {
+      let layerName = "Keep Out " + this.keepOutCount;
+      this.$refs.Map.removeLayer(layerName);
+      this.keepOutCircleCoords = this.$refs.Map.addCircle(
         lng,
         lat,
         rad,
