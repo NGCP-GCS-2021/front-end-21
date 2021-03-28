@@ -2,9 +2,17 @@
   <div class="mea">
     <v-container fill-height fluid flex class="pa-2 mt-3 d-flex">
       <v-row align="auto">
-        <Map cols="col col-6" center_lat="33.932116" center_long="-117.630109" zoom="9"
-           SW_bound_lat="33.93154919990249" SW_bound_long="-117.63616828159178"
-           NE_bound_lat="33.93569086311143" NE_bound_long="-117.6263621141112" />
+        <Map
+          cols="col col-6"
+          center_lat="33.932116"
+          center_long="-117.630109"
+          zoom="9"
+          SW_bound_lat="33.93154919990249"
+          SW_bound_long="-117.63616828159178"
+          NE_bound_lat="33.93569086311143"
+          NE_bound_long="-117.6263621141112"
+          ref="Map"
+        />
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row class="pb-3">
@@ -16,7 +24,13 @@
               <v-row class="d-flex" align="auto">
                 <v-col cols="6" class="ml-0 pl-3">
                   <v-card class="pa-1" style="width: 100%; height: 420px">
-                    <KeepIn :vehicle="vehicle" @addToKeepIn="addToKeepIn" />
+                    <KeepIn
+                      :vehicle="vehicle"
+                      @addToKeepIn="addToKeepIn"
+                      @addKeepInPolygon="addKeepInPolygon"
+                      @addKeepInCircle="addKeepInCircle"
+                      :circleCoords="keepInCircleCoords"
+                    />
                   </v-card>
                 </v-col>
                 <v-col cols="6" class="ml-0 pl-3">
@@ -98,12 +112,12 @@
 
 <script>
 import VehicleSelect from "@/components/Geofence/VehicleSelect.vue";
-import KeepIn from "@/components/Geofence/KeepIn.vue";
-import KeepInCart from "@/components/Geofence/KeepInCart.vue";
-import KeepOut from "@/components/Geofence/KeepOut.vue";
-import KeepOutCart from "@/components/Geofence/KeepOutCart.vue";
+import KeepIn from "@/components/Geofence/KeepIn/KeepIn.vue";
+import KeepInCart from "@/components/Geofence/KeepIn/KeepInCart.vue";
+import KeepOut from "@/components/Geofence/KeepOut/KeepOut.vue";
+import KeepOutCart from "@/components/Geofence/KeepOut/KeepOutCart.vue";
 import axios from "axios";
-import Map from '@/components/Map.vue';
+import Map from "@/components/Map.vue";
 
 export default {
   name: "",
@@ -114,7 +128,7 @@ export default {
     KeepInCart,
     KeepOut,
     KeepOutCart,
-    Map
+    Map,
   },
 
   data: () => ({
@@ -128,6 +142,9 @@ export default {
     keepInEmpty: true,
     keepOutEmpty: true,
     currentGeofence: [],
+    keepInCount: 0,
+    keepOutCount: 0,
+    keepInCircleCoords: null,
   }),
   methods: {
     setVehicle(vehicle) {
@@ -137,11 +154,11 @@ export default {
       } else {
         this.keepInEmpty = true;
         this.keepInEmpty = true;
-        this.$refs.KeepInCart.CoordinatesArray = []
-        this.$refs.KeepOutCart.CoordinatesArray = []
+        this.$refs.KeepInCart.CoordinatesArray = [];
+        this.$refs.KeepOutCart.CoordinatesArray = [];
       }
     },
-    getCurrentGeofence(vehicle) {
+    getCurrentGeofence() {
       let path = "";
       if (this.vehicle == "MAC") {
         path = "http://127.0.0.1:5000/MAC_INPUT";
@@ -170,17 +187,22 @@ export default {
         }
       }
     },
-    addToKeepIn(coordinates) {
+    addToKeepIn(coordinates, lng, lat, rad) {
       this.$refs.KeepInCart.CoordinatesArray.push(coordinates);
+      let circleInputs = { lng: lng, lat: lat, rad: rad };
+      console.log(circleInputs);
+      this.$refs.KeepInCart.CircleInputsArray.push(circleInputs);
       this.submitDisabled = false;
       this.deleteDisabled = false;
       this.keepInEmpty = false;
+      this.keepInCount++;
     },
     addToKeepOut(coordinates) {
       this.$refs.KeepOutCart.CoordinatesArray.push(coordinates);
       this.submitDisabled = false;
       this.deleteDisabled = false;
       this.keepOutEmpty = false;
+      this.keepOutCount++;
     },
     deleteAll() {
       this.dialog = false;
@@ -194,15 +216,24 @@ export default {
     postGeofence() {
       this.Geofence.Geofence = [];
       let keepInAreas = this.$refs.KeepInCart.CoordinatesArray;
+      let keepInCircleInputs = this.$refs.KeepInCart.CircleInputsArray;
       for (let i = 0; i < keepInAreas.length; i++) {
         let keepInArea = keepInAreas[i];
         for (let j = 0; j < keepInArea.length; j++) {
           keepInArea[j].lat = parseFloat(keepInArea[j].lat);
           keepInArea[j].lng = parseFloat(keepInArea[j].lng);
         }
+        keepInCircleInputs.lng = parseFloat(keepInCircleInputs.lng);
+        keepInCircleInputs.lat = parseFloat(keepInCircleInputs.lat);
+        keepInCircleInputs.rad = parseFloat(keepInCircleInputs.rad);
         this.Geofence.Geofence.push({
           Coordinates: keepInArea,
           Keep_in: true,
+          Circle_inputs: {
+            lng: keepInCircleInputs.lng,
+            lat: keepInCircleInputs.lat,
+            rad: keepInCircleInputs.rad,
+          },
         });
       }
       let keepOutAreas = this.$refs.KeepOutCart.CoordinatesArray;
@@ -249,7 +280,25 @@ export default {
     },
     setKeepOutEmpty(value) {
       this.keepOutEmpty = value;
-    }
+    },
+    addKeepInPolygon(coordinates) {
+      let layerName = "Keep In " + this.keepInCount;
+      this.$refs.Map.removeLayer(layerName);
+      this.$refs.Map.addPoly(coordinates, layerName, "green", 0.8);
+    },
+    addKeepInCircle(lng, lat, rad) {
+      let layerName = "Keep In " + this.keepInCount;
+      this.$refs.Map.removeLayer(layerName);
+      this.keepInCircleCoords = this.$refs.Map.addCircle(
+        lng,
+        lat,
+        rad,
+        16,
+        layerName,
+        "black",
+        0.8
+      );
+    },
   },
 };
 </script>

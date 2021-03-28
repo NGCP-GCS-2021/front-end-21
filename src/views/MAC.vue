@@ -138,7 +138,6 @@ export default {
         "black",
         0.8
       );
-      console.log(this.circleCoords);
     },
   },
 };
