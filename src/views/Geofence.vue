@@ -299,7 +299,7 @@ export default {
     addKeepInCircle(lng, lat, rad) {
       let layerName = "Keep In " + this.keepInCount;
       this.$refs.Map.removeLayer(layerName);
-      this.keepInCircleCoords = this.$refs.Map.addCircle(
+      let tempCoords = this.$refs.Map.addCircle(
         lng,
         lat,
         rad,
@@ -308,6 +308,10 @@ export default {
         "black",
         0.8
       );
+      for (let i = 0; i < tempCoords.length; i++) {
+        tempCoords[i] = { lng: tempCoords[i][0], lat: tempCoords[i][1] };
+      }
+      this.keepInCircleCoords = tempCoords;
     },
     addKeepOutPolygon(coordinates) {
       let layerName = "Keep Out " + this.keepOutCount;
@@ -317,7 +321,7 @@ export default {
     addKeepOutCircle(lng, lat, rad) {
       let layerName = "Keep Out " + this.keepOutCount;
       this.$refs.Map.removeLayer(layerName);
-      this.keepOutCircleCoords = this.$refs.Map.addCircle(
+      let tempCoords = this.$refs.Map.addCircle(
         lng,
         lat,
         rad,
@@ -326,6 +330,10 @@ export default {
         "black",
         0.8
       );
+      for (let i = 0; i < tempCoords.length; i++) {
+        tempCoords[i] = { lng: tempCoords[i][0], lat: tempCoords[i][1] };
+      }
+      this.keepInCircleCoords = tempCoords;
     },
   },
 };
