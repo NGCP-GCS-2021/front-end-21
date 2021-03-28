@@ -122,7 +122,6 @@ export default {
       },
     },
     isInvalid: true,
-    temptemp: [],
   }),
   methods: {
     submit() {
@@ -151,8 +150,6 @@ export default {
           lat: "",
         },
       ];
-      //  !!!!!!   do we want to clear the search area on MAC's side as well?
-      //            most likely not since MAC might need geofence to function
     },
     addPolygon() {
       let tempCoordinates = new Array(this.Coordinates.length);
@@ -163,35 +160,34 @@ export default {
         temp[1] = this.Coordinates[i].lat;
         tempCoordinates[i] = temp;
       }
-      this.temptemp = tempCoordinates;
       this.$emit("addPolygon", tempCoordinates);
     },
     postSearchArea() {
       this.Search_area.Search_area.Coordinates = this.Coordinates;
 
-      // for (
-      //     let i = 0;
-      //     i < this.Search_area.Search_area.Coordinates.length;
-      //     i++
-      // ) {
-      //   this.Search_area.Search_area.Coordinates[i].lat = parseFloat(
-      //       this.Search_area.Search_area.Coordinates[i].lat
-      //   );
-      //   this.Search_area.Search_area.Coordinates[i].lng = parseFloat(
-      //       this.Search_area.Search_area.Coordinates[i].lng
-      //   );
-      // }
-      // const searchAreaStringify = JSON.stringify(this.Search_area);
-      // const path = "http://127.0.0.1:5000/MAC_INPUT";
-      // axios
-      //     .post(path, searchAreaStringify)
-      //     .then(() => {
-      //       console.log("Posted Search Area coordinates to MAC_INPUT for Polygon");
-      //       console.log(searchAreaStringify);
-      //     })
-      //     .catch((error) => {
-      //       console.log(error.response);
-      //     });
+      for (
+        let i = 0;
+        i < this.Search_area.Search_area.Coordinates.length;
+        i++
+      ) {
+        this.Search_area.Search_area.Coordinates[i].lat = parseFloat(
+          this.Search_area.Search_area.Coordinates[i].lat
+        );
+        this.Search_area.Search_area.Coordinates[i].lng = parseFloat(
+          this.Search_area.Search_area.Coordinates[i].lng
+        );
+      }
+      const searchAreaStringify = JSON.stringify(this.Search_area);
+      const path = "http://127.0.0.1:5000/MAC_INPUT";
+      axios
+        .post(path, searchAreaStringify)
+        .then(() => {
+          console.log("Posted Search Area coordinates (Polygon) to MAC_INPUT");
+          console.log(searchAreaStringify);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
     },
   },
 };

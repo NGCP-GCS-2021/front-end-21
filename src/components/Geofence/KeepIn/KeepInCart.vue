@@ -31,8 +31,8 @@
                 <v-row v-for="(Coordinates, j) in Coordinates" :key="j">
                   <h4 class="font-weight-light" pa-0 ma-0>
                     <code
-                      >Coordinate {{ j + 1 }}: [{{ Coordinates.lat }},
-                      {{ Coordinates.lng }}]</code
+                      >Coordinate {{ j + 1 }}: [{{ Coordinates[0] }},
+                      {{ Coordinates[1] }}]</code
                     >
                   </h4>
                 </v-row>
@@ -56,6 +56,7 @@ export default {
   props: ["vehicle", "keepInEmpty"],
   data: () => ({
     CoordinatesArray: [],
+    CircleInputsArray: [],
   }),
   methods: {
     removeArea(k) {
@@ -63,7 +64,7 @@ export default {
       if (this.CoordinatesArray.length == 0) {
         this.$emit("setKeepInEmpty", true);
       }
-    }
+    },
   },
 };
 </script>
