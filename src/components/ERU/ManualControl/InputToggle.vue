@@ -44,27 +44,36 @@ export default {
     },
   },
   mounted() {
-    const InputToggle = this;
+    const el = this;
+
+    var gamepadAPI = {
+      controller: {},
+      turbo: false,
+      connect: function (evt) {
+        gamepadAPI.controller = evt.gamepad;
+        el.controllerDisabled = false;
+        console.log("Gamepad connected.");
+      },
+      disconnect: function (evt) {
+        el.controllerDisabled = true;
+        delete gamepadAPI.controller;
+        console.log("Gamepad disconnected.");
+      },
+      update: function () {},
+      buttonPressed: function () {
+        console.log("good job u did something");
+      },
+      buttons: [],
+      buttonsCache: [],
+      buttonsStatus: [],
+      axesStatus: [],
+    };
 
     //Gamepad Connected
-    window.addEventListener("gamepadconnected", function (e) {
-      var gp = navigator.getGamepads()[e.gamepad.index];
-      console.log(
-        "Gamepad connected at index %d: %s. %d buttons, %d axes.",
-        gp.index,
-        gp.id,
-        gp.buttons.length,
-        gp.axes.length
-      );
-      InputToggle.controllerDisabled = false;
-    });
+    window.addEventListener("gamepadconnected", gamepadAPI.connect);
 
     //Gamepad Disconnected
-    window.addEventListener("gamepaddisconnected", function (e) {
-      var gp = navigator.getGamepads()[e.gamepad.index];
-      console.log("Gamepad disconnected from index %d: %s", gp.index, gp.id);
-      InputToggle.controllerDisabled = true;
-    });
+    window.addEventListener("gamepaddisconnected", gamepadAPI.disconnect);
   },
 };
 </script>
