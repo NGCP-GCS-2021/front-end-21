@@ -39,6 +39,10 @@ export default {
     ERUselected: false,
     MEAselected: false,
   }),
+  props: ["defaultVehicle"],
+  mounted() {
+    this.selectMAC();
+  },
   methods: {
     selectMAC() {
       this.MACselected = !this.MACselected;

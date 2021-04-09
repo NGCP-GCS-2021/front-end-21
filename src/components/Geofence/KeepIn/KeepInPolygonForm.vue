@@ -138,10 +138,28 @@ export default {
   props: ["vehicle"],
   data: () => ({
     dialog: false,
+    // Coordinates: [
+    //   {
+    //     lng: "",
+    //     lat: "",
+    //   },
+    // ],
     Coordinates: [
       {
-        lng: "",
-        lat: "",
+        lat: "33.9334264",
+        lng: "-117.6328200",
+      },
+      {
+        lat: "33.9350553",
+        lng: "-117.6328093",
+      },
+      {
+        lat: "33.9350331",
+        lng: "-117.6295263",
+      },
+      {
+        lat: "33.9333106",
+        lng: "-117.6294458",
       },
     ],
     isInvalid: true,
@@ -182,8 +200,8 @@ export default {
       let temp = [];
       for (let i = 0; i < this.Coordinates.length; i++) {
         temp = new Array(2);
-        temp[0] = this.Coordinates[i].lng;
-        temp[1] = this.Coordinates[i].lat;
+        temp[0] = parseFloat(this.Coordinates[i].lng);
+        temp[1] = parseFloat(this.Coordinates[i].lat);
         tempCoordinates[i] = temp;
       }
       this.$emit("addKeepInPolygon", tempCoordinates);

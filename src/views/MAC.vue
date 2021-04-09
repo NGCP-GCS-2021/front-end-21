@@ -126,7 +126,8 @@ export default {
     },
     addPolygon(coordinates) {
       this.$refs.Map.removeLayer("Search Area");
-      this.$refs.Map.addPoly(coordinates, "Search Area", "red", 0.8);
+      this.$refs.Map.addPoly(coordinates, "Search Area", "#00ff6a", 0.3);
+      console.log("herhehehere")
     },
     addCircle(lng, lat, rad) {
       this.circleCoords = this.$refs.Map.addCircle(
@@ -135,8 +136,8 @@ export default {
         rad,
         16,
         "SearchAreaCircle",
-        "black",
-        0.8
+        "#00ff6a",
+        0.3 
       );
     },
   },

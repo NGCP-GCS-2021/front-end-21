@@ -110,10 +110,28 @@ export default {
   name: "PolygonForm",
   data: () => ({
     dialog: false,
+    // Coordinates: [
+    //   {
+    //     lng: "",
+    //     lat: "",
+    //   },
+    // ],
     Coordinates: [
       {
-        lng: "",
-        lat: "",
+        lat: "33.9334264",
+        lng: "-117.6328200",
+      },
+      {
+        lat: "33.9350553",
+        lng: "-117.6328093",
+      },
+      {
+        lat: "33.9350331",
+        lng: "-117.6295263",
+      },
+      {
+        lat: "33.9333106",
+        lng: "-117.6294458",
       },
     ],
     Search_area: {

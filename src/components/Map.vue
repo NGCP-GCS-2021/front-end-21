@@ -356,25 +356,25 @@ export default {
         this.map = this.makeMap(this.icons);
         // For testing
         var vm = this;
-        this.map.on('load', function() {
-            var tempCoords = [
-                [-117.6311926970484, 33.93459532438122],
-                [-117.6314209323399, 33.93364332758927],
-                [-117.63052445140261, 33.93404089266308]
-            ];
-            vm.addCircle(vm.center_long, vm.center_lat, 20, 16, "test1", "black", 0.8);
-            vm.addCircle(vm.center_long, vm.center_lat, 40, 16, "test2", "black", 0.8);
-            vm.addCircle(vm.center_long, vm.center_lat, 50, 16, "test3", "black", 0.8);
-            vm.editLayerOpacity("test1", 0);
-            vm.editLayerColor("test2", "red");
-            vm.removeLayer("test3");
-            vm.addCoord("test_point", "eru", vm.center_long, vm.center_lat);
-            vm.setRotation("test_point", 90);
-            vm.setRotation("test_point", 70);
-            vm.editPointSource("test_point", [-117.63052445140261, 33.93404089266308]);
-            vm.editPolySource("test2", tempCoords);
-            vm.addCoord("test_point2", "hiker", vm.center_long, vm.center_lat);
-        });
+        // this.map.on('load', function() {
+        //     var tempCoords = [
+        //         [-117.6311926970484, 33.93459532438122],
+        //         [-117.6314209323399, 33.93364332758927],
+        //         [-117.63052445140261, 33.93404089266308]
+        //     ];
+        //     vm.addCircle(vm.center_long, vm.center_lat, 20, 16, "test1", "black", 0.8);
+        //     vm.addCircle(vm.center_long, vm.center_lat, 40, 16, "test2", "black", 0.8);
+        //     vm.addCircle(vm.center_long, vm.center_lat, 50, 16, "test3", "black", 0.8);
+        //     vm.editLayerOpacity("test1", 0);
+        //     vm.editLayerColor("test2", "red");
+        //     vm.removeLayer("test3");
+        //     vm.addCoord("test_point", "eru", vm.center_long, vm.center_lat);
+        //     vm.setRotation("test_point", 90);
+        //     vm.setRotation("test_point", 70);
+        //     vm.editPointSource("test_point", [-117.63052445140261, 33.93404089266308]);
+        //     vm.editPolySource("test2", tempCoords);
+        //     vm.addCoord("test_point2", "hiker", vm.center_long, vm.center_lat);
+        // });
     },
     template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
 }
