@@ -164,6 +164,8 @@ export default {
                 console.warn('Map.vue: addPoly: given layer name already exists');
                 return undefined;
             }
+            // Copy the first coordinate to the last to prevent rendering artifacts
+            coords.push(coords[0]);
             // We will use the convention that the source associated with layer name n
             // is n_source
             this.map.addSource(name + '_source', {
@@ -223,7 +225,8 @@ export default {
                 'type': 'symbol',
                 'layout': {
                     'icon-image': icon,
-                    'icon-rotate': 0
+                    'icon-rotate': 0,
+                    'icon-allow-overlap': true
                 }
             });
             return [lng, lat];
