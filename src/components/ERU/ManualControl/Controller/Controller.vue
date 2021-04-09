@@ -1,7 +1,41 @@
 <template>
   <div>
     <v-container>
-      <div></div>
+      <div class="controller" style="justify-content: center;">
+        <!-- <img
+          src="../../../../assets/lt.png"
+          style="width: 50px; height: 50px; top: 100px; left: 100px"
+        /> -->
+        <!-- <img src="../../../../assets/rt.png" /> -->
+        <svg style="width: 100%; height: 100%">
+          <circle
+            :cx="joystick_pos"
+            cy="123"
+            r="16"
+            stroke="black"
+            stroke-width="3"
+            fill="black"
+          />
+          <circle
+            cx="551"
+            cy="155"
+            r="15"
+            stroke="black"
+            stroke-width="3"
+            :opacity="a_pressed ? '0.5' : '0'"
+            :fill="a_pressed ? 'black' : ''"
+          />
+          <circle
+            cx="586"
+            cy="124"
+            r="15"
+            stroke="black"
+            stroke-width="3"
+            :opacity="b_pressed ? '0.5' : '0.0'"
+            :fill="b_pressed ? 'black' : 'green'"
+          />
+        </svg>
+      </div>
     </v-container>
   </div>
 </template>
@@ -16,7 +50,7 @@ export default {
     left_trigger: 0,
     dpad_up: false,
     dpad_down: false,
-    joystick_pos: 150,
+    joystick_pos: 315,
     image: "../../../../assets/xbox.png",
   }),
   methods: {
@@ -38,11 +72,11 @@ export default {
     moveJoystickIcon(axis) {
       if (this.joystick_pos) {
         if (axis > 0.1) {
-          this.joystick_pos = Math.min(axis * 10 + this.joystick_pos, 160);
+          this.joystick_pos = Math.min(axis * 10 + this.joystick_pos, 320);
         } else if (axis < -0.1) {
-          this.joystick_pos = Math.max(axis * 10 + this.joystick_pos, 140);
+          this.joystick_pos = Math.max(axis * 10 + this.joystick_pos, 300);
         } else {
-          this.joystick_pos = 150;
+          this.joystick_pos = 310;
         }
       }
     },
@@ -59,4 +93,12 @@ export default {
 </script>
 
 <style scoped>
+.controller {
+  align-content: center;
+  height: 350px;
+  width: 875px;
+  /* background-color: aqua; */
+  background-image: url("../../../../assets/xbox.png");
+  background-position: center;
+}
 </style>
