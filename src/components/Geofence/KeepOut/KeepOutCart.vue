@@ -27,14 +27,21 @@
               >
             </h4>
             <v-container>
-              <v-row v-for="(Coordinates, j) in Coordinates" :key="j">
-                <h4 class="font-weight-light" pa-0 ma-0>
-                  <code
-                    >Coordinate {{ j + 1 }}: [{{ Coordinates.lat }},
-                    {{ Coordinates.lng }}]</code
-                  >
-                </h4>
-              </v-row>
+              <v-col>
+                <v-row v-for="(Coordinates, j) in Coordinates" :key="j">
+                  <h4 class="font-weight-light" pa-0 ma-0>
+                    <code
+                      >Coordinate {{ j + 1 }}: [{{ Coordinates.lat }},
+                      {{ Coordinates.lng }}]</code
+                    >
+                  </h4>
+                </v-row>
+              </v-col>
+              <v-col :cols="1" align="center">
+                <v-icon class="mt-2" color="red" @click="removeArea(k)"
+                  >mdi-minus-circle</v-icon
+                >
+              </v-col>
             </v-container>
             <v-divider></v-divider>
           </v-container>
@@ -49,7 +56,15 @@ export default {
   props: ["vehicle", "keepOutEmpty"],
   data: () => ({
     CoordinatesArray: [],
+    CircleInputsArray: [],
   }),
-  methods: {},
+  methods: {
+    removeArea(k) {
+      this.CoordinatesArray.splice(k, 1);
+      if (this.CoordinatesArray.length == 0) {
+        this.$emit("setKeepOutEmpty", true);
+      }
+    },
+  },
 };
 </script>

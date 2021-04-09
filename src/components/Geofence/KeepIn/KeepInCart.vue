@@ -5,6 +5,7 @@
         <h3 class="font-weight-light" pa-0 ma-0>
           Keep In Areas - [Latitude, Longitude]
         </h3>
+        <h5>Coords: {{ this.CoordinatesArray }}</h5>
       </v-row>
     </v-container>
     <v-container>
@@ -56,6 +57,7 @@ export default {
   props: ["vehicle", "keepInEmpty"],
   data: () => ({
     CoordinatesArray: [],
+    CircleInputsArray: [],
   }),
   methods: {
     removeArea(k) {
@@ -63,7 +65,7 @@ export default {
       if (this.CoordinatesArray.length == 0) {
         this.$emit("setKeepInEmpty", true);
       }
-    }
+    },
   },
 };
 </script>

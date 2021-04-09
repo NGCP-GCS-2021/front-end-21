@@ -1,67 +1,93 @@
 <template>
   <div>
-    <!-- <p v-gamepad:left-analog-left.repeat="left"></p>
-    <div v-gamepad:button-a.repeat="pressed"></div> -->
+    <h1>X-axis: {{ x_axis }}</h1>
+    <h1>A pressed: {{ a_pressed }}</h1>
+    <h1>B pressed: {{ b_pressed }}</h1>
+    <h1>Right Trigger: {{ right_trigger }}</h1>
+    <h1>Left Trigger: {{ left_trigger }}</h1>
+    <h1>D-pad Up: {{ dpad_up }}</h1>
+    <h1>D-pad Down: {{ dpad_down }}</h1>
+    <svg>
+      <circle
+        :cx="joystick_pos"
+        cy="50"
+        r="15"
+        stroke="black"
+        stroke-width="3"
+        fill="black"
+      />
+    </svg>
+    <svg>
+      <circle
+        cx="50"
+        cy="50"
+        r="40"
+        stroke="black"
+        stroke-width="3"
+        :fill="a_pressed ? 'yellow' : 'black'"
+      />
+    </svg>
+    <svg>
+      <rect
+        width="50"
+        height="100"
+        :style="
+          dpad_up
+            ? 'fill: rgb(0, 0, 255); stroke-width: 3; stroke: rgb(0, 0, 0)'
+            : 'fill: rgb(225, 0, 0); stroke-width: 3; stroke: rgb(0, 0, 0)'
+        "
+      />
+    </svg>
   </div>
 </template>
 
 <script>
 export default {
-  data: () => ({}),
+  data: () => ({
+    x_axis: 0,
+    a_pressed: false,
+    b_pressed: false,
+    right_trigger: 0,
+    left_trigger: 0,
+    dpad_up: false,
+    dpad_down: false,
+    joystick_pos: 150,
+  }),
   methods: {
-    buttonPressed(b) {
-      if (typeof b == "object") {
-        return b.pressed;
-      }
-      return b == 1.0;
-    },
-    gameLoop() {
-      var gamepads = navigator.getGamepads
-        ? navigator.getGamepads()
-        : navigator.webkitGetGamepads
-        ? navigator.webkitGetGamepads
-        : [];
-      if (!gamepads) {
-        return;
-      }
+    getControllerState() {
+      var gamepads = navigator.getGamepads();
+      let gamepad = gamepads[0];
+      //console.log(gamepad);
 
-      var gp = gamepads[0];
-      if (this.buttonPressed(gp.buttons[0])) {
-        console.log("A");
-      } else if (this.buttonPressed(gp.buttons[2])) {
-        console.log("X");
-      } else if (this.buttonPressed(gp.buttons[1])) {
-        console.log("B");
-      } else if (this.buttonPressed(gp.buttons[3])) {
-        console.log("Y");
+      this.x_axis = gamepad.axes[0];
+      this.a_pressed = gamepad.buttons[0].pressed;
+      this.b_pressed = gamepad.buttons[1].pressed;
+      this.right_trigger = gamepad.buttons[7].value;
+      this.left_trigger = gamepad.buttons[6].value;
+      this.dpad_up = gamepad.buttons[12].pressed;
+      this.dpad_down = gamepad.buttons[13].pressed;
+
+      this.moveJoystickIcon(gamepad.axes[0]);
+    },
+    moveJoystickIcon(axis) {
+      if (this.joystick_pos) {
+        if (axis > 0.1) {
+          this.joystick_pos = Math.min(axis * 10 + this.joystick_pos, 160);
+        } else if (axis < -0.1) {
+          this.joystick_pos = Math.max(axis * 10 + this.joystick_pos, 140);
+        } else {
+          this.joystick_pos = 150;
+        }
       }
-      return window.requestAnimationFrame(this.gameLoop);
     },
   },
 
   mounted() {
-    const el = this;
-    var start;
-
-    //Gamepad Connected
-    // window.addEventListener("gamepadisconnected", function (e) {
-    //   var gp = navigator.getGamepads()[e.gamepad.index];
-    //   console.log(
-    //     "Gamepad connected at index %d: %s. %d buttons, %d axes.",
-    //     gp.index,
-    //     gp.id,
-    //     gp.buttons.length,
-    //     gp.axes.length
-    //   );
-    start = el.gameLoop(window);
-    // });
-
-    //Gamepad Disconnected
-    window.addEventListener("gamepaddisconnected", function (e) {
-      var gp = navigator.getGamepads()[e.gamepad.index];
-      console.log("Gamepad disconnected from index %d: %s", gp.index, gp.id);
-      el.cancelAnimationFrame(start); //Check this one, might be this/window or just cancel
-    });
+    //console.log(navigator.getGamepads()[0]);
+    this.interval = setInterval(() => this.getControllerState(), 50);
   },
+  beforeDestroy() {
+    this.clearInterval();
+  }
 };
 </script>

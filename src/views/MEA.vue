@@ -21,7 +21,7 @@
               </v-col>
             </v-row>
             <v-row class="px-3 pb-1">
-                <h4>Data Updated {{ }} ago</h4>
+                <h4>Data Updated ago</h4>
             </v-row>
           </v-container>
           <v-container fluid flex>

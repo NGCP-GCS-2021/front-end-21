@@ -63,10 +63,10 @@
                 <v-btn
                   class="mr-4"
                   color="green"
-                  type="submit"
+                  @click="submit"
                   :disabled="invalid"
                 >
-                  Submit
+                  Add to List
                 </v-btn>
                 <v-btn @click="clear"> Clear </v-btn>
               </v-card-actions>
@@ -90,7 +90,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { required, regex, between } from "vee-validate/dist/rules";
 import {
   extend,
@@ -138,7 +137,13 @@ export default {
   methods: {
     submit() {
       this.$refs.observer.validate();
-      this.postSearchArea();
+      this.$emit(
+        "addToKeepOut",
+        this.circleCoords,
+        this.Longitude,
+        this.Latitude,
+        this.Radius
+      );
     },
     clear() {
       this.Longitude = "";
@@ -148,41 +153,7 @@ export default {
       this.invalid = true;
     },
     addCircle() {
-      this.$emit("addCircle", this.Longitude, this.Latitude, this.Radius);
-    },
-    postSearchArea() {
-      for (
-        let i = 0;
-        i < this.Search_area.Search_area.Coordinates.length;
-        i++
-      ) {
-        this.Search_area.Search_area.Coordinates[i].lat = parseFloat(
-          this.Search_area.Search_area.Coordinates[i].lat
-        );
-        this.Search_area.Search_area.Coordinates[i].lng = parseFloat(
-          this.Search_area.Search_area.Coordinates[i].lng
-        );
-      }
-
-      this.Search_area.Search_area.Circle_inputs.lng = parseFloat(
-        this.Latitude
-      );
-      this.Search_area.Search_area.Circle_inputs.lat = parseFloat(
-        this.Longitude
-      );
-      this.Search_area.Search_area.Circle_inputs.rad = parseFloat(this.Radius);
-
-      const searchAreaStringify = JSON.stringify(this.Search_area);
-      const path = "http://127.0.0.1:5000/MAC_INPUT";
-      axios
-        .post(path, searchAreaStringify)
-        .then(() => {
-          console.log("Posted Search Area (Circle) coordinates to MAC_INPUT");
-          console.log(searchAreaStringify);
-        })
-        .catch((error) => {
-          console.log(error.response);
-        });
+      this.$emit("addKeepOutCircle", this.Longitude, this.Latitude, this.Radius);
     },
   },
 };
