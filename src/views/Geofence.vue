@@ -16,7 +16,10 @@
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row class="pb-3">
-              <VehicleSelect @selected="setVehicle" />
+              <VehicleSelect
+                @selected="setVehicle"
+                :defaultVehicle="defaultVehicle"
+              />
               <!-- setVehicle("MAC") -->
             </v-row>
 
@@ -138,7 +141,8 @@ export default {
   },
 
   data: () => ({
-    vehicle: null, //"MAC", "ERU", "MEA"
+    vehicle: "MAC", //"MAC", "ERU", "MEA"
+    defaultVehicle: "MAC",
     submitDisabled: true,
     deleteDisabled: true,
     Geofence: {
@@ -294,7 +298,8 @@ export default {
     addKeepInPolygon(coordinates) {
       let layerName = "Keep In " + this.keepInCount;
       this.$refs.Map.removeLayer(layerName);
-      this.$refs.Map.addPoly(coordinates, layerName, "green", 0.8);
+      let coords = this.$refs.Map.addPoly(coordinates, layerName, "green", 0.4);
+      console.log(coords);
     },
     addKeepInCircle(lng, lat, rad) {
       let layerName = "Keep In " + this.keepInCount;
@@ -305,8 +310,8 @@ export default {
         rad,
         16,
         layerName,
-        "black",
-        0.8
+        "green",
+        0.4
       );
       for (let i = 0; i < tempCoords.length; i++) {
         tempCoords[i] = { lng: tempCoords[i][0], lat: tempCoords[i][1] };
@@ -316,7 +321,7 @@ export default {
     addKeepOutPolygon(coordinates) {
       let layerName = "Keep Out " + this.keepOutCount;
       this.$refs.Map.removeLayer(layerName);
-      this.$refs.Map.addPoly(coordinates, layerName, "green", 0.8);
+      this.$refs.Map.addPoly(coordinates, layerName, "red", 0.4);
     },
     addKeepOutCircle(lng, lat, rad) {
       let layerName = "Keep Out " + this.keepOutCount;
@@ -327,8 +332,8 @@ export default {
         rad,
         16,
         layerName,
-        "black",
-        0.8
+        "red",
+        0.4
       );
       for (let i = 0; i < tempCoords.length; i++) {
         tempCoords[i] = { lng: tempCoords[i][0], lat: tempCoords[i][1] };

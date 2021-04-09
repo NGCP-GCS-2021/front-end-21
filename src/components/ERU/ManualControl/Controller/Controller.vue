@@ -1,43 +1,42 @@
 <template>
   <div>
-    <h1>X-axis: {{ x_axis }}</h1>
-    <h1>A pressed: {{ a_pressed }}</h1>
-    <h1>B pressed: {{ b_pressed }}</h1>
-    <h1>Right Trigger: {{ right_trigger }}</h1>
-    <h1>Left Trigger: {{ left_trigger }}</h1>
-    <h1>D-pad Up: {{ dpad_up }}</h1>
-    <h1>D-pad Down: {{ dpad_down }}</h1>
-    <svg>
-      <circle
-        :cx="joystick_pos"
-        cy="50"
-        r="15"
-        stroke="black"
-        stroke-width="3"
-        fill="black"
-      />
-    </svg>
-    <svg>
-      <circle
-        cx="50"
-        cy="50"
-        r="40"
-        stroke="black"
-        stroke-width="3"
-        :fill="a_pressed ? 'yellow' : 'black'"
-      />
-    </svg>
-    <svg>
-      <rect
-        width="50"
-        height="100"
-        :style="
-          dpad_up
-            ? 'fill: rgb(0, 0, 255); stroke-width: 3; stroke: rgb(0, 0, 0)'
-            : 'fill: rgb(225, 0, 0); stroke-width: 3; stroke: rgb(0, 0, 0)'
-        "
-      />
-    </svg>
+    <v-container>
+      <div class="controller" style="justify-content: center;">
+        <!-- <img
+          src="../../../../assets/lt.png"
+          style="width: 50px; height: 50px; top: 100px; left: 100px"
+        /> -->
+        <!-- <img src="../../../../assets/rt.png" /> -->
+        <svg style="width: 100%; height: 100%">
+          <circle
+            :cx="joystick_pos"
+            cy="123"
+            r="16"
+            stroke="black"
+            stroke-width="3"
+            fill="black"
+          />
+          <circle
+            cx="551"
+            cy="155"
+            r="15"
+            stroke="black"
+            stroke-width="3"
+            :opacity="a_pressed ? '0.5' : '0'"
+            :fill="a_pressed ? 'black' : ''"
+          />
+          <circle
+            cx="586"
+            cy="124"
+            r="15"
+            stroke="black"
+            stroke-width="3"
+            :opacity="b_pressed ? '0.5' : '0.0'"
+            :fill="b_pressed ? 'black' : 'green'"
+          />
+        </svg>
+      </div>
+    </v-container>
   </div>
 </template>
 
@@ -51,7 +50,8 @@ export default {
     left_trigger: 0,
     dpad_up: false,
     dpad_down: false,
-    joystick_pos: 150,
+    joystick_pos: 315,
+    image: "../../../../assets/xbox.png",
   }),
   methods: {
     getControllerState() {
@@ -72,11 +72,11 @@ export default {
     moveJoystickIcon(axis) {
       if (this.joystick_pos) {
         if (axis > 0.1) {
-          this.joystick_pos = Math.min(axis * 10 + this.joystick_pos, 160);
+          this.joystick_pos = Math.min(axis * 10 + this.joystick_pos, 320);
         } else if (axis < -0.1) {
-          this.joystick_pos = Math.max(axis * 10 + this.joystick_pos, 140);
+          this.joystick_pos = Math.max(axis * 10 + this.joystick_pos, 300);
         } else {
-          this.joystick_pos = 150;
+          this.joystick_pos = 310;
         }
       }
     },
@@ -88,6 +88,17 @@ export default {
   },
   beforeDestroy() {
     this.clearInterval();
-  }
+  },
 };
 </script>
+
+<style scoped>
+.controller {
+  align-content: center;
+  height: 350px;
+  width: 875px;
+  /* background-color: aqua; */
+  background-image: url("../../../../assets/xbox.png");
+  background-position: center;
+}
+</style>
