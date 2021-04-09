@@ -164,6 +164,8 @@ export default {
                 console.warn('Map.vue: addPoly: given layer name already exists');
                 return undefined;
             }
+            // Copy the first coordinate to the last to prevent rendering artifacts
+            coords.push(coords[0]);
             // We will use the convention that the source associated with layer name n
             // is n_source
             this.map.addSource(name + '_source', {
@@ -223,7 +225,8 @@ export default {
                 'type': 'symbol',
                 'layout': {
                     'icon-image': icon,
-                    'icon-rotate': 0
+                    'icon-rotate': 0,
+                    'icon-allow-overlap': true
                 }
             });
             return [lng, lat];
@@ -358,9 +361,9 @@ export default {
         var vm = this;
         this.map.on('load', function() {
             var tempCoords = [
-                [-117.6311926970484, 33.93459532438122],
-                [-117.6314209323399, 33.93364332758927],
-                [-117.63052445140261, 33.93404089266308]
+                [-117.6328200, 33.9334264],
+                [-117.6328093, 33.9350553],
+                [-117.6295263, 33.9350331]
             ];
             vm.addCircle(vm.center_long, vm.center_lat, 20, 16, "test1", "black", 0.8);
             vm.addCircle(vm.center_long, vm.center_lat, 40, 16, "test2", "black", 0.8);
@@ -368,12 +371,13 @@ export default {
             vm.editLayerOpacity("test1", 0);
             vm.editLayerColor("test2", "red");
             vm.removeLayer("test3");
-            vm.addCoord("test_point", "eru", vm.center_long, vm.center_lat);
+            vm.addCoord("test_point", "mac", vm.center_long, vm.center_lat);
+            vm.addCoord("test_point3", "eru", -117.63052445140261, 33.93404089266308);
             vm.setRotation("test_point", 90);
             vm.setRotation("test_point", 70);
             vm.editPointSource("test_point", [-117.63052445140261, 33.93404089266308]);
-            vm.editPolySource("test2", tempCoords);
             vm.addCoord("test_point2", "hiker", vm.center_long, vm.center_lat);
+            vm.addPoly(tempCoords, "triangle", "green", 0.8);
         });
     },
     template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>'
