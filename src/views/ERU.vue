@@ -75,9 +75,6 @@
                         @inputSelected="setInput"
                       />
                     </v-col>
-                    <!-- <v-col>
-                      <CheckController @controllerConnected="controllerConnected"/>
-                    </v-col> -->
                     <v-col>
                       <PowerButton @activate="setButtonsActivated" />
                     </v-col>
@@ -106,8 +103,17 @@
             <v-row v-if="input === 'keyboard'" style="padding-top: 1%">
               <v-card width="100%">
                 <v-container fluid-flex>
+                  <SimpleKeyboard
+                    @onChange="onChange"
+                    @onKeyPress="onKeyPress"
+                    :input="input"
+                  />
+                </v-container>
+              </v-card>
+              <v-card width="100%">
+                <v-container fluid-flex>
                   <h1 class="font-weight-light">Controls:</h1>
-                  <v-row>
+                  <v-row style="padding-top: 1%">
                     <v-col cols="6">
                       <img
                         src="../assets/KeysLegendWASD.png"
