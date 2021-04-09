@@ -5,7 +5,7 @@
         <h3 class="font-weight-light" pa-0 ma-0>
           Keep In Areas - [Latitude, Longitude]
         </h3>
-        <h5>Coords: {{ this.CoordinatesArray }}</h5>
+        <!-- <h5>Coords: {{ this.CoordinatesArray }}</h5> -->
       </v-row>
     </v-container>
     <v-container>
