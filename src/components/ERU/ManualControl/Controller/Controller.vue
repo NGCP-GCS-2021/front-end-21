@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <div class="controller" style="justify-content: center;">
+      <div class="controller" style="justify-content: center">
         <!-- <img
           src="../../../../assets/lt.png"
           style="width: 50px; height: 50px; top: 100px; left: 100px"
@@ -23,7 +23,7 @@
             stroke="black"
             stroke-width="3"
             :opacity="a_pressed ? '0.5' : '0'"
-            :fill="a_pressed ? 'black' : ''"
+            fill="black"
           />
           <circle
             cx="586"
@@ -32,8 +32,13 @@
             stroke="black"
             stroke-width="3"
             :opacity="b_pressed ? '0.5' : '0.0'"
-            :fill="b_pressed ? 'black' : 'green'"
+            fill="black"
           />
+          <!-- <rect width="23" height="23" x="357px" y="187px" /> -->
+          <rect width="23" height="23" x="334px" y="189px" />
+          <rect width="23" height="23" x="380px" y="189px"/>
+          <rect width="23" height="23" x="357px" y="166px" fill="black" :opacity="dpad_up ? '0.5' : '1'" />
+          <rect width="23" height="23" x="357px" y="212px" fill="black" :opacity="dpad_down ? '0.5' : '1'"/>
         </svg>
       </div>
     </v-container>
@@ -50,7 +55,7 @@ export default {
     left_trigger: 0,
     dpad_up: false,
     dpad_down: false,
-    joystick_pos: 315,
+    joystick_pos: 309,
     image: "../../../../assets/xbox.png",
   }),
   methods: {
@@ -72,11 +77,11 @@ export default {
     moveJoystickIcon(axis) {
       if (this.joystick_pos) {
         if (axis > 0.1) {
-          this.joystick_pos = Math.min(axis * 10 + this.joystick_pos, 320);
+          this.joystick_pos = Math.min(axis * 10 + this.joystick_pos, 319);
         } else if (axis < -0.1) {
-          this.joystick_pos = Math.max(axis * 10 + this.joystick_pos, 300);
+          this.joystick_pos = Math.max(axis * 10 + this.joystick_pos, 299);
         } else {
-          this.joystick_pos = 310;
+          this.joystick_pos = 309;
         }
       }
     },
