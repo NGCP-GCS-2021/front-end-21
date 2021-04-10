@@ -95,7 +95,8 @@ export default {
             // Load images
             for (const [key, val] of images.entries()) {
                 map.loadImage(val, function(error, image) {
-                    if (error)  throw error;
+                    if (error)
+                        console.log(error);
                     map.addImage(key, image);
                 }); 
             }
@@ -200,7 +201,7 @@ export default {
             var coords = this.approxCircle(lng, lat, radius, numPoints);
             return this.addPoly(coords, name, color, opacity);
         },
-
+        
         addCoord: function(name, icon, lng, lat) {
             // Draws an icon at the specified coordinate with the given layer name
             // Returns [lng, lat] on success, undefined on failure
@@ -340,21 +341,21 @@ export default {
         function() {
             return {
                 map: null, // Reference to the mapbox object
-                icon: null // Map of icon names to file paths
+                icons: null // Map of icon names to file paths
             };
         }
     },
     mounted() {
         this.icons = new Map([
             ['custom_marker', 'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png'],
-            ['eru', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/eru.png'],
-            ['evac-point', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/evac-point.png'],
-            ['geofence', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/geofence.png'],
-            ['hiker', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/hiker.png'],
-            ['home', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/home.png'],
-            ['mac', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/mac.png'],
-            ['mea', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/mea.png'],
-            ['search-area', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/search-area.png']
+            ['eru', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/master/src/assets/map_icons/eru.png'],
+            ['evac-point', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/master/src/assets/map_icons/evac-point.png'],
+            ['geofence', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/master/src/assets/map_icons/geofence.png'],
+            ['hiker', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/master/src/assets/map_icons/hiker.png'],
+            ['home', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/master/src/assets/map_icons/home.png'],
+            ['mac', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/master/src/assets/map_icons/mac.png'],
+            ['mea', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/master/src/assets/map_icons/mea.png'],
+            ['search-area', 'https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/master/src/assets/map_icons/search-area.png']
         ]);
         this.map = this.makeMap(this.icons);
         // For testing
