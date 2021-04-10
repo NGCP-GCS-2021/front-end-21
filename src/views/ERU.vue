@@ -189,7 +189,7 @@ export default {
   }),
   mounted() {
     //this.getERUData();
-    setInterval(this.setMapPosition(), 1000);
+    this.interval = setInterval(() => this.setMapPosition(), 500);
   },
   updated() {
     //this.getERUData();
