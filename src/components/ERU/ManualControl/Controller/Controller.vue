@@ -4,8 +4,16 @@
       <div class="controller" style="justify-content: center">
         <!-- <img
           src="../../../../assets/lt.png"
-          style="width: 50px; height: 50px; top: 100px; left: 100px"
-        /> -->
+          style="
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 300px;
+            top: 10px;
+            filter: invert
+          "
+        />
+        <h4>left trigger: {{ left_trigger }}</h4> -->
         <!-- <img src="../../../../assets/rt.png" /> -->
         <svg style="width: 100%; height: 100%">
           <circle
@@ -36,9 +44,35 @@
           />
           <!-- <rect width="23" height="23" x="357px" y="187px" /> -->
           <rect width="23" height="23" x="334px" y="189px" />
-          <rect width="23" height="23" x="380px" y="189px"/>
-          <rect width="23" height="23" x="357px" y="166px" fill="black" :opacity="dpad_up ? '0.5' : '1'" />
-          <rect width="23" height="23" x="357px" y="212px" fill="black" :opacity="dpad_down ? '0.5' : '1'"/>
+          <rect width="23" height="23" x="380px" y="189px" />
+          <rect
+            width="23"
+            height="23"
+            x="357px"
+            y="166px"
+            fill="black"
+            :opacity="dpad_up ? '0.5' : '1'"
+          />
+          <rect
+            width="23"
+            height="23"
+            x="357px"
+            y="212px"
+            fill="black"
+            :opacity="dpad_down ? '0.5' : '1'"
+          />
+          <path
+            d="M152.5 37C152.5 41.1421 149.142 44.5 145 44.5H132C127.858 44.5 124.5 41.1421 124.5 37V16.5C124.5 8.76801 130.768 2.5 138.5 2.5C146.232 2.5 152.5 8.76801 152.5 16.5V37Z"
+            transform="translate(180,0) scale(0.8)"
+            :opacity="(left_trigger != 0) ? '0.5' : ''"
+
+          />
+          <path
+            d="M152.5 37C152.5 41.1421 149.142 44.5 145 44.5H132C127.858 44.5 124.5 41.1421 124.5 37V16.5C124.5 8.76801 130.768 2.5 138.5 2.5C146.232 2.5 152.5 8.76801 152.5 16.5V37Z"
+            transform="translate(455,0) scale(0.8)"
+            :opacity="(right_trigger != 0) ? '0.5' : ''"
+
+          />
         </svg>
       </div>
     </v-container>
