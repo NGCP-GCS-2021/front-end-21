@@ -12,6 +12,7 @@
           NE_bound_lat="33.93569086311143"
           NE_bound_long="-117.6263621141112"
           ref="Map"
+          @setMounted="setMounted"
         />
         <template v-if="!manualControlView">
           <v-col :cols="6">
@@ -186,6 +187,25 @@ export default {
     current_lng: -117,
     current_lat: 34,
     eru_data: null,
+    map_mounted: false,
+    Coordinates: [
+      {
+        lat: "33.9334264",
+        lng: "-117.6328200",
+      },
+      {
+        lat: "33.9350553",
+        lng: "-117.6328093",
+      },
+      {
+        lat: "33.9350331",
+        lng: "-117.6295263",
+      },
+      {
+        lat: "33.9333106",
+        lng: "-117.6294458",
+      },
+    ],
   }),
   mounted() {
     //this.getERUData();
@@ -207,7 +227,15 @@ export default {
           console.error(error);
         });
     },
+    setMounted(value) {
+      this.map_mounted = value;
+      console.log("map_mounted:" + this.map_mounted);
+    },
     setMapPosition() {
+      if (!this.$refs.Map.map.loaded()) {
+        console.log(this.$refs.Map.map.loaded())
+        return;
+      }
       // for (let i = 0; i < this.eru_data.length; i++) {
       //   if (this.eru_data.title == "Latitude") {
       //     this.current_lat = this.eru_data.value;
@@ -215,19 +243,23 @@ export default {
       //     this.current_lng == this.eru_data.value;
       //   }
       // }
-      let coord = [this.current_lng, this.current_lat];
-      let pointExists = this.$refs.Map.editPointSource("eru", coord);
-      console.log(pointExists);
-      if (pointExists) {
-      } else {
-        console.log("we are jere");
-        this.$refs.Map.addCoord(
-          "eru",
-          "eru",
-          this.current_lng,
-          this.current_lat
-        );
-      }
+      // let coord = [this.current_lng, this.current_lat];
+      // let pointExists = this.$refs.Map.editPointSource("eru", coord);
+      // // console.log(pointExists);
+      // if (pointExists) {
+      // } else {
+      //   console.log(
+      //     this.$refs.Map.addCoord(
+      //       "eru",
+      //       "eru",
+      //       this.current_lng,
+      //       this.current_lat
+      //     )
+      //   );
+      // }
+      console.log(
+        this.$refs.Map.addPoly(this.Coordinates, "eru", "green", 0.4)
+      );
     },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
@@ -244,9 +276,6 @@ export default {
     setButtonsActivated(value) {
       this.buttonsActivated = value;
     },
-    // controllerConnected() {
-    //   this.controllerConnected = true;
-    // }
   },
 };
 </script>
