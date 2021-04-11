@@ -189,7 +189,7 @@ export default {
   }),
   mounted() {
     //this.getERUData();
-    this.interval = setInterval(() => this.setMapPosition(), 500);
+    this.interval = setInterval(() => this.setMapPosition(), 5000);
   },
   updated() {
     //this.getERUData();
@@ -215,7 +215,7 @@ export default {
       //     this.current_lng == this.eru_data.value;
       //   }
       // }
-      let coord = [this.current_lng, this.current_lat];
+      let coord =[-117.6311926970484, 33.93459532438122];
       let pointExists = this.$refs.Map.editPointSource("eru", coord);
       console.log(pointExists);
       if (pointExists) {
