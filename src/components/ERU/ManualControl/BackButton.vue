@@ -13,6 +13,7 @@ export default {
     back() {
       this.$emit("back", false);
       this.$emit("deactivate", false)
+      this.$emit("inputSelected", null)
     },
   },
 };

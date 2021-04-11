@@ -30,17 +30,62 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   props: ["buttonsActivated"],
   data: () => ({
     controllerDisabled: true,
+    keyboardSelected: false,
+    controllerSelected: false,
   }),
   methods: {
     selectedKeyboard() {
-      this.$emit("inputSelected", "keyboard");
+      this.keyboardSelected = !this.keyboardSelected;
+      this.controllerSelected = false;
+
+      if (this.keyboardSelected) {
+        this.postManualListener(1);
+        this.$emit("inputSelected", "keyboard");
+      } else {
+        this.postManualListener(0);
+        this.$emit("inputSelected", null);
+      }
     },
     selectedController() {
-      this.$emit("inputSelected", "controller");
+      this.controllerSelected = !this.controllerSelected;
+      this.keyboardSelected = false;
+      if (this.controllerSelected) {
+        this.postManualListener(2);
+        this.$emit("inputSelected", "controller");
+      } else {
+        this.postManualListener(0);
+        this.$emit("inputSelected", null);
+      }
+    },
+    postManualListener(input) {
+      let manualListener;
+      if (input == 0) {
+        manualListener = JSON.stringify({
+          Manual_listener: parseFloat(input),
+          Manual_control: false,
+        });
+      } else if (input == 1 || input == 2) {
+        manualListener = JSON.stringify({
+          Manual_listener: parseFloat(input),
+          Manual_control: true,
+        });
+      }
+      console.log(manualListener);
+      const path = "http://127.0.0.1:5000/ERU_INPUT";
+      axios
+        .post(path, manualListener)
+        .then(() => {
+          console.log("Posted Manual Control/Listener to MAC_INPUT");
+          console.log(manualListener);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
     },
   },
   mounted() {

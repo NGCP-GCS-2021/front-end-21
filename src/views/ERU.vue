@@ -11,6 +11,7 @@
           SW_bound_long="-117.63616828159178"
           NE_bound_lat="33.93569086311143"
           NE_bound_long="-117.6263621141112"
+          ref="Map"
         />
         <template v-if="!manualControlView">
           <v-col :cols="6">
@@ -67,6 +68,7 @@
                       <BackButton
                         @back="setManualControlView"
                         @deactivate="setButtonsActivated"
+                        @inputSelected="setInput"
                       />
                     </v-col>
                     <v-col cols="8">
@@ -181,9 +183,52 @@ export default {
     manualControlView: false,
     input: null,
     buttonsActivated: false,
-    // controllerConnected: false,
+    current_lng: -117,
+    current_lat: 34,
+    eru_data: null,
   }),
+  mounted() {
+    //this.getERUData();
+    this.interval = setInterval(() => this.setMapPosition(), 500);
+  },
+  updated() {
+    //this.getERUData();
+  },
   methods: {
+    getERUData() {
+      const path = "http://127.0.0.1:5000/ERU_XBEE";
+      axios
+        .get(path)
+        .then((res) => {
+          this.eru_data = res.data.ERU;
+          this.setMapPosition();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    setMapPosition() {
+      // for (let i = 0; i < this.eru_data.length; i++) {
+      //   if (this.eru_data.title == "Latitude") {
+      //     this.current_lat = this.eru_data.value;
+      //   } else if (this.eru_data.title == "Longitude") {
+      //     this.current_lng == this.eru_data.value;
+      //   }
+      // }
+      let coord = [this.current_lng, this.current_lat];
+      let pointExists = this.$refs.Map.editPointSource("eru", coord);
+      console.log(pointExists);
+      if (pointExists) {
+      } else {
+        console.log("we are jere");
+        this.$refs.Map.addCoord(
+          "eru",
+          "eru",
+          this.current_lng,
+          this.current_lat
+        );
+      }
+    },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
       this.updatedStage = stage;
