@@ -75,12 +75,11 @@ export default {
           Manual_control: true,
         });
       }
-      console.log(manualListener);
       const path = "http://127.0.0.1:5000/ERU_INPUT";
       axios
         .post(path, manualListener)
         .then(() => {
-          console.log("Posted Manual Control/Listener to MAC_INPUT");
+          console.log("Posted Manual Control/Listener to ERU_INPUT");
           console.log(manualListener);
         })
         .catch((error) => {
