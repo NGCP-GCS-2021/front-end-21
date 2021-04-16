@@ -87,8 +87,22 @@ export default {
     Longitude: "",
     Latitude: "",
   }),
-
+  mounted() {
+    this.getEvac();
+  },
   methods: {
+    getEvac() {
+      const path = "http://127.0.0.1:5000/MEA_INPUT";
+      axios
+        .get(path)
+        .then((res) => {
+          this.Longitude = res.data.EZ_lat;
+          this.Latitude = res.data.EZ_lng;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     submit() {
       this.$refs.observer.validate();
       this.postEvacMEA();
