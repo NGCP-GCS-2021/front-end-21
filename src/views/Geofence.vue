@@ -18,7 +18,6 @@
             <v-row class="pb-3">
               <VehicleSelect
                 @selected="setVehicle"
-                :defaultVehicle="defaultVehicle"
               />
               <!-- setVehicle("MAC") -->
             </v-row>
@@ -142,7 +141,6 @@ export default {
 
   data: () => ({
     vehicle: "MAC", //"MAC", "ERU", "MEA"
-    defaultVehicle: "MAC",
     submitDisabled: true,
     deleteDisabled: true,
     Geofence: {

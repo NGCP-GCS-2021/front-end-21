@@ -6,6 +6,7 @@
         <v-btn
           value="MAC"
           @click="selectMAC"
+          
         >
           <h1 class="font-weight-light">MAC</h1>
           <v-icon color="green">mdi-airplane</v-icon>
@@ -35,10 +36,10 @@ export default {
     MACselected: true,
     ERUselected: false,
     MEAselected: false,
+    vehicleSelect: 0,
   }),
-  props: ["defaultVehicle"],
   mounted() {
-    //this.selectMAC();
+    this.selectMAC()
   },
   methods: {
     selectMAC() {
