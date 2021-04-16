@@ -3,25 +3,15 @@
     <h1 class="font-weight-light text-center">Select a Vehicle:</h1>
     <v-card-actions class="justify-center">
       <v-btn-toggle v-model="vehicleSelect">
-        <v-btn
-          value="MAC"
-          @click="selectMAC"
-          
-        >
+        <v-btn value="MAC" @click="selectMAC">
           <h1 class="font-weight-light">MAC</h1>
           <v-icon color="green">mdi-airplane</v-icon>
         </v-btn>
-        <v-btn
-          value="ERU"
-          @click="selectERU"
-        >
+        <v-btn value="ERU" @click="selectERU">
           <h1 class="font-weight-light">ERU</h1>
           <v-icon color="orange">mdi-car</v-icon>
         </v-btn>
-        <v-btn
-          value="MEA"
-          @click="selectMEA"
-        >
+        <v-btn value="MEA" @click="selectMEA">
           <h1 class="font-weight-light">MEA</h1>
           <v-icon color="purple">mdi-quadcopter</v-icon>
         </v-btn>
@@ -39,7 +29,7 @@ export default {
     vehicleSelect: 0,
   }),
   mounted() {
-    this.selectMAC()
+    this.selectMAC();
   },
   methods: {
     selectMAC() {
