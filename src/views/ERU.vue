@@ -28,7 +28,7 @@
               <v-row>
                 <v-card class="pa-1" style="width: 100%">
                   <v-container fluid flex>
-                    <!-- <ERUStatus /> -->
+                    <ERUStatus />
                   </v-container>
                 </v-card>
               </v-row>
