@@ -184,35 +184,21 @@ export default {
     manualControlView: false,
     input: null,
     buttonsActivated: false,
-    current_lng: -117,
-    current_lat: 34,
+    current_lng: -117.6316988,
+    current_lat: 33.9336,
     eru_data: null,
     map_mounted: false,
-    Coordinates: [
-      {
-        lat: "33.9334264",
-        lng: "-117.6328200",
-      },
-      {
-        lat: "33.9350553",
-        lng: "-117.6328093",
-      },
-      {
-        lat: "33.9350331",
-        lng: "-117.6295263",
-      },
-      {
-        lat: "33.9333106",
-        lng: "-117.6294458",
-      },
-    ],
+    firstGet: true,
   }),
   mounted() {
-    //this.getERUData();
-    this.interval = setInterval(() => this.setMapPosition(), 500);
+    //setTimeout(this.getERUData(), 5000);
+    setTimeout(this.setMapPosition(), 5000);
+    //this.interval = setInterval(() => this.setMapPosition(), 5000);
   },
   updated() {
-    //this.getERUData();
+    // if (!firstGet) {
+    //   this.getERUData();
+    // }
   },
   methods: {
     getERUData() {
@@ -227,15 +213,8 @@ export default {
           console.error(error);
         });
     },
-    setMounted(value) {
-      this.map_mounted = value;
-      console.log("map_mounted:" + this.map_mounted);
-    },
+
     setMapPosition() {
-      if (!this.$refs.Map.map.loaded()) {
-        console.log(this.$refs.Map.map.loaded())
-        return;
-      }
       // for (let i = 0; i < this.eru_data.length; i++) {
       //   if (this.eru_data.title == "Latitude") {
       //     this.current_lat = this.eru_data.value;
@@ -243,23 +222,21 @@ export default {
       //     this.current_lng == this.eru_data.value;
       //   }
       // }
-      // let coord = [this.current_lng, this.current_lat];
-      // let pointExists = this.$refs.Map.editPointSource("eru", coord);
-      // // console.log(pointExists);
-      // if (pointExists) {
-      // } else {
-      //   console.log(
-      //     this.$refs.Map.addCoord(
-      //       "eru",
-      //       "eru",
-      //       this.current_lng,
-      //       this.current_lat
-      //     )
-      //   );
-      // }
-      // console.log(
-      //   this.$refs.Map.addPoly(this.Coordinates, "eru", "green", 0.4)
-      // );
+
+      let coord = [this.current_lng, this.current_lat]; //array for editPointSource
+      let pointExists = this.$refs.Map.editPointSource("eru", coord);
+      if (pointExists) {
+        console.log("testspot")
+      } else {
+        console.log("reached this point");
+        this.$refs.Map.addCoord(
+          "eru",
+          "eru",
+          this.current_lng,
+          this.current_lat
+        );
+      }
+      this.firstGet = false;
     },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
