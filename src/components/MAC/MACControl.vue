@@ -3,7 +3,7 @@
     <h1 class="font-weight-light">Stage Command</h1>
     <v-form ref="form" v-model="valid" lazy-validation class="pa-5">
       <v-select
-        v-model="select"
+        v-model="currentStage"
         :items="stages"
         :rules="[(v) => !!v || 'Please select stage']"
         label="Select Mission Stage"
@@ -15,6 +15,9 @@
       <v-btn color="green" class="mr-5" @click="postCurrentStage">
         Submit
       </v-btn>
+      <h3>Stage: {{ currentStage.stage }}</h3>
+      <h3>id: {{ currentStage.id }}</h3>
+
       <!-- <v-btn @click="clear"> Clear </v-btn> -->
       <!-- <v-dialog v-model="dialog" max-width="425">
         <v-card>
@@ -52,10 +55,11 @@ import axios from "axios";
 export default {
   data: () => ({
     menu: false,
-    currentStage: {
-      Perform_stage: null,
-    },
     //All stage id's are: (Integer Indication + 1)
+    currentStage: {
+      stage: null,
+      id: -1,
+    },
     stages: [
       {
         stage: "Ready to Start",
@@ -78,22 +82,59 @@ export default {
         id: 10,
       },
     ],
+    currentData: null,
   }),
+  mounted() {
+    this.getCurrentStage();
+  },
+
   methods: {
-    postCurrentStage() {
-      const path = "http://127.0.0.1:5000/MAC_INPUT";
-      this.currentStage.Perform_stage = this.select.id - 1;
-      const currentStageStringify = JSON.stringify(this.currentStage);
+    getCurrentStage() {
+      const path = "http://127.0.0.1:5000/MAC_XBEE";
+
       axios
-        .post(path, currentStageStringify)
-        .then(() => {
-          console.log("Posted stage to MAC_INPUT");
-          this.$emit("setGeneralStage", this.select.stage, "MAC");
+        .get(path)
+        .then((res) => {
+          this.currentData = res.data.MAC;
+          this.setCurrentStage();
         })
         .catch((error) => {
-          console.log(error.response);
-
+          console.error(error);
         });
+    },
+    setCurrentStage() {
+      for (let i = 0; i < this.currentData.length; i++) {
+        let pair = this.currentData[i];
+        if (pair.title == "Current_stage") {
+          this.currentStage.id = pair.value;
+
+          for (let k = 0; k < this.stages.length; k++) {
+            if (this.currentStage.id == this.stages[k].id) {
+              this.currentStage.stage = this.stages[k].stage;
+              i = this.currentData.length; //ends loop
+              k = this.stages.length; //ends loop
+            }
+          }
+        }
+      }
+    },
+    postCurrentStage() {
+      if (this.currentStage.id == -1) {
+      } else {
+        const path = "http://127.0.0.1:5000/MAC_INPUT";
+        const currentStageStringify = JSON.stringify({
+          Perform_stage: this.currentStage.id - 1,
+        });
+        axios
+          .post(path, currentStageStringify)
+          .then(() => {
+            console.log("Posted stage to MAC_INPUT");
+            this.$emit("setGeneralStage", this.currentStage.stage, "MAC");
+          })
+          .catch((error) => {
+            console.log(error.response);
+          });
+      }
     },
   },
 };

@@ -86,8 +86,23 @@ export default {
     Latitude: "",
     Longitude: "",
   }),
+  mounted() {
+    this.getCurrentDropLocation();
+  },
 
   methods: {
+    getCurrentDropLocation() {
+      const path = "http://127.0.0.1:5000/ERU_INPUT";
+      axios
+        .get(path)
+        .then((res) => {
+          this.Longitude = res.data.Drop_loc_lng;
+          this.Latitude = res.data.Drop_loc_lat;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     submit() {
       this.$refs.observer.validate();
       this.postDropLoc();
