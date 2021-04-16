@@ -5,15 +5,14 @@
       <v-btn-toggle v-model="vehicleSelect">
         <v-btn
           value="MAC"
-          :color="vehicleSelect == 'MAC' ? 'primary' : ''"
           @click="selectMAC"
+          
         >
           <h1 class="font-weight-light">MAC</h1>
           <v-icon color="green">mdi-airplane</v-icon>
         </v-btn>
         <v-btn
           value="ERU"
-          :color="vehicleSelect == 'ERU' ? 'primary' : ''"
           @click="selectERU"
         >
           <h1 class="font-weight-light">ERU</h1>
@@ -21,7 +20,6 @@
         </v-btn>
         <v-btn
           value="MEA"
-          :color="vehicleSelect == 'MEA' ? 'primary' : ''"
           @click="selectMEA"
         >
           <h1 class="font-weight-light">MEA</h1>
@@ -35,13 +33,13 @@
 <script>
 export default {
   data: () => ({
-    MACselected: false,
+    MACselected: true,
     ERUselected: false,
     MEAselected: false,
+    vehicleSelect: 0,
   }),
-  props: ["defaultVehicle"],
   mounted() {
-    this.selectMAC();
+    this.selectMAC()
   },
   methods: {
     selectMAC() {
