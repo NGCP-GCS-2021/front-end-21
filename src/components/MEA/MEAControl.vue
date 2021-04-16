@@ -77,8 +77,41 @@ export default {
         id: 10,
       },
     ],
+    currentData: null,
   }),
+  mounted() {
+    this.getCurrentStage();
+  },
   methods: {
+    getCurrentStage() {
+      const path = "http://127.0.0.1:5000/MEA_XBEE";
+
+      axios
+          .get(path)
+          .then((res) => {
+            this.currentData = res.data.MEA;
+            this.setCurrentStage();
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+    },
+    setCurrentStage() {
+      for (let i = 0; i < this.currentData.length; i++) {
+        let pair = this.currentData[i];
+        if (pair.title == "Current_stage") {
+          this.currentStage.id = pair.value;
+
+          for (let k = 0; k < this.stages.length; k++) {
+            if (this.currentStage.id == this.stages[k].id) {
+              this.currentStage.stage = this.stages[k].stage;
+              i = this.currentData.length; //ends loop
+              k = this.stages.length; //ends loop
+            }
+          }
+        }
+      }
+    },
     postCurrentStage() {
       const path = "http://127.0.0.1:5000/MEA_INPUT";
       this.currentStage.Perform_stage = this.select.id - 1;

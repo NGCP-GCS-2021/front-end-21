@@ -102,10 +102,26 @@ export default {
       travelTo: {},
       Latitude: "",
       Longitude: "",
+      Altitude: "",
     };
   },
-
+  mounted() {
+    this.getCurrentTravelTo();
+  },
   methods: {
+    getCurrentTravelTo(){
+      const path = "http://127.0.0.1:5000/MEA_INPUT";
+      axios
+          .get(path)
+          .then((res) => {
+            this.Longitude = res.data.Travel_to_lng;
+            this.Latitude = res.data.Travel_to_lat;
+            this.Altitude = res.data.Travel_to_alt;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+    },
     submit() {
       this.$refs.observer.validate();
       this.postTravelTo();
@@ -122,14 +138,14 @@ export default {
         Travel_to_lng: parseFloat(this.Longitude),
         Travel_to_alt: parseFloat(this.Altitude),
       });
-      const path = "http://127.0.0.1:5000/MAC_INPUT";
+      const path = "http://127.0.0.1:5000/MEA_INPUT";
       // console.log(this.travelTo);
       axios
         .post(path, this.travelTo, {
           headers: { "Content-Type": "application/json" },
         })
         .then(() => {
-          console.log("Posted Travel to/Home coordinates to MAC_INPUT");
+          console.log("Posted Travel to/Home coordinates to MEA_INPUT");
           console.log(this.travelTo);
         })
         .catch((error) => {
