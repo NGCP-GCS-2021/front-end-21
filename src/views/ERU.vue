@@ -102,6 +102,19 @@
                   <Controller />
                 </v-container>
               </v-card>
+              <v-card width="100%">
+                <v-container fluid-flex>
+                  <h1 class="font-weight-light">Controls:</h1>
+                  <v-row style="padding-top: 1%">
+                    <h3>Left Trigger: Move backwards</h3>
+                    <h3>Right Trigger: Move forward</h3>
+                    <h3>Joystick (left side): Move left and right</h3>
+                    <h3>D-Pad: Lower (down) and raise (up) scooper</h3>
+                    <h3>"A" button: Squeeze scooper</h3>
+                    <h3>"B" button: Release scooper</h3>
+                  </v-row>
+                </v-container>
+              </v-card>
             </v-row>
             <v-row v-if="input === 'keyboard'" style="padding-top: 1%">
               <v-card width="100%">
