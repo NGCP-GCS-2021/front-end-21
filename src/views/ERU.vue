@@ -191,14 +191,12 @@ export default {
     firstGet: true,
   }),
   mounted() {
-    //setTimeout(this.getERUData(), 5000);
-    setTimeout(this.setMapPosition(), 5000);
-    //this.interval = setInterval(() => this.setMapPosition(), 5000);
+    setTimeout(this.getERUData, 5000);
   },
   updated() {
-    // if (!firstGet) {
-    //   this.getERUData();
-    // }
+    if (!firstGet) {
+      this.getERUData();
+    }
   },
   methods: {
     getERUData() {
@@ -215,20 +213,20 @@ export default {
     },
 
     setMapPosition() {
-      // for (let i = 0; i < this.eru_data.length; i++) {
-      //   if (this.eru_data.title == "Latitude") {
-      //     this.current_lat = this.eru_data.value;
-      //   } else if (this.eru_data.title == "Longitude") {
-      //     this.current_lng == this.eru_data.value;
-      //   }
-      // }
+      for (let i = 0; i < this.eru_data.length; i++) {
+        if (this.eru_data.title == "Latitude") {
+          this.current_lat = this.eru_data.value;
+        } else if (this.eru_data.title == "Longitude") {
+          this.current_lng = this.eru_data.value;
+        }
+      }
 
       let coord = [this.current_lng, this.current_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("eru", coord);
       if (pointExists) {
-        console.log("testspot")
+        console.log("edited point")
       } else {
-        console.log("reached this point");
+        console.log("added point");
         this.$refs.Map.addCoord(
           "eru",
           "eru",
