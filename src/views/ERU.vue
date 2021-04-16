@@ -257,9 +257,9 @@ export default {
       //     )
       //   );
       // }
-      console.log(
-        this.$refs.Map.addPoly(this.Coordinates, "eru", "green", 0.4)
-      );
+      // console.log(
+      //   this.$refs.Map.addPoly(this.Coordinates, "eru", "green", 0.4)
+      // );
     },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
