@@ -97,7 +97,6 @@ import EvacuationZone from "@/components/EvacuationZone.vue";
 import ERUDrop from "@/components/MAC/ERUDrop.vue";
 import MACSearchArea from "@/components/MAC/MACSearchArea.vue";
 import Map from "@/components/Map.vue";
-import PolygonForm from "@/components/MAC/PolygonForm.vue";
 
 export default {
   name: "",
@@ -117,7 +116,16 @@ export default {
     updatedStage: null,
     updatedVehicle: null,
     circleCoords: null,
+    current_lng: -117,
+    current_lat: 34,
+    mac_data: null,
   }),
+  mounted() {
+    this.interval = setInterval(() => this.setMapPosition(), 500)
+  },
+  updated() {
+
+  },
   methods: {
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
@@ -139,6 +147,43 @@ export default {
         "#00ff6a",
         0.3 
       );
+    },
+    getEruData() {
+      const path = "http://127.0.0.1:5000/MAC_XBEE";
+      axios
+        .get(path)
+        .then((res) => {
+          this.mac_data = res.data.MAC;
+          this.setMapPosition();
+        })
+        .catch((error) => {
+          console.error(error);
+      });
+    },
+    setMapPosition() {
+      // for (let i = 0; i < this.eru_data.length; i++) {
+      //   if (this.eru_data.title == "Latitude") {
+      //     this.current_lat = this.eru_data.value;
+      //   } else if (this.eru_data.title == "Longitude") {
+      //     this.current_lng == this.eru_data.value;
+      //   }
+      // }
+      let coord = [this.current_lng, this.current_lat];
+      let pointExists = this.$refs.Map.editPointSource("mac", coord);
+      console.log(pointExists);
+      if ((this.current_lat == null || this.current_lng == null)) {
+      } else {
+        if (pointExists) {
+        } else {
+          console.log("we are jere_mac");
+          this.$refs.Map.addCoord(
+              "mac",
+              "mac",
+              this.current_lng,
+              this.current_lat
+          );
+        }
+      }
     },
   },
 };

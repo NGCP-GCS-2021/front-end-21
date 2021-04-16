@@ -207,6 +207,11 @@ export default {
           console.log(error.response);
         });
     },
+    mounted() {
+      if (coordinates != null){
+        this.Coordinates = this.coordinates;
+      }
+    }
   },
 };
 </script>
