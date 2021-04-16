@@ -87,8 +87,23 @@ export default {
       Latitude: "",
     };
   },
-
+  mounted() {
+    this.getCurrentTravelTo();
+  },
   methods: {
+    getCurrentTravelTo() {
+      const path = "http://127.0.0.1:5000/ERU_INPUT";
+      axios
+        .get(path)
+        .then((res) => {
+          this.Longitude = res.data.Travel_to_lng;
+          this.Latitude = res.data.Travel_to_lat;
+          this.Altitude = res.data.Travel_to_alt;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     submit() {
       this.$refs.observer.validate();
       this.postTravelTo();

@@ -15,8 +15,6 @@
       <v-btn color="green" class="mr-5" @click="postCurrentStage">
         Submit
       </v-btn>
-      <h3>Stage: {{ currentStage.stage }}</h3>
-      <h3>id: {{ currentStage.id }}</h3>
 
       <!-- <v-btn @click="clear"> Clear </v-btn> -->
       <!-- <v-dialog v-model="dialog" max-width="425">

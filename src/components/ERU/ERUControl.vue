@@ -87,21 +87,58 @@ export default {
         id: 10,
       },
     ],
+    currentData: null,
   }),
+  mounted() {
+    this.getCurrentStage();
+  },
   methods: {
-    postCurrentStage() {
-      const path = "http://127.0.0.1:5000/ERU_INPUT";
-      this.currentStage.Perform_stage = this.select.id - 1;
-      const currentStageStringify = JSON.stringify(this.currentStage);
+    getCurrentStage() {
+      const path = "http://127.0.0.1:5000/ERU_XBEE";
+
       axios
-        .post(path, currentStageStringify)
-        .then(() => {
-          console.log("Posted stage to ERU_INPUT");
-          this.$emit("setGeneralStage", this.select.stage, "ERU");
+        .get(path)
+        .then((res) => {
+          this.currentData = res.data.MAC;
+          this.setCurrentStage();
         })
         .catch((error) => {
-          console.log(error.response);
+          console.error(error);
         });
+    },
+    setCurrentStage() {
+      for (let i = 0; i < this.currentData.length; i++) {
+        let pair = this.currentData[i];
+        if (pair.title == "Current_stage") {
+          this.currentStage.id = pair.value;
+
+          for (let k = 0; k < this.stages.length; k++) {
+            if (this.currentStage.id == this.stages[k].id) {
+              this.currentStage.stage = this.stages[k].stage;
+              i = this.currentData.length; //ends loop
+              k = this.stages.length; //ends loop
+            }
+          }
+        }
+      }
+    },
+    postCurrentStage() {
+      if (this.currentStage.id == -1) {
+      } else {
+        const path = "http://127.0.0.1:5000/ERU_INPUT";
+        const currentStageStringify = JSON.stringify({
+          Perform_stage: this.currentStage.id - 1,
+        });
+        axios
+          .post(path, currentStageStringify)
+          .then(() => {
+            console.log("Posted stage to ERU_INPUT");
+            this.$emit("setGeneralStage", this.currentStage.stage, "ERU");
+          })
+          .catch((error) => {
+            console.log(error.response);
+          });
+      }
     },
   },
 };
