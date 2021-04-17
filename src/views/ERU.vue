@@ -269,7 +269,7 @@ export default {
       for (let i = 0; i < this.hiker_data.length; i++) {
         if (this.hiker_data.title == "Hiker_lat") {
           this.hiker_lat = this.hiker_data.value;
-        } else if (this.eru_data.title == "Hiker_lng") {
+        } else if (this.hiker_data.title == "Hiker_lng") {
           this.hiker_lng = this.hiker_data.value;
         }
       }
