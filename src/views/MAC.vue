@@ -119,12 +119,16 @@ export default {
     current_lng: -117,
     current_lat: 34,
     mac_data: null,
+    map_mounted: false,
+    firstGet: true,
   }),
   mounted() {
-    this.interval = setInterval(() => this.setMapPosition(), 500)
+    setTimeout(this.getCurrentData, 5000);
   },
   updated() {
-
+    if (!firstGet) {
+      this.getCurrentData();
+    }
   },
   methods: {
     setGeneralStage(stage, vehicle) {
@@ -148,42 +152,41 @@ export default {
         0.3 
       );
     },
-    getEruData() {
+    getCurrentData() {
       const path = "http://127.0.0.1:5000/MAC_XBEE";
       axios
         .get(path)
         .then((res) => {
-          this.mac_data = res.data.MAC;
-          this.setMapPosition();
+          this.eru_data = res.data.ERU;
+          this.setMACPosition();
         })
         .catch((error) => {
           console.error(error);
-      });
+        });
     },
-    setMapPosition() {
-      // for (let i = 0; i < this.eru_data.length; i++) {
-      //   if (this.eru_data.title == "Latitude") {
-      //     this.current_lat = this.eru_data.value;
-      //   } else if (this.eru_data.title == "Longitude") {
-      //     this.current_lng == this.eru_data.value;
-      //   }
-      // }
-      let coord = [this.current_lng, this.current_lat];
-      let pointExists = this.$refs.Map.editPointSource("mac", coord);
-      console.log(pointExists);
-      if ((this.current_lat == null || this.current_lng == null)) {
-      } else {
-        if (pointExists) {
-        } else {
-          console.log("we are jere_mac");
-          this.$refs.Map.addCoord(
-              "mac",
-              "mac",
-              this.current_lng,
-              this.current_lat
-          );
+    setMACPosition() {
+      for (let i = 0; i < this.eru_data.length; i++) {
+        if (this.eru_data.title == "Latitude") {
+          this.current_lat = this.eru_data.value;
+        } else if (this.eru_data.title == "Longitude") {
+          this.current_lng = this.eru_data.value;
         }
       }
+
+      let coord = [this.current_lng, this.current_lat]; //array for editPointSource
+      let pointExists = this.$refs.Map.editPointSource("mac", coord);
+      if (pointExists) {
+        console.log("edited point")
+      } else {
+        console.log("added point");
+        this.$refs.Map.addCoord(
+          "mac",
+          "mac",
+          this.current_lng,
+          this.current_lat
+        );
+      }
+      this.firstGet = false;
     },
   },
 };
