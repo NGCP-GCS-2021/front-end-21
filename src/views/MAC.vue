@@ -144,7 +144,6 @@ export default {
     addPolygon(coordinates) {
       this.$refs.Map.removeLayer("Search Area");
       this.$refs.Map.addPoly(coordinates, "Search Area", "#00ff6a", 0.3);
-      console.log("herhehehere")
     },
     addCircle(lng, lat, rad) {
       this.circleCoords = this.$refs.Map.addCircle(
@@ -162,11 +161,11 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.eru_data = res.data.ERU;
+          this.mac_data = res.data.MAC;
           this.setMACPosition();
         })
         .catch((error) => {
-          console.error(error);
+          console.error(error.response);
         });
       path = "http://127.0.0.1:5000/Hiker";
       axios
@@ -176,16 +175,16 @@ export default {
           this.setHikerPosition();
         })
         .catch((error) => {
-          console.error(error);
+          console.error(error.response);
         });
     },
 
     setMACPosition() {
       for (let i = 0; i < this.mac_data.length; i++) {
-        if (this.mac_data.title == "Latitude") {
-          this.current_lat = this.mac_data.value;
-        } else if (this.mac_data.title == "Longitude") {
-          this.current_lng = this.mac_data.value;
+        if (this.mac_data[i].title == "Latitude") {
+          this.current_lat = this.mac_data[i].value;
+        } else if (this.mac_data[i].title == "Longitude") {
+          this.current_lng = this.mac_data[i].value;
         }
       }
 
@@ -206,10 +205,10 @@ export default {
     },
     setHikerPosition() {
       for (let i = 0; i < this.hiker_data.length; i++) {
-        if (this.hiker_data.title == "Hiker_lat") {
-          this.hiker_lat = this.hiker_data.value;
-        } else if (this.hiker_data.title == "Hiker_lng") {
-          this.hiker_lng = this.hiker_data.value;
+        if (this.hiker_data[i].title == "Hiker_lat") {
+          this.hiker_lat = this.hiker_data[i].value;
+        } else if (this.hiker_data[i].title == "Hiker_lng") {
+          this.hiker_lng = this.hiker_data[i].value;
         }
       }
 

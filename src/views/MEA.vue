@@ -151,7 +151,7 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.eru_data = res.data.ERU;
+          this.mea_data = res.data.MEA;
           this.setMEAPosition();
         })
         .catch((error) => {
@@ -160,10 +160,10 @@ export default {
     },
     setMEAPosition() {
       for (let i = 0; i < this.mea_data.length; i++) {
-        if (this.mea_data.title == "Latitude") {
-          this.current_lat = this.mea_data.value;
-        } else if (this.mea_data.title == "Longitude") {
-          this.current_lng = this.mea_data.value;
+        if (this.mea_data[i].title == "Latitude") {
+          this.current_lat = this.mea_data[i].value;
+        } else if (this.mea_data[i].title == "Longitude") {
+          this.current_lng = this.mea_data[i].value;
         }
       }
 
@@ -184,10 +184,10 @@ export default {
     },
     setHikerPosition() {
       for (let i = 0; i < this.hiker_data.length; i++) {
-        if (this.hiker_data.title == "Hiker_lat") {
-          this.hiker_lat = this.hiker_data.value;
-        } else if (this.hiker_data.title == "Hiker_lng") {
-          this.hiker_lng = this.hiker_data.value;
+        if (this.hiker_data[i].title == "Hiker_lat") {
+          this.hiker_lat = this.hiker_data[i].value;
+        } else if (this.hiker_data[i].title == "Hiker_lng") {
+          this.hiker_lng = this.hiker_data[i].value;
         }
       }
 

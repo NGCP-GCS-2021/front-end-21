@@ -12,7 +12,6 @@
           NE_bound_lat="33.93569086311143"
           NE_bound_long="-117.6263621141112"
           ref="Map"
-          @setMounted="setMounted"
         />
         <template v-if="!manualControlView">
           <v-col :cols="6">
@@ -255,10 +254,10 @@ export default {
 
     setERUPosition() {
       for (let i = 0; i < this.eru_data.length; i++) {
-        if (this.eru_data.title == "Latitude") {
-          this.current_lat = this.eru_data.value;
-        } else if (this.eru_data.title == "Longitude") {
-          this.current_lng = this.eru_data.value;
+        if (this.eru_data[i].title == "Latitude") {
+          this.current_lat = this.eru_data[i].value;
+        } else if (this.eru_data[i].title == "Longitude") {
+          this.current_lng = this.eru_data[i].value;
         }
       }
 
@@ -279,10 +278,10 @@ export default {
     },
     setHikerPosition() {
       for (let i = 0; i < this.hiker_data.length; i++) {
-        if (this.hiker_data.title == "Hiker_lat") {
-          this.hiker_lat = this.hiker_data.value;
-        } else if (this.hiker_data.title == "Hiker_lng") {
-          this.hiker_lng = this.hiker_data.value;
+        if (this.hiker_data[i].title == "Hiker_lat") {
+          this.hiker_lat = this.hiker_data[i].value;
+        } else if (this.hiker_data[i].title == "Hiker_lng") {
+          this.hiker_lng = this.hiker_data[i].value;
         }
       }
 
