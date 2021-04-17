@@ -128,14 +128,12 @@ export default {
     hiker_lat: 33.933729,
   }),
   mounted() {
-    // setTimeout(this.getCurrentData, 5000);
-    setTimeout(this.setMEAPosition, 5000);
-    setTimeout(this.setHikerPosition, 5000);
+    setTimeout(this.getCurrentData, 5000);
   },
   updated() {
-    // if (!this.firstGetMEA && !this.firstGetHiker) {
-    //   this.getCurrentData();
-    // }
+    if (!this.firstGetMEA && !this.firstGetHiker) {
+      this.getCurrentData();
+    }
   },
   methods: {
     queryAndIndeterminate() {
