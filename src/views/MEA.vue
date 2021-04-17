@@ -2,26 +2,34 @@
   <div class="mea">
     <v-container fill-height fluid flex class="pa-2 mt-3 d-flex">
       <v-row align="auto">
-        <Map cols="col col-6" center_lat="33.932116" center_long="-117.630109" zoom="9"
-           SW_bound_lat="33.93154919990249" SW_bound_long="-117.63616828159178"
-           NE_bound_lat="33.93569086311143" NE_bound_long="-117.6263621141112" />
+        <Map
+          cols="col col-6"
+          center_lat="33.932116"
+          center_long="-117.630109"
+          zoom="9"
+          SW_bound_lat="33.93154919990249"
+          SW_bound_long="-117.63616828159178"
+          NE_bound_lat="33.93569086311143"
+          NE_bound_long="-117.6263621141112"
+          ref="Map"
+        />
         <v-col :cols="6">
           <v-container fluid flex>
-            <v-row >
+            <v-row>
               <v-col :cols="12">
-                <v-progress-linear 
+                <v-progress-linear
                   color="green"
                   class="px-1"
                   v-model="value"
                   :active="show"
                   :indeterminate="query"
                   :query="true"
-                  >
+                >
                 </v-progress-linear>
               </v-col>
             </v-row>
             <v-row class="px-3 pb-1">
-                <h4>Data Updated ago</h4>
+              <h4>Data Updated ago</h4>
             </v-row>
           </v-container>
           <v-container fluid flex>
@@ -72,16 +80,16 @@ import MEAControl from "@/components/MEA/MEAControl.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
 import MEAHome from "@/components/MEA/MEAHome.vue";
 import EvacuationZone from "@/components/EvacuationZone.vue";
-import Map from '@/components/Map.vue';
+import Map from "@/components/Map.vue";
 
 export default {
-  data () {
-      return {
-        value: 0,
-        query: false,
-        show: true,
-        interval: 0,
-      }
+  data() {
+    return {
+      value: 0,
+      query: false,
+      show: true,
+      interval: 0,
+    };
   },
 
   mounted() {
@@ -92,8 +100,8 @@ export default {
       this.getCurrentData();
     }
   },
-  beforeDestroy () {
-    clearInterval(this.interval)
+  beforeDestroy() {
+    clearInterval(this.interval);
   },
   name: "",
   props: ["stage", "vehicle"],
@@ -103,20 +111,35 @@ export default {
     GeneralStage,
     MEAHome,
     EvacuationZone,
-    Map
+    Map,
   },
 
   data: () => ({
     updatedStage: null,
     updatedVehicle: null,
     map_mounted: false,
-    firstGet: true,
+    firstGetMEA: true,
+    mea_data: [],
+    current_lng: -117.6316988,
+    current_lat: 33.9336,
+    firstGetHiker: true,
+    hiker_data: [],
+    hiker_lng: -117.6318437,
+    hiker_lat: 33.933729,
   }),
+  mounted() {
+    setTimeout(this.getCurrentData, 5000);
+  },
+  updated() {
+    if (!this.firstGetMEA && !this.firstGetHiker) {
+      this.getCurrentData();
+    }
+  },
   methods: {
-    queryAndIndeterminate () {
-      this.query = true
-      this.show = true
-      this.value = 0
+    queryAndIndeterminate() {
+      this.query = true;
+      this.show = true;
+      this.value = 0;
     },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
@@ -136,18 +159,18 @@ export default {
         });
     },
     setMEAPosition() {
-      for (let i = 0; i < this.eru_data.length; i++) {
-        if (this.eru_data.title == "Latitude") {
-          this.current_lat = this.eru_data.value;
-        } else if (this.eru_data.title == "Longitude") {
-          this.current_lng = this.eru_data.value;
+      for (let i = 0; i < this.mea_data.length; i++) {
+        if (this.mea_data.title == "Latitude") {
+          this.current_lat = this.mea_data.value;
+        } else if (this.mea_data.title == "Longitude") {
+          this.current_lng = this.mea_data.value;
         }
       }
 
       let coord = [this.current_lng, this.current_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("mea", coord);
       if (pointExists) {
-        console.log("edited point")
+        console.log("edited point");
       } else {
         console.log("added point");
         this.$refs.Map.addCoord(
@@ -157,7 +180,31 @@ export default {
           this.current_lat
         );
       }
-      this.firstGet = false;
+      this.firstGetMEA = false;
+    },
+    setHikerPosition() {
+      for (let i = 0; i < this.hiker_data.length; i++) {
+        if (this.hiker_data.title == "Hiker_lat") {
+          this.hiker_lat = this.hiker_data.value;
+        } else if (this.hiker_data.title == "Hiker_lng") {
+          this.hiker_lng = this.hiker_data.value;
+        }
+      }
+
+      let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
+      let pointExists = this.$refs.Map.editPointSource("hiker", coord);
+      if (pointExists) {
+        console.log("edited point");
+      } else {
+        console.log("added point");
+        this.$refs.Map.addCoord(
+          "hiker",
+          "hiker",
+          this.hiker_lng,
+          this.hiker_lat
+        );
+      }
+      this.firstGetHiker = false;
     },
   },
 };
