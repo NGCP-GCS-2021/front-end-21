@@ -100,7 +100,7 @@ export default {
   data() {
     return {
       travelTo: {},
-      Longitude: "testeteisjha",
+      Longitude: "",
       Latitude: "",
       Altitude: "",
       firstGetHome: true,
@@ -120,28 +120,30 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.Longitude = res.data.Travel_to_lng;
-          this.Latitude = res.data.Travel_to_lat;
-          this.Altitude = res.data.Travel_to_alt;
-          this.setHomePosition();
+          if (this.firstGetHome) {
+            this.Longitude = res.data.Travel_to_lng;
+            this.Latitude = res.data.Travel_to_lat;
+            this.Altitude = res.data.Travel_to_alt;
+            this.setHomePosition(this.Longitude, this.Latitude);
+          } else {
+            this.setHomePosition(
+              res.data.Travel_to_lng,
+              res.data.Travel_to_lat
+            );
+          }
         })
         .catch((error) => {
           console.error(error);
         });
     },
-    setHomePosition() {
-      let coord = [this.Longitude, this.Latitude]; //array for editPointSource
+    setHomePosition(lng, lat) {
+      let coord = [lng, lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("mac_home", coord);
       if (pointExists) {
         console.log("edited point");
       } else {
         console.log("added point");
-        this.$refs.Map.addCoord(
-          "mac_home",
-          "home",
-          this.Longitude,
-          this.Latitude
-        );
+        this.$refs.Map.addCoord("mac_home", "home", lng, lat);
       }
       this.firstGetHome = false;
     },

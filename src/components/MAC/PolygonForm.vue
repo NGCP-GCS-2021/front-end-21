@@ -67,7 +67,7 @@
       <v-row>
         <v-col>
           <v-card-actions>
-            <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
+            <v-btn class="mr-4" color="green" @click="submit" :disabled="invalid">
               Submit
             </v-btn>
             <v-btn @click="clear"> Clear </v-btn>
@@ -110,33 +110,38 @@ export default {
   name: "PolygonForm",
   data: () => ({
     dialog: false,
-    Coordinates: [
-      {
-        lng: "",
-        lat: "",
-      },
-    ],
     // Coordinates: [
     //   {
-    //     lat: "33.9334264",
-    //     lng: "-117.6328200",
-    //   },
-    //   {
-    //     lat: "33.9350553",
-    //     lng: "-117.6328093",
-    //   },
-    //   {
-    //     lat: "33.9350331",
-    //     lng: "-117.6295263",
-    //   },
-    //   {
-    //     lat: "33.9333106",
-    //     lng: "-117.6294458",
+    //     lng: "",
+    //     lat: "",
     //   },
     // ],
+    Coordinates: [
+      {
+        lat: "33.9334264",
+        lng: "-117.6328200",
+      },
+      {
+        lat: "33.9350553",
+        lng: "-117.6328093",
+      },
+      {
+        lat: "33.9350331",
+        lng: "-117.6295263",
+      },
+      {
+        lat: "33.9333106",
+        lng: "-117.6294458",
+      },
+    ],
     Search_area: {
       Search_area: {
         Coordinates: [],
+        Circle_inputs: {
+            lng: null,
+            lat: null,
+            rad: null,
+          },
       },
     },
     isInvalid: true,
@@ -144,6 +149,7 @@ export default {
   methods: {
     submit() {
       this.$refs.observer.validate();
+      console.log("hi max")
       this.postSearchArea();
     },
     add() {
@@ -196,6 +202,7 @@ export default {
         );
       }
       const searchAreaStringify = JSON.stringify(this.Search_area);
+      console.log(searchAreaStringify);
       const path = "http://127.0.0.1:5000/MAC_INPUT";
       axios
         .post(path, searchAreaStringify)

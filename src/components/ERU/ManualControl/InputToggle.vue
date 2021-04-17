@@ -8,7 +8,6 @@
       <v-btn-toggle v-model="inputSelect">
         <v-btn
           value="keyboard"
-          :color="inputSelect == 'keyboard' ? 'primary' : ''"
           :disabled="!buttonsActivated"
           @click="selectedKeyboard"
         >
@@ -17,7 +16,6 @@
         </v-btn>
         <v-btn
           value="controller"
-          :color="inputSelect == 'controller' ? 'primary' : ''"
           :disabled="controllerDisabled || !buttonsActivated"
           @click="selectedController"
         >
