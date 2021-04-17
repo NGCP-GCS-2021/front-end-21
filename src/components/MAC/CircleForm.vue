@@ -10,7 +10,7 @@
                 name="Latitude"
                 :rules="{
                   required: true,
-                  regex: /^\d*\.?\d*$/,
+                  regex: /^-?[0-9]\d*(.\d+)?$/,
                 }"
                 class="pa-0 ma-0"
               >
@@ -45,7 +45,7 @@
                 name="Radius"
                 :rules="{
                   required: true,
-                  regex: /^-?[0-9]\d*(.\d+)?$/,
+                  regex: /^\d*\.?\d*$/,
                 }"
               >
                 <v-text-field
