@@ -84,20 +84,16 @@ export default {
       }
   },
 
-  /*mounted () {
-    this.queryAndIndeterminate()
-  },*/
-
+  mounted() {
+    setTimeout(this.getCurrentData, 5000);
+  },
+  updated() {
+    if (!firstGet) {
+      this.getCurrentData();
+    }
+  },
   beforeDestroy () {
     clearInterval(this.interval)
-  },
-
-  methods: {
-    queryAndIndeterminate () {
-      this.query = true
-      this.show = true
-      this.value = 0
-    },
   },
   name: "",
   props: ["stage", "vehicle"],
@@ -113,12 +109,55 @@ export default {
   data: () => ({
     updatedStage: null,
     updatedVehicle: null,
+    map_mounted: false,
+    firstGet: true,
   }),
   methods: {
+    queryAndIndeterminate () {
+      this.query = true
+      this.show = true
+      this.value = 0
+    },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
       this.updatedStage = stage;
       this.updatedVehicle = vehicle;
+    },
+    getCurrentData() {
+      const path = "http://127.0.0.1:5000/MEA_XBEE";
+      axios
+        .get(path)
+        .then((res) => {
+          this.eru_data = res.data.ERU;
+          this.setMEAPosition();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    setMEAPosition() {
+      for (let i = 0; i < this.eru_data.length; i++) {
+        if (this.eru_data.title == "Latitude") {
+          this.current_lat = this.eru_data.value;
+        } else if (this.eru_data.title == "Longitude") {
+          this.current_lng = this.eru_data.value;
+        }
+      }
+
+      let coord = [this.current_lng, this.current_lat]; //array for editPointSource
+      let pointExists = this.$refs.Map.editPointSource("mea", coord);
+      if (pointExists) {
+        console.log("edited point")
+      } else {
+        console.log("added point");
+        this.$refs.Map.addCoord(
+          "mea",
+          "mea",
+          this.current_lng,
+          this.current_lat
+        );
+      }
+      this.firstGet = false;
     },
   },
 };
