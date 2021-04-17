@@ -67,7 +67,7 @@
       <v-row>
         <v-col>
           <v-card-actions>
-            <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
+            <v-btn class="mr-4" color="green" @click="submit" :disabled="invalid">
               Submit
             </v-btn>
             <v-btn @click="clear"> Clear </v-btn>
@@ -144,6 +144,7 @@ export default {
   methods: {
     submit() {
       this.$refs.observer.validate();
+      console.log("hi max")
       this.postSearchArea();
     },
     add() {
