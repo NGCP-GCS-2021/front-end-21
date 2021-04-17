@@ -103,10 +103,16 @@ export default {
       Longitude: "testeteisjha",
       Latitude: "",
       Altitude: "",
+      firstGetHome: true,
     };
   },
   mounted() {
-    this.getCurrentTravelTo();
+    setTimeout(this.getCurrentTravelTo, 5000);
+  },
+  updated() {
+    if (!this.firstGetHome) {
+      this.getCurrentTravelTo();
+    }
   },
   methods: {
     getCurrentTravelTo() {
@@ -117,10 +123,27 @@ export default {
           this.Longitude = res.data.Travel_to_lng;
           this.Latitude = res.data.Travel_to_lat;
           this.Altitude = res.data.Travel_to_alt;
+          this.setHomePosition();
         })
         .catch((error) => {
           console.error(error);
         });
+    },
+    setHomePosition() {
+      let coord = [this.Longitude, this.Latitude]; //array for editPointSource
+      let pointExists = this.$refs.Map.editPointSource("mac_home", coord);
+      if (pointExists) {
+        console.log("edited point");
+      } else {
+        console.log("added point");
+        this.$refs.Map.addCoord(
+          "mac_home",
+          "home",
+          this.Longitude,
+          this.Latitude
+        );
+      }
+      this.firstGetHome = false;
     },
     submit() {
       this.$refs.observer.validate();

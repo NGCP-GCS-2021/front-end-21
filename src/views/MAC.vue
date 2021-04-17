@@ -131,7 +131,7 @@ export default {
     setTimeout(this.getCurrentData, 5000);
   },
   updated() {
-    if (!firstGetMAC && !firstGetHiker) { 
+    if (!this.firstGetMAC && !this.firstGetHiker) { 
       this.getCurrentData();
     }
   },
