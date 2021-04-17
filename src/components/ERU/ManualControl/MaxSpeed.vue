@@ -77,16 +77,16 @@ export default {
         Manual_speed: parseFloat(this.MaxSpeed),
       });
       console.log(maxSpeed);
-      // const path = "http://127.0.0.1:5000/ERU_INPUT";
-      // axios
-      //   .post(path, maxSpeed)
-      //   .then(() => {
-      //     console.log("Posted Manual Speed to ERU_INPUT");
-      //     console.log(maxSpeed);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error.response);
-      //   });
+      const path = "http://127.0.0.1:5000/ERU_INPUT";
+      axios
+        .post(path, maxSpeed)
+        .then(() => {
+          console.log("Posted Manual Speed to ERU_INPUT");
+          console.log(maxSpeed);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
     },
   },
 };
