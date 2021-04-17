@@ -200,32 +200,44 @@ export default {
     current_lng: -117.6316988,
     current_lat: 33.9336,
     eru_data: null,
-    map_mounted: false,
     firstGet: true,
+    hiker_data: null,
+    hiker_lng: -117.6318437,
+    hiker_lat: 33.933729,
   }),
   mounted() {
-    setTimeout(this.getERUData, 5000);
+    setTimeout(this.getCurrentData, 5000);
   },
   updated() {
     if (!firstGet) {
-      this.getERUData();
+      this.getCurrentData();
     }
   },
   methods: {
-    getERUData() {
-      const path = "http://127.0.0.1:5000/ERU_XBEE";
+    getCurrentData() {
+      let path = "http://127.0.0.1:5000/ERU_XBEE";
       axios
         .get(path)
         .then((res) => {
           this.eru_data = res.data.ERU;
-          this.setMapPosition();
+          this.setERUPosition();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      path = "http://127.0.0.1:5000/Hiker";
+      axios
+        .get(path)
+        .then((res) => {
+          this.hiker_data = res.data.Hiker;
+          this.setHikerPosition();
         })
         .catch((error) => {
           console.error(error);
         });
     },
 
-    setMapPosition() {
+    setERUPosition() {
       for (let i = 0; i < this.eru_data.length; i++) {
         if (this.eru_data.title == "Latitude") {
           this.current_lat = this.eru_data.value;
@@ -237,7 +249,7 @@ export default {
       let coord = [this.current_lng, this.current_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("eru", coord);
       if (pointExists) {
-        console.log("edited point")
+        console.log("edited point");
       } else {
         console.log("added point");
         this.$refs.Map.addCoord(
@@ -245,6 +257,30 @@ export default {
           "eru",
           this.current_lng,
           this.current_lat
+        );
+      }
+      this.firstGet = false;
+    },
+    setHikerPosition() {
+      for (let i = 0; i < this.hiker_data.length; i++) {
+        if (this.hiker_data.title == "Hiker_lat") {
+          this.hiker_lat = this.hiker_data.value;
+        } else if (this.eru_data.title == "Hiker_lng") {
+          this.hiker_lng = this.hiker_data.value;
+        }
+      }
+
+      let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
+      let pointExists = this.$refs.Map.editPointSource("hiker", coord);
+      if (pointExists) {
+        console.log("edited point");
+      } else {
+        console.log("added point");
+        this.$refs.Map.addCoord(
+          "hiker",
+          "hiker",
+          this.hiker_lng,
+          this.hiker_lat
         );
       }
       this.firstGet = false;
