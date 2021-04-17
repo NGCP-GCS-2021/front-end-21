@@ -100,7 +100,7 @@ export default {
   data() {
     return {
       travelTo: {},
-      Longitude: "testeteisjha",
+      Longitude: "",
       Latitude: "",
       Altitude: "",
       firstGetHome: true,
@@ -111,7 +111,7 @@ export default {
   },
   updated() {
     if (!this.firstGetHome) {
-      this.getCurrentHomePosition();      
+      this.getCurrentTravelTo();
     }
   },
   methods: {
@@ -120,21 +120,17 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.Longitude = res.data.Travel_to_lng;
-          this.Latitude = res.data.Travel_to_lat;
-          this.Altitude = res.data.Travel_to_alt;
-          this.setHomePosition(this.Longitude, this.Latitude);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-    getCurrentHomePosition() {
-      const path = "http://127.0.0.1:5000/MAC_INPUT";
-      axios
-        .get(path)
-        .then((res) => {
-          this.setHomePosition(res.data.Travel_to_lng, res.data.Travel_to_lat);
+          if (this.firstGetHome) {
+            this.Longitude = res.data.Travel_to_lng;
+            this.Latitude = res.data.Travel_to_lat;
+            this.Altitude = res.data.Travel_to_alt;
+            this.setHomePosition(this.Longitude, this.Latitude);
+          } else {
+            this.setHomePosition(
+              res.data.Travel_to_lng,
+              res.data.Travel_to_lat
+            );
+          }
         })
         .catch((error) => {
           console.error(error);
@@ -147,12 +143,7 @@ export default {
         console.log("edited point");
       } else {
         console.log("added point");
-        this.$refs.Map.addCoord(
-          "mac_home",
-          "home",
-          lng,
-          lat
-        );
+        this.$refs.Map.addCoord("mac_home", "home", lng, lat);
       }
       this.firstGetHome = false;
     },
