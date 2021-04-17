@@ -111,7 +111,7 @@ export default {
   },
   updated() {
     if (!this.firstGetHome) {
-      this.getCurrentTravelTo();
+      this.getCurrentHomePosition();      
     }
   },
   methods: {
@@ -123,14 +123,25 @@ export default {
           this.Longitude = res.data.Travel_to_lng;
           this.Latitude = res.data.Travel_to_lat;
           this.Altitude = res.data.Travel_to_alt;
-          this.setHomePosition();
+          this.setHomePosition(this.Longitude, this.Latitude);
         })
         .catch((error) => {
           console.error(error);
         });
     },
-    setHomePosition() {
-      let coord = [this.Longitude, this.Latitude]; //array for editPointSource
+    getCurrentHomePosition() {
+      const path = "http://127.0.0.1:5000/MAC_INPUT";
+      axios
+        .get(path)
+        .then((res) => {
+          this.setHomePosition(res.data.Travel_to_lng, res.data.Travel_to_lat);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    setHomePosition(lng, lat) {
+      let coord = [lng, lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("mac_home", coord);
       if (pointExists) {
         console.log("edited point");
@@ -139,8 +150,8 @@ export default {
         this.$refs.Map.addCoord(
           "mac_home",
           "home",
-          this.Longitude,
-          this.Latitude
+          lng,
+          lat
         );
       }
       this.firstGetHome = false;
