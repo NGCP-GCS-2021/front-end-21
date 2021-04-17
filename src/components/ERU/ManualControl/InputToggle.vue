@@ -87,6 +87,23 @@ export default {
         });
     },
   },
+  beforeDestroy() {
+    let manualListener = JSON.stringify({
+      Manual_listener: 0,
+      Manual_control: false,
+    });
+    const path = "http://127.0.0.1:5000/ERU_INPUT";
+    axios
+      .post(path, manualListener)
+      .then(() => {
+        console.log("Posted Manual Control/Listener to ERU_INPUT");
+        console.log(manualListener);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  },
+
   mounted() {
     const el = this;
 
@@ -103,14 +120,6 @@ export default {
         delete gamepadAPI.controller;
         console.log("Gamepad disconnected.");
       },
-      update: function () {},
-      buttonPressed: function () {
-        console.log("good job u did something");
-      },
-      buttons: [],
-      buttonsCache: [],
-      buttonsStatus: [],
-      axesStatus: [],
     };
 
     //Gamepad Connected
