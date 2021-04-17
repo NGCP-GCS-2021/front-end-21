@@ -105,14 +105,26 @@
               <v-card width="100%">
                 <v-container fluid-flex>
                   <h1 class="font-weight-light">Controls:</h1>
-                  <v-row style="padding-top: 1%">
-                    <h3>Left Trigger: Move backwards</h3>
-                    <h3>Right Trigger: Move forward</h3>
-                    <h3>Joystick (left side): Move left and right</h3>
-                    <h3>D-Pad: Lower (down) and raise (up) scooper</h3>
-                    <h3>"A" button: Squeeze scooper</h3>
-                    <h3>"B" button: Release scooper</h3>
-                  </v-row>
+                  <div style="padding-top: 1%">
+                    <v-row>
+                      <v-col>
+                        <h1 class="font-weight-regular">Left Trigger: Move backwards</h1>
+                        <h1 class="font-weight-regular">"A" button: Squeeze scooper</h1>
+                        <h1 class="font-weight-regular">Joystick (left side): Move left and right</h1>
+                      </v-col>
+                      <v-col>
+                        <h1 class="font-weight-regular">Right Trigger: Move forward</h1>
+                        <h1 class="font-weight-regular">"B" button: Release scooper</h1>
+                        <h1 class="font-weight-regular">D-Pad: Lower (down) and raise (up) scooper</h1>
+                      </v-col>
+                    </v-row>
+<!--                    <h1 class="font-weight-regular">Left Trigger: Move backwards</h1>-->
+<!--                    <h1>Right Trigger: Move forward</h1>-->
+<!--                    <h1>Joystick (left side): Move left and right</h1>-->
+<!--                    <h1>D-Pad: Lower (down) and raise (up) scooper</h1>-->
+<!--                    <h1>"A" button: Squeeze scooper</h1>-->
+<!--                    <h1>"B" button: Release scooper</h1>-->
+                  </div>
                 </v-container>
               </v-card>
             </v-row>
