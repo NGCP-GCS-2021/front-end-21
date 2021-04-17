@@ -116,8 +116,8 @@ export default {
     updatedStage: null,
     updatedVehicle: null,
     circleCoords: null,
-    current_lng: -117,
-    current_lat: 34,
+    current_lng: -117.6316988,
+    current_lat: 33.9336,
     mac_data: null,
     map_mounted: false,
     firstGetMAC: true,
@@ -127,12 +127,14 @@ export default {
     hiker_lat: 33.933729,
   }),
   mounted() {
-    setTimeout(this.getCurrentData, 5000);
+    // setTimeout(this.getCurrentData, 5000);
+    setTimeout(this.setMACPosition, 5000);
+    setTimeout(this.setHikerPosition, 5000);
   },
   updated() {
-    if (!firstGetMAC && !firstGetHiker) { 
-      this.getCurrentData();
-    }
+    // if (!firstGetMAC && !firstGetHiker) { 
+    //   this.getCurrentData();
+    // }
   },
   methods: {
     setGeneralStage(stage, vehicle) {
@@ -180,13 +182,13 @@ export default {
     },
 
     setMACPosition() {
-      for (let i = 0; i < this.mac_data.length; i++) {
-        if (this.mac_data.title == "Latitude") {
-          this.current_lat = this.mac_data.value;
-        } else if (this.mac_data.title == "Longitude") {
-          this.current_lng = this.mac_data.value;
-        }
-      }
+      // for (let i = 0; i < this.mac_data.length; i++) {
+      //   if (this.mac_data.title == "Latitude") {
+      //     this.current_lat = this.mac_data.value;
+      //   } else if (this.mac_data.title == "Longitude") {
+      //     this.current_lng = this.mac_data.value;
+      //   }
+      // }
 
       let coord = [this.current_lng, this.current_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("mac", coord);
@@ -204,13 +206,13 @@ export default {
       this.firstGetMAC = false;
     },
     setHikerPosition() {
-      for (let i = 0; i < this.hiker_data.length; i++) {
-        if (this.hiker_data.title == "Hiker_lat") {
-          this.hiker_lat = this.hiker_data.value;
-        } else if (this.mac_data.title == "Hiker_lng") {
-          this.hiker_lng = this.hiker_data.value;
-        }
-      }
+      // for (let i = 0; i < this.hiker_data.length; i++) {
+      //   if (this.hiker_data.title == "Hiker_lat") {
+      //     this.hiker_lat = this.hiker_data.value;
+      //   } else if (this.mac_data.title == "Hiker_lng") {
+      //     this.hiker_lng = this.hiker_data.value;
+      //   }
+      // }
 
       let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("hiker", coord);
