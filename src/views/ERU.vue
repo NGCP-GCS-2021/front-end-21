@@ -197,10 +197,11 @@ export default {
     manualControlView: false,
     input: null,
     buttonsActivated: false,
+    firstGetERU: true,
+    eru_data: null,
     current_lng: -117.6316988,
     current_lat: 33.9336,
-    eru_data: null,
-    firstGet: true,
+    firstGetHiker: true,
     hiker_data: null,
     hiker_lng: -117.6318437,
     hiker_lat: 33.933729,
@@ -209,12 +210,13 @@ export default {
     setTimeout(this.getCurrentData, 5000);
   },
   updated() {
-    if (!firstGet) {
+    if (!this.firstGetERU && !this.firstGetHiker) {
       this.getCurrentData();
     }
   },
   methods: {
     getCurrentData() {
+      //ERU information
       let path = "http://127.0.0.1:5000/ERU_XBEE";
       axios
         .get(path)
@@ -225,6 +227,8 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+
+      //Hiker Information
       path = "http://127.0.0.1:5000/Hiker";
       axios
         .get(path)
@@ -259,7 +263,7 @@ export default {
           this.current_lat
         );
       }
-      this.firstGet = false;
+      this.firstGetERU = false;
     },
     setHikerPosition() {
       for (let i = 0; i < this.hiker_data.length; i++) {
@@ -283,7 +287,7 @@ export default {
           this.hiker_lat
         );
       }
-      this.firstGet = false;
+      this.firstGetHiker = false;
     },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
