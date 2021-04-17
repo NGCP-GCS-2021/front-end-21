@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import axios from "axios"
 import { required, regex } from "vee-validate/dist/rules";
 import {
   extend,
