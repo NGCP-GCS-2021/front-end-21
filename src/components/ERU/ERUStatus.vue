@@ -2,7 +2,7 @@
   <div>
     <v-row justify="center">
       <h2 class="font-weight-light pr-2">Vehicle Mission Stage:</h2>
-      <h2 class="font-weight-regular pb-2">ERU Drop</h2>
+      <h2 class="font-weight-regular pb-2">{{ current_stage.stage }}</h2>
     </v-row>
     <div
       style="
@@ -58,6 +58,40 @@ export default {
       //battery
     };
   },
+  current_stage: {
+    stage: "no stage",
+    id: -1
+  },
+  stages: [
+    {
+      stage: "Ready to Start",
+      id: 1,
+    },
+    {
+      stage: "ERU Landing Sequence",
+      id: 5,
+    },
+    {
+      stage: "Drive to Hiker",
+      id: 6,
+    },
+    {
+      stage: "Load the Hiker",
+      id: 7,
+    },
+    {
+      stage: "Go to EZ",
+      id: 8,
+    },
+    {
+      stage: "Transferring Hiker",
+      id: 9,
+    },
+    {
+      stage: "Return to Home/Travel to Position",
+      id: 10,
+    },
+  ],
   methods: {
     getERUData() {
       const path = "http://127.0.0.1:5000/ERU_XBEE";
@@ -65,11 +99,28 @@ export default {
         .get(path)
         .then((res) => {
           this.eru_data = res.data.ERU;
+          this.setCurrentStage()
         })
         .catch((error) => {
           console.error(error);
         });
     },
+  },
+  setCurrentStage() {
+    for (let i = 0; i < this.eru_data.length; i++) {
+      let pair = this.eru_data[i];
+      if (pair.title == "Current_stage") {
+        this.current_stage.id = pair.value;
+
+        for (let k = 0; k < this.stages.length; k++) {
+          if (this.current_stage.id == this.stages[k].id) {
+            this.current_stage.stage = this.stages[k].stage;
+            i = this.eru_data.length; //ends loop
+            k = this.stages.length; //ends loop
+          }
+        }
+      }
+    }
   },
   mounted() {
     this.getERUData();
