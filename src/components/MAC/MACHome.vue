@@ -121,10 +121,17 @@ export default {
         .get(path)
         .then((res) => {
           if (this.firstGetHome) {
-            this.Longitude = res.data.Travel_to_lng;
-            this.Latitude = res.data.Travel_to_lat;
-            this.Altitude = res.data.Travel_to_alt;
-            this.setHomePosition(this.Longitude, this.Latitude);
+            if (
+              res.data.Travel_to_lng == 0 &&
+              res.data.Travel_to_lat == 0 &&
+              res.data.Travel_to_alt == 0
+            ) {
+            } else {
+              this.Longitude = res.data.Travel_to_lng;
+              this.Latitude = res.data.Travel_to_lat;
+              this.Altitude = res.data.Travel_to_alt;
+              this.setHomePosition(this.Longitude, this.Latitude);
+            }
           } else {
             this.setHomePosition(
               res.data.Travel_to_lng,
@@ -178,8 +185,4 @@ export default {
   },
 };
 </script>
-
--get all data from MAC_input
--pull out travelTo alt, lat, lng
-  -setting this.Altitude = alt
 
