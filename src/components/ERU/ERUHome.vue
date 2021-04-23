@@ -85,24 +85,54 @@ export default {
       travelTo: {},
       Longitude: "",
       Latitude: "",
+      firstGetHome: true,
     };
   },
   mounted() {
-    this.getCurrentTravelTo();
+    setTimeout(this.getCurrentTravelTo, 5000);
+  },
+  updated() {
+    if (!this.firstGetHome) {
+      this.getCurrentTravelTo();
+    }
   },
   methods: {
     getCurrentTravelTo() {
       const path = "http://127.0.0.1:5000/ERU_INPUT";
       axios
-        .get(path)
-        .then((res) => {
-          this.Longitude = res.data.Travel_to_lng;
-          this.Latitude = res.data.Travel_to_lat;
-          this.Altitude = res.data.Travel_to_alt;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+          .get(path)
+          .then((res) => {
+            if (this.firstGetHome) {
+              if (
+                  res.data.Travel_to_lng == 0 &&
+                  res.data.Travel_to_lat == 0
+              ) {
+              } else {
+                this.Longitude = res.data.Travel_to_lng;
+                this.Latitude = res.data.Travel_to_lat;
+                this.setHomePosition(this.Longitude, this.Latitude);
+              }
+            } else {
+              this.setHomePosition(
+                  res.data.Travel_to_lng,
+                  res.data.Travel_to_lat
+              );
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+    },
+    setHomePosition(lng, lat) {
+      let coord = [lng, lat]; //array for editPointSource
+      let pointExists = this.$refs.Map.editPointSource("mac_home", coord);
+      if (pointExists) {
+        console.log("edited point");
+      } else {
+        console.log("added point");
+        this.$refs.Map.addCoord("mac_home", "home", lng, lat);
+      }
+      this.firstGetHome = false;
     },
     submit() {
       this.$refs.observer.validate();
