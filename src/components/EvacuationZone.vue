@@ -3,7 +3,7 @@
     <h1 class="font-weight-light">Evacuation Zone</h1>
     <!-- <h3>Current Data: {{ Longitude }}, {{ Latitude }}</h3> -->
     <validation-observer ref="observer" v-slot="{ invalid }">
-      <form @submit.prevent="submit" style="height: 150px;">
+      <form @submit.prevent="submit" style="height: 150px">
         <v-container>
           <v-row>
             <v-col cols="6">
@@ -86,27 +86,50 @@ export default {
     drop_loc: {},
     Longitude: "",
     Latitude: "",
+    firstGetEvac: true,
   }),
   mounted() {
-    this.getEvac();
+    setTimeout(this.getCurrentEvac, 5000);
+  },
+  updated() {
+    if (!this.firstGetEvac) {
+      this.getCurrentEvac();
+    }
   },
   methods: {
-    getEvac() {
-      const path = "http://127.0.0.1:5000/MEA_INPUT";
+    getCurrentEvac() {
+      const path = "http://127.0.0.1:5000/ERU_INPUT";
       axios
         .get(path)
         .then((res) => {
-          if ((res.data.Drop_loc_lng) == 0 && (res.data.Drop_loc_lng == 0)) {
+          if (this.firstGetEvac) {
+            if (res.data.Drop_loc_lng == 0 && res.data.Drop_loc_lng == 0) {
+            } else {
+              this.Longitude = res.data.Drop_loc_lng;
+              this.Latitude = res.data.Drop_loc_lat;
+              this.setEvacPosition(
+                res.data.Drop_loc_lng,
+                res.data.Drop_loc_lat
+              );
+            }
           } else {
-            this.Longitude = res.data.Drop_loc_lng;
-            this.Latitude = res.data.Drop_loc_lat;
+            this.setEvacPosition(res.data.Travel_to_lng, res.data.Travel_to_lng);
           }
-          this.Longitude = res.data.EZ_lat;
-          this.Latitude = res.data.EZ_lng;
         })
         .catch((error) => {
           console.error(error);
         });
+    },
+    setEvacPosition(lng, lat) {
+      let coord = [lng, lat]; //array for editPointSource
+      let pointExists = this.$refs.Map.editPointSource("evac_zone", coord);
+      if (pointExists) {
+        console.log("edited point");
+      } else {
+        console.log("added point");
+        this.$refs.Map.addCoord("evac_zone", "evac-point", lng, lat);
+      }
+      this.firstGetEvac = false;
     },
     submit() {
       this.$refs.observer.validate();
@@ -136,7 +159,7 @@ export default {
         .catch((error) => {
           console.log(error.response);
         });
-    }, 
+    },
     postEvacMEA() {
       this.drop_loc = JSON.stringify({
         Drop_loc_lat: parseFloat(this.Latitude),
@@ -154,8 +177,7 @@ export default {
         .catch((error) => {
           console.log(error.response);
         });
-    }, 
-
+    },
   },
 };
 </script>

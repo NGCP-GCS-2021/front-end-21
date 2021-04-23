@@ -130,7 +130,10 @@ export default {
               this.Longitude = res.data.Travel_to_lng;
               this.Latitude = res.data.Travel_to_lat;
               this.Altitude = res.data.Travel_to_alt;
-              this.setHomePosition(this.Longitude, this.Latitude);
+              this.setHomePosition(
+                res.data.Drop_loc_lng,
+                res.data.Drop_loc_lat
+              );
             }
           } else {
             this.setHomePosition(

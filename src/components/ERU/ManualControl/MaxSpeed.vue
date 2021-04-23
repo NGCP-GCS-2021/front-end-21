@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 import { required, regex } from "vee-validate/dist/rules";
 import {
   extend,
@@ -63,8 +63,24 @@ export default {
       MaxSpeed: "",
     };
   },
-
+  mounted() {
+    this.getMaxSpeed();
+  },
   methods: {
+    getMaxSpeed() {
+      const path = "http://127.0.0.1:5000/ERU_INPUT";
+      axios
+        .get(path)
+        .then((res) => {
+          if (res.data.Manual_speed == 0) {
+          } else {
+            this.MaxSpeed = res.data.Manual_speed;
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     submit() {
       this.$refs.observer.validate();
       this.postMaxSpeed();
