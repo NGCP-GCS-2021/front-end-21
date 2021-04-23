@@ -49,13 +49,10 @@
 <script>
 import axios from "axios";
 export default {
-  //either props or in data MOST LIKELY DATA
   data() {
     return {
       eru_data: [],
       eru_messages: [],
-      //mission_status
-      //battery
     };
   },
   current_stage: {
