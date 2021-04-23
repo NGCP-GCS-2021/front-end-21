@@ -41,6 +41,7 @@
                   <v-card class="pa-1">
                     <ERUHome 
                       @editERUHome = "editERUHome"
+                      @addERUHome = "addERUHome"
                       :pointExists = "pointExists"
                     
                     />
@@ -320,9 +321,11 @@ export default {
     setButtonsActivated(value) {
       this.buttonsActivated = value;
     },
-
     editERUHome(coord) {
       this.pointExists = this.$refs.Map.editPointSource(coords);
+    },
+    addERUHome(lng, lat) {
+      this.$refs.Map.addCoord("eru_home", "home", lng, lat);
     }
   },
 };

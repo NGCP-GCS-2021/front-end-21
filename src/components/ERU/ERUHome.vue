@@ -132,7 +132,7 @@ export default {
         console.log("edited point");
       } else {
         console.log("added point");
-        this.$refs.Map.addCoord("eru_home", "home", lng, lat);
+        this.$emit("addERUHome", lng, lat);
       }
       this.firstGetHome = false;
     },
