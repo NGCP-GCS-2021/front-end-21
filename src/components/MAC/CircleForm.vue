@@ -45,7 +45,7 @@
                 name="Radius"
                 :rules="{
                   required: true,
-                  regex: /^\d*\.?\d*$/,
+                  regex: /^-?[0-9]\d*(.\d+)?$/,
                 }"
               >
                 <v-text-field
