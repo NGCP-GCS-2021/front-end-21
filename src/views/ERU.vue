@@ -39,7 +39,11 @@
                 </v-col>
                 <v-col cols="6">
                   <v-card class="pa-1">
-                    <ERUHome />
+                    <ERUHome 
+                      @editERUHome = "editERUHome"
+                      :pointExists = "pointExists"
+                    
+                    />
                   </v-card>
                 </v-col>
               </v-row>
@@ -216,6 +220,7 @@ export default {
     hiker_data: null,
     hiker_lng: -117.6318437,
     hiker_lat: 33.933729,
+    pointExists: false
   }),
   mounted() {
     setTimeout(this.getCurrentData, 5000);
@@ -315,6 +320,10 @@ export default {
     setButtonsActivated(value) {
       this.buttonsActivated = value;
     },
+
+    editERUHome(coord) {
+      this.pointExists = this.$refs.Map.editPointSource(coords);
+    }
   },
 };
 </script>
