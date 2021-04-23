@@ -96,6 +96,11 @@ export default {
       axios
         .get(path)
         .then((res) => {
+          if ((res.data.Drop_loc_lng) == 0 && (res.data.Drop_loc_lng == 0)) {
+          } else {
+            this.Longitude = res.data.Drop_loc_lng;
+            this.Latitude = res.data.Drop_loc_lat;
+          }
           this.Longitude = res.data.EZ_lat;
           this.Latitude = res.data.EZ_lng;
         })
