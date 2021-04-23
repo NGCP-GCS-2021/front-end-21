@@ -2,7 +2,7 @@
   <div>
     <v-row justify="center">
       <h2 class="font-weight-light pr-2">Vehicle Mission Stage:</h2>
-      <h2 class="font-weight-regular pb-2">ERU Drop</h2>
+      <h2 class="font-weight-regular pb-2">{{ current_stage.stage }}</h2>
     </v-row>
     <div
       style="
@@ -52,6 +52,32 @@ export default {
     return {
       mac_data: [],
       mac_messages: [],
+      current_stage: {
+        stage: "No stage",
+        id: -1
+      },
+      stages: [
+        {
+          stage: "Ready to Start",
+          id: 1,
+        },
+        {
+          stage: "Takeoff to Minimum Altitude",
+          id: 2,
+        },
+        {
+          stage: "Find the Hiker",
+          id: 3,
+        },
+        {
+          stage: "ERU Drop",
+          id: 4,
+        },
+        {
+          stage: "Return to Home/Travel to Position",
+          id: 10,
+        },
+      ],
     };
   },
   methods: {
@@ -61,14 +87,28 @@ export default {
         .get(path)
         .then((res) => {
           this.mac_data = res.data.MAC;
+          this.setCurrentStage();
         })
         .catch((error) => {
           console.error(error);
         });
     },
-    getLongLat(){
+    setCurrentStage() {
+      for (let i = 0; i < this.mac_data.length; i++) {
+        let pair = this.mac_data[i];
+        if (pair.title == "Current_stage") {
+          this.current_stage.id = pair.value;
 
-    }
+          for (let k = 0; k < this.stages.length; k++) {
+            if (this.current_stage.id == this.stages[k].id) {
+              this.current_stage.stage = this.stages[k].stage;
+              i = this.mac_data.length; //ends loop
+              k = this.stages.length; //ends loop
+            }
+          }
+        }
+      }
+    },
   },
   mounted() {
     this.getMACData();
@@ -76,7 +116,6 @@ export default {
   updated() {
     this.getMACData();
   },
-
 };
 </script>
 

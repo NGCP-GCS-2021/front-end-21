@@ -61,6 +61,7 @@
                       <KeepOutCart
                         :keepOutEmpty="keepOutEmpty"
                         @setKeepOutEmpty="setKeepOutEmpty"
+                        @removeKeepOutArea="removeKeepOutArea"
                         ref="KeepOutCart"
                       />
                     </v-col>
@@ -338,6 +339,10 @@ export default {
       }
       this.keepInCircleCoords = tempCoords;
     },
+    removeKeepOutArea(k) {
+      let layerName = "Keep Out " + k
+      this.$refs.Map.removeLayer(layerName);
+    }
   },
 };
 </script>

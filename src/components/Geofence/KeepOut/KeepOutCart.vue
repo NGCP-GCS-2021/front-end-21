@@ -64,6 +64,7 @@ export default {
       if (this.CoordinatesArray.length == 0) {
         this.$emit("setKeepOutEmpty", true);
       }
+      //this.$emit("removeArea", k)
     },
   },
 };

@@ -2,7 +2,7 @@
   <div>
     <v-row justify="center">
       <h2 class="font-weight-light pr-2">Vehicle Mission Stage:</h2>
-      <h2 class="font-weight-regular pb-2">ERU Drop</h2>
+      <h2 class="font-weight-regular pb-2">{{ current_stage.stage }}</h2>
     </v-row>
     <div
       style="
@@ -29,7 +29,12 @@
       <v-col :cols="12">
         <div
           class="scrollable"
-          style="border: 1px solid #bfbfbf; font-size: small; border-radius: 5px; height: 65px; overflow-y: hidden;
+          style="
+            border: 1px solid #bfbfbf;
+            font-size: small;
+            border-radius: 5px;
+            height: 65px;
+            overflow-y: hidden;
           "
         >
           <div v-for="(mea_messages, index) in mea_messages" :key="index">
@@ -50,8 +55,33 @@ export default {
     return {
       mea_data: [],
       mea_messages: [],
-      //mission_status
-      //battery
+      current_stage: {
+        stage: "No stage",
+        id: -1,
+      },
+      //All stage id's are: (Integer Indication + 1)
+      stages: [
+        {
+          stage: "Ready to Start",
+          id: 1,
+        },
+        {
+          stage: "Takeoff to Minimum Altitude",
+          id: 2,
+        },
+        {
+          stage: "Go to EZ",
+          id: 8,
+        },
+        {
+          stage: "Transferring Hiker",
+          id: 9,
+        },
+        {
+          stage: "Return to Home/Travel to Position",
+          id: 10,
+        },
+      ],
     };
   },
   methods: {
@@ -61,12 +91,29 @@ export default {
         .get(path)
         .then((res) => {
           this.mea_data = res.data.MEA;
+          this.setCurrentStage();
           console.log(new Date().getTime());
         })
         .catch((error) => {
           console.error(error);
         });
     },
+    setCurrentStage() {
+      for (let i = 0; i < this.mea_data.length; i++) {
+        let pair = this.mea_data[i];
+        if (pair.title == "Current_stage") {
+          this.current_stage.id = pair.value;
+
+          for (let k = 0; k < this.stages.length; k++) {
+            if (this.current_stage.id == this.stages[k].id) {
+              this.current_stage.stage = this.stages[k].stage;
+              i = this.mea_data.length; //ends loop
+              k = this.stages.length; //ends loop
+            }
+          }
+        }
+      }
+    }
   },
   mounted() {
     this.getMEAData();
