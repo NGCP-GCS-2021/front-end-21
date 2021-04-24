@@ -118,6 +118,8 @@ export default {
   },
   mounted() {
     this.getMACSearchArea();
+    console.log(this.Search_area.coordinates);
+    console.log(this.Search_area.coordinates.length);
     if (this.Search_area.Coordinates.length > 0) {
       if (this.Search_area.Circle_inputs.rad == null) {
         //Polygon
