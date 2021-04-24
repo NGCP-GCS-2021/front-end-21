@@ -42,7 +42,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
+            <v-btn class="mr-4" color="green" @click="submit" :disabled="invalid">
               Submit
             </v-btn>
             <v-btn @click="clear"> Clear </v-btn>
@@ -137,6 +137,7 @@ export default {
     },
     submit() {
       this.$refs.observer.validate();
+      console.log("whaddup stokers")
       this.postDropLoc();
     },
     clear() {
