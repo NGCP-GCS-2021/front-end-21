@@ -57,7 +57,7 @@ export default {
   },
   current_stage: {
     stage: "no stage",
-    id: -1
+    id: -1,
   },
   stages: [
     {
@@ -96,28 +96,28 @@ export default {
         .get(path)
         .then((res) => {
           this.eru_data = res.data.ERU;
-          this.setCurrentStage()
+          this.setCurrentStage();
         })
         .catch((error) => {
           console.error(error);
         });
     },
-  },
-  setCurrentStage() {
-    for (let i = 0; i < this.eru_data.length; i++) {
-      let pair = this.eru_data[i];
-      if (pair.title == "Current_stage") {
-        this.current_stage.id = pair.value;
+    setCurrentStage() {
+      for (let i = 0; i < this.eru_data.length; i++) {
+        let pair = this.eru_data[i];
+        if (pair.title == "Current_stage") {
+          this.current_stage.id = pair.value;
 
-        for (let k = 0; k < this.stages.length; k++) {
-          if (this.current_stage.id == this.stages[k].id) {
-            this.current_stage.stage = this.stages[k].stage;
-            i = this.eru_data.length; //ends loop
-            k = this.stages.length; //ends loop
+          for (let k = 0; k < this.stages.length; k++) {
+            if (this.current_stage.id == this.stages[k].id) {
+              this.current_stage.stage = this.stages[k].stage;
+              i = this.eru_data.length; //ends loop
+              k = this.stages.length; //ends loop
+            }
           }
         }
       }
-    }
+    },
   },
   mounted() {
     this.getERUData();
