@@ -89,7 +89,6 @@ export default {
   }),
   props: ['ERUDropPointExists'],
   mounted() {
-    this.getCurrentDropLocation();
     setTimeout(this.getCurrentDropLocation, 5000);
   },
   updated() {
