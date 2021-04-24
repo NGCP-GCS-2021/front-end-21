@@ -53,42 +53,43 @@ export default {
     return {
       eru_data: [],
       eru_messages: [],
+      current_stage: {
+        stage: "no stage",
+        id: -1,
+      },
+      stages: [
+        {
+          stage: "Ready to Start",
+          id: 1,
+        },
+        {
+          stage: "ERU Landing Sequence",
+          id: 5,
+        },
+        {
+          stage: "Drive to Hiker",
+          id: 6,
+        },
+        {
+          stage: "Load the Hiker",
+          id: 7,
+        },
+        {
+          stage: "Go to EZ",
+          id: 8,
+        },
+        {
+          stage: "Transferring Hiker",
+          id: 9,
+        },
+        {
+          stage: "Return to Home/Travel to Position",
+          id: 10,
+        },
+      ],
     };
   },
-  current_stage: {
-    stage: "no stage",
-    id: -1,
-  },
-  stages: [
-    {
-      stage: "Ready to Start",
-      id: 1,
-    },
-    {
-      stage: "ERU Landing Sequence",
-      id: 5,
-    },
-    {
-      stage: "Drive to Hiker",
-      id: 6,
-    },
-    {
-      stage: "Load the Hiker",
-      id: 7,
-    },
-    {
-      stage: "Go to EZ",
-      id: 8,
-    },
-    {
-      stage: "Transferring Hiker",
-      id: 9,
-    },
-    {
-      stage: "Return to Home/Travel to Position",
-      id: 10,
-    },
-  ],
+
   methods: {
     getERUData() {
       const path = "http://127.0.0.1:5000/ERU_XBEE";
