@@ -35,20 +35,18 @@
                 <v-col cols="6" class="ml-0 pl-3">
                   <v-card class="pa-1" style="width: 100%">
                     <EvacuationZone
-                    @editEvac = "editEvac"
-                    :evacPointExists = "evacPointExists"
-                    @addEvac = "addEvac"
-
+                      @editEvac="editEvac"
+                      :evacPointExists="evacPointExists"
+                      @addEvac="addEvac"
                     />
                   </v-card>
                 </v-col>
                 <v-col cols="6">
                   <v-card class="pa-1">
-                    <ERUHome 
-                      @editERUHome = "editERUHome"
-                      @addERUHome = "addERUHome"
-                      :pointExists = "pointExists"
-                    
+                    <ERUHome
+                      @editERUHome="editERUHome"
+                      @addERUHome="addERUHome"
+                      :pointExists="pointExists"
                     />
                   </v-card>
                 </v-col>
@@ -117,22 +115,34 @@
                   <div style="padding-top: 1%">
                     <v-row>
                       <v-col>
-                        <h1 class="font-weight-regular">Left Trigger: Move backwards</h1>
-                        <h1 class="font-weight-regular">"A" button: Squeeze scooper</h1>
-                        <h1 class="font-weight-regular">Joystick (left side): Move left and right</h1>
+                        <h1 class="font-weight-regular">
+                          Left Trigger: Move backwards
+                        </h1>
+                        <h1 class="font-weight-regular">
+                          "A" button: Squeeze scooper
+                        </h1>
+                        <h1 class="font-weight-regular">
+                          Joystick (left side): Move left and right
+                        </h1>
                       </v-col>
                       <v-col>
-                        <h1 class="font-weight-regular">Right Trigger: Move forward</h1>
-                        <h1 class="font-weight-regular">"B" button: Release scooper</h1>
-                        <h1 class="font-weight-regular">D-Pad: Lower (down) and raise (up) scooper</h1>
+                        <h1 class="font-weight-regular">
+                          Right Trigger: Move forward
+                        </h1>
+                        <h1 class="font-weight-regular">
+                          "B" button: Release scooper
+                        </h1>
+                        <h1 class="font-weight-regular">
+                          D-Pad: Lower (down) and raise (up) scooper
+                        </h1>
                       </v-col>
                     </v-row>
-<!--                    <h1 class="font-weight-regular">Left Trigger: Move backwards</h1>-->
-<!--                    <h1>Right Trigger: Move forward</h1>-->
-<!--                    <h1>Joystick (left side): Move left and right</h1>-->
-<!--                    <h1>D-Pad: Lower (down) and raise (up) scooper</h1>-->
-<!--                    <h1>"A" button: Squeeze scooper</h1>-->
-<!--                    <h1>"B" button: Release scooper</h1>-->
+                    <!--                    <h1 class="font-weight-regular">Left Trigger: Move backwards</h1>-->
+                    <!--                    <h1>Right Trigger: Move forward</h1>-->
+                    <!--                    <h1>Joystick (left side): Move left and right</h1>-->
+                    <!--                    <h1>D-Pad: Lower (down) and raise (up) scooper</h1>-->
+                    <!--                    <h1>"A" button: Squeeze scooper</h1>-->
+                    <!--                    <h1>"B" button: Release scooper</h1>-->
                   </div>
                 </v-container>
               </v-card>
@@ -191,7 +201,7 @@ import ControllerBars from "@/components/ERU/ManualControl/Controller/Controller
 
 import KeyboardBars from "@/components/ERU/ManualControl/Keyboard/KeyboardBars";
 import Map from "@/components/Map.vue";
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "",
@@ -228,7 +238,7 @@ export default {
     hiker_lng: -117.6318437,
     hiker_lat: 33.933729,
     pointExists: false,
-    evacPointExists: false
+    evacPointExists: false,
   }),
   mounted() {
     setTimeout(this.getCurrentData, 5000);
@@ -329,17 +339,17 @@ export default {
       this.buttonsActivated = value;
     },
     editERUHome(coord) {
-      this.pointExists = this.$refs.Map.editPointSource("eru_home",coords);
+      this.pointExists = this.$refs.Map.editPointSource("eru_home", coord);
     },
     addERUHome(lng, lat) {
       this.$refs.Map.addCoord("eru_home", "home", lng, lat);
     },
-    editEvac(coord){
-      this.evacPointExists = this.$refs.Map.editPointSource("evac_zone", coords);
+    editEvac(coord) {
+      this.evacPointExists = this.$refs.Map.editPointSource("evac_zone", coord);
     },
     addEvac(lng, lat) {
       this.$refs.Map.addCoord("evac_zone", "evac-point", lng, lat);
-    }
+    },
   },
 };
 </script>
