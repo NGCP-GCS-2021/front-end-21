@@ -43,7 +43,12 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
+            <v-btn
+              class="mr-4"
+              color="green"
+              @click="submit"
+              :disabled="invalid"
+            >
               Submit
             </v-btn>
             <v-btn @click="clear"> Clear </v-btn>
@@ -83,7 +88,7 @@ export default {
     ValidationObserver,
   },
   data: () => ({
-    drop_loc: {},
+    EZ: {},
     Longitude: "",
     Latitude: "",
     firstGetEvac: true,
@@ -104,17 +109,14 @@ export default {
         .get(path)
         .then((res) => {
           if (this.firstGetEvac) {
-            if (res.data.Drop_loc_lng == 0 && res.data.Drop_loc_lng == 0) {
+            if (res.data.EZ_lng == 0 && res.data.EZ_lat == 0) {
             } else {
-              this.Longitude = res.data.Drop_loc_lng;
-              this.Latitude = res.data.Drop_loc_lat;
-              this.setEvacPosition(
-                res.data.Drop_loc_lng,
-                res.data.Drop_loc_lat
-              );
+              this.Longitude = res.data.EZ_lng;
+              this.Latitude = res.data.EZ_lat;
+              this.setEvacPosition(res.data.EZ_lng, res.data.EZ_lat);
             }
           } else {
-            this.setEvacPosition(res.data.Travel_to_lng, res.data.Travel_to_lng);
+            this.setEvacPosition(res.data.EZ_lng, res.data.EZ_lat);
           }
         })
         .catch((error) => {
@@ -128,7 +130,7 @@ export default {
         console.log("edited point");
       } else {
         console.log("added point");
-        this.$emit("addEvac", lng, lat)
+        this.$emit("addEvac", lng, lat);
       }
       this.firstGetEvac = false;
     },
@@ -144,36 +146,36 @@ export default {
     },
 
     postEvacERU() {
-      this.drop_loc = JSON.stringify({
-        Drop_loc_lat: parseFloat(this.Latitude),
-        Drop_loc_lng: parseFloat(this.Longitude),
+      this.EZ = JSON.stringify({
+        EZ_lng: parseFloat(this.Latitude),
+        EZ_lat: parseFloat(this.Longitude),
       });
       const path = "http://127.0.0.1:5000/ERU_INPUT";
       axios
-        .post(path, this.drop_loc, {
+        .post(path, this.EZ, {
           headers: { "Content-Type": "application/json" },
         })
         .then(() => {
           console.log("Posted Evacuation Zone coordinates to ERU_INPUT");
-          console.log(this.drop_loc);
+          console.log(this.EZ);
         })
         .catch((error) => {
           console.log(error.response);
         });
     },
     postEvacMEA() {
-      this.drop_loc = JSON.stringify({
-        Drop_loc_lat: parseFloat(this.Latitude),
-        Drop_loc_lng: parseFloat(this.Longitude),
+      this.EZ = JSON.stringify({
+        EZ_lng: parseFloat(this.Latitude),
+        EZ_lat: parseFloat(this.Longitude),
       });
       const path = "http://127.0.0.1:5000/MEA_INPUT";
       axios
-        .post(path, this.drop_loc, {
+        .post(path, this.EZ, {
           headers: { "Content-Type": "application/json" },
         })
         .then(() => {
           console.log("Posted Evacuation Zone coordinates to MEA_INPUT");
-          console.log(this.drop_loc);
+          console.log(this.EZ);
         })
         .catch((error) => {
           console.log(error.response);
