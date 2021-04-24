@@ -88,6 +88,7 @@ export default {
     ValidationObserver,
   },
   data: () => ({
+    EZ: {},
     Longitude: "",
     Latitude: "",
     firstGetEvac: true,
@@ -145,52 +146,39 @@ export default {
     },
 
     postEvacERU() {
+      this.EZ = JSON.stringify({
+        EZ_lng: parseFloat(this.Latitude),
+        EZ_lat: parseFloat(this.Longitude),
+      });
       const path = "http://127.0.0.1:5000/ERU_INPUT";
-
-      let EZ_lng = JSON.stringify({
-        EZ_lng: parseFloat(this.Longitude),
-      });
       axios
-        .post(path, EZ_lng)
+        .post(path, this.EZ)
         .then(() => {
-          console.log("Posted Evacuation Zone lng coordinates to ERU_INPUT");
-          console.log(EZ_lng);
-        })
-        .catch((error) => {
-          console.log(error.response);
-        });
-
-      let EZ_lat = JSON.stringify({
-        EZ_lat: parseFloat(this.Latitude),
-      });
-      axios
-        .post(path, EZ_lat)
-        .then(() => {
-          console.log("Posted Evacuation Zone lat coordinates to ERU_INPUT");
-          console.log(EZ_lat);
+          console.log("Posted Evacuation Zone coordinates to ERU_INPUT");
+          console.log(this.EZ);
         })
         .catch((error) => {
           console.log(error.response);
         });
     },
-    // postEvacMEA() {
-    //   this.EZ = JSON.stringify({
-    //     EZ_lng: parseFloat(this.Latitude),
-    //     EZ_lat: parseFloat(this.Longitude),
-    //   });
-    //   const path = "http://127.0.0.1:5000/MEA_INPUT";
-    //   axios
-    //     .post(path, this.EZ, {
-    //       headers: { "Content-Type": "application/json" },
-    //     })
-    //     .then(() => {
-    //       console.log("Posted Evacuation Zone coordinates to MEA_INPUT");
-    //       console.log(this.EZ);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error.response);
-    //     });
-    // },
+    postEvacMEA() {
+      this.EZ = JSON.stringify({
+        EZ_lng: parseFloat(this.Latitude),
+        EZ_lat: parseFloat(this.Longitude),
+      });
+      const path = "http://127.0.0.1:5000/MEA_INPUT";
+      axios
+        .post(path, this.EZ, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then(() => {
+          console.log("Posted Evacuation Zone coordinates to MEA_INPUT");
+          console.log(this.EZ);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
   },
 };
 </script>
