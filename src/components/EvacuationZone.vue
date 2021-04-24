@@ -147,8 +147,8 @@ export default {
 
     postEvacERU() {
       this.EZ = JSON.stringify({
-        EZ_lng: parseFloat(this.Latitude),
-        EZ_lat: parseFloat(this.Longitude),
+        EZ_lng: parseFloat(this.Longitude),
+        EZ_lat: parseFloat(this.Latitude),
       });
       const path = "http://127.0.0.1:5000/ERU_INPUT";
       axios
