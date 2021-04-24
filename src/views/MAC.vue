@@ -15,25 +15,7 @@
         />
         <v-col :cols="6">
           <v-container fluid flex>
-            <v-row>
-              <v-col :cols="12">
-                <v-progress-linear
-                  color="green"
-                  class="px-1"
-                  v-model="value"
-                  :active="show"
-                  :indeterminate="query"
-                  :query="true"
-                >
-                </v-progress-linear>
-              </v-col>
-            </v-row>
-            <v-row class="px-3 pb-1">
-              <h4>Data Updated ago</h4>
-            </v-row>
-          </v-container>
-          <v-container fluid flex>
-            <v-row class="pb-3">
+            <v-row class="pb-3 px-5">
               <GeneralStage
                 :stage="stage"
                 :vehicle="vehicle"
@@ -41,7 +23,7 @@
                 :updatedVehicle="updatedVehicle"
               />
             </v-row>
-            <v-row>
+            <v-row class="px-5">
               <v-card class="pa-1" style="width: 100%">
                 <v-container fluid flex>
                   <MACStatus />
@@ -49,7 +31,7 @@
               </v-card>
             </v-row>
             <v-container
-              class="mt-5 pt-5 scrollable"
+              class="mt-5 pt-1 scrollable"
               style="height: 515px; overflow-y: hidden"
             >
               <v-row class="d-flex" align="auto">

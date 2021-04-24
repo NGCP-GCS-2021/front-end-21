@@ -21,28 +21,6 @@
         </div>
       </div>
     </div>
-
-    <v-row justify="left">
-      <h3 class="font-weight-bold">Messages:</h3>
-    </v-row>
-    <v-row fluid justify="center">
-      <v-col :cols="12">
-        <div
-          class="scrollable"
-          style="
-            border: 1px solid #bfbfbf;
-            font-size: small;
-            border-radius: 5px;
-            height: 65px;
-            overflow-y: hidden;
-          "
-        >
-          <div v-for="(eru_messages, index) in eru_messages" :key="index">
-            <p class="my-0 py-0 px-1">{{ eru_messages.message }}</p>
-          </div>
-        </div>
-      </v-col>
-    </v-row>
   </div>
 </template>
 
@@ -54,7 +32,7 @@ export default {
       eru_data: [],
       eru_messages: [],
       current_stage: {
-        stage: "no stage",
+        stage: "No stage",
         id: -1,
       },
       stages: [

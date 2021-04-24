@@ -15,25 +15,7 @@
         />
         <v-col :cols="6">
           <v-container fluid flex>
-            <v-row>
-              <v-col :cols="12">
-                <v-progress-linear
-                  color="green"
-                  class="px-1"
-                  v-model="value"
-                  :active="show"
-                  :indeterminate="query"
-                  :query="true"
-                >
-                </v-progress-linear>
-              </v-col>
-            </v-row>
-            <v-row class="px-3 pb-1">
-              <h4>Data Updated ago</h4>
-            </v-row>
-          </v-container>
-          <v-container fluid flex>
-            <v-row class="pb-3">
+            <v-row class="pb-3 px-3">
               <GeneralStage
                 :stage="stage"
                 :vehicle="vehicle"
@@ -41,7 +23,7 @@
                 :updatedVehicle="updatedVehicle"
               />
             </v-row>
-            <v-row>
+            <v-row class="px-3">
               <v-card class="pa-1" style="width: 100%">
                 <v-container fluid flex>
                   <MEAStatus />
@@ -60,7 +42,7 @@
                 </v-card>
               </v-col>
             </v-row>
-            <v-row class="mt-3" align="auto">
+            <v-row class="mt-1" align="auto">
               <v-col class="d-flex">
                 <v-card class="pa-1" style="width: 100%">
                   <MEAControl @setGeneralStage="setGeneralStage" />
@@ -83,14 +65,6 @@ import EvacuationZone from "@/components/EvacuationZone.vue";
 import Map from "@/components/Map.vue";
 
 export default {
-  data() {
-    return {
-      value: 0,
-      query: false,
-      show: true,
-      interval: 0,
-    };
-  },
 
   mounted() {
     setTimeout(this.getCurrentData, 5000);
@@ -136,11 +110,6 @@ export default {
     }
   },
   methods: {
-    queryAndIndeterminate() {
-      this.query = true;
-      this.show = true;
-      this.value = 0;
-    },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
       this.updatedStage = stage;
