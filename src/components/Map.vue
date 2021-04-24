@@ -394,7 +394,7 @@ export default {
         "https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/mea.png",
       ],
       [
-        "search-area",
+        "drop-location",
         "https://raw.githubusercontent.com/NGCP-GCS-2021/front-end-21/harvey/src/assets/map_icons/search-area.png",
       ],
     ]);

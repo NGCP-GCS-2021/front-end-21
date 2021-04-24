@@ -35,5 +35,10 @@ export default {
       }
     },
   },
+  unmounted() {
+    this.polygonSelected = false;
+    this.circleSelected = false;
+    this.$emit("selected", null);
+  },
 };
 </script>
