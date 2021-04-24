@@ -87,7 +87,7 @@ export default {
     Longitude: "",
     firstGetERUDrop: true,
   }),
-  props: ['pointExists'],
+  props: ['ERUDropPointExists'],
   mounted() {
     this.getCurrentDropLocation();
     setTimeout(this.getCurrentDropLocation, 5000);

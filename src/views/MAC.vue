@@ -64,7 +64,11 @@
                 </v-col>
                 <v-col cols="6" class="d-flex">
                   <v-card class="pa-1" style="width: 100%">
-                    <ERUDrop />
+                    <ERUDrop
+                      @editERUDrop="editERUDrop"
+                      @addERUDrop="addERUDrop"
+                      :ERUDropPointExists="ERUDropPointExists"
+                    />
                   </v-card>
                 </v-col>
               </v-row>
@@ -131,7 +135,9 @@ export default {
     hiker_lng: -117.6318437,
     hiker_lat: 33.933729,
     pointExists: false,
+    ERUDropPointExists: false,
   }),
+
   mounted() {
     setTimeout(this.getCurrentData, 5000);
   },
@@ -237,6 +243,12 @@ export default {
     }, 
     addMACHome(lng, lat) {
       this.$refs.Map.addCoord("mac_home", "home", lng, lat);
+    },
+    editERUDrop(coord) {
+      this.ERUDropPointExists = this.$refs.Map.editPointSource("eru_drop_loc", coord);
+    },
+    addERUDrop(lng, lat) {
+      this.$refs.Map.addCoord("eru_drop_loc", "eru-point", lng, lat); //not sure if naming is correct
     }
   },
 };
