@@ -21,28 +21,6 @@
         </div>
       </div>
     </div>
-
-    <v-row justify="left">
-      <h3 class="font-weight-bold">Messages:</h3>
-    </v-row>
-    <v-row fluid justify="center">
-      <v-col :cols="12">
-        <div
-          class="scrollable"
-          style="
-            border: 1px solid #bfbfbf;
-            font-size: small;
-            border-radius: 5px;
-            height: 65px;
-            overflow-y: hidden;
-          "
-        >
-          <div v-for="(mea_messages, index) in mea_messages" :key="index">
-            <p class="my-0 py-0 px-1">{{ mea_messages.message }}</p>
-          </div>
-        </div>
-      </v-col>
-    </v-row>
   </div>
 </template>
 

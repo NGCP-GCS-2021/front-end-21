@@ -16,7 +16,7 @@
         <template v-if="!manualControlView">
           <v-col :cols="6">
             <v-container fluid flex>
-              <v-row class="pb-3">
+              <v-row class="pb-3 px-5">
                 <GeneralStage
                   :stage="stage"
                   :vehicle="vehicle"
@@ -24,14 +24,14 @@
                   :updatedVehicle="updatedVehicle"
                 />
               </v-row>
-              <v-row>
+              <v-row class="px-5">
                 <v-card class="pa-1" style="width: 100%">
                   <v-container fluid flex>
                     <ERUStatus />
                   </v-container>
                 </v-card>
               </v-row>
-              <v-row class="pt-0" align="auto">
+              <v-row class="pt-0 px-3" align="auto">
                 <v-col cols="6" class="ml-0 pl-3">
                   <v-card class="pa-1" style="width: 100%">
                     <EvacuationZone
@@ -51,7 +51,7 @@
                   </v-card>
                 </v-col>
               </v-row>
-              <v-row class="pt-0" align="auto">
+              <v-row class="pt-0 px-3" align="auto">
                 <v-col cols="6">
                   <v-card class="pa-1" style="width: 100%">
                     <ERUControl @setGeneralStage="setGeneralStage" />
@@ -72,7 +72,7 @@
               <v-card width="100%">
                 <v-container fluid-flex>
                   <v-row>
-                    <v-col col="1">
+                    <v-col col="1" style="flex-grow: 0.5;">
                       <BackButton
                         @back="setManualControlView"
                         @deactivate="setButtonsActivated"
@@ -84,9 +84,6 @@
                         :buttonsActivated="buttonsActivated"
                         @inputSelected="setInput"
                       />
-                    </v-col>
-                    <v-col>
-                      <PowerButton @activate="setButtonsActivated" />
                     </v-col>
                   </v-row>
                   <v-row>
@@ -137,12 +134,6 @@
                         </h1>
                       </v-col>
                     </v-row>
-                    <!--                    <h1 class="font-weight-regular">Left Trigger: Move backwards</h1>-->
-                    <!--                    <h1>Right Trigger: Move forward</h1>-->
-                    <!--                    <h1>Joystick (left side): Move left and right</h1>-->
-                    <!--                    <h1>D-Pad: Lower (down) and raise (up) scooper</h1>-->
-                    <!--                    <h1>"A" button: Squeeze scooper</h1>-->
-                    <!--                    <h1>"B" button: Release scooper</h1>-->
                   </div>
                 </v-container>
               </v-card>
@@ -157,8 +148,10 @@
                   />
                 </v-container>
               </v-card>
+            </v-row>
+            <v-row v-if="input === 'keyboard'" style="padding-top: 1%">
               <v-card width="100%">
-                <v-container fluid-flex>
+                <v-container fluid-flex> 
                   <h1 class="font-weight-light">Controls:</h1>
                   <v-row style="padding-top: 1%">
                     <v-col cols="6">
@@ -213,7 +206,6 @@ export default {
     ERUHome,
     EvacuationZone,
     ManualControl,
-    PowerButton,
     InputToggle,
     BackButton,
     MaxSpeed,
@@ -228,7 +220,7 @@ export default {
     updatedVehicle: null,
     manualControlView: false,
     input: null,
-    buttonsActivated: false,
+    buttonsActivated: true,
     firstGetERU: true,
     eru_data: null,
     current_lng: -117.6316988,
@@ -334,9 +326,6 @@ export default {
     setInput(input) {
       this.input = input;
       console.log(this.input);
-    },
-    setButtonsActivated(value) {
-      this.buttonsActivated = value;
     },
     editERUHome(coord) {
       this.pointExists = this.$refs.Map.editPointSource("eru_home", coord);

@@ -15,7 +15,7 @@
         />
         <v-col :cols="6">
           <v-container fluid flex>
-            <v-row class="pb-3">
+            <v-row class="pb-3 px-5">
               <VehicleSelect
                 @selected="setVehicle"
               />
