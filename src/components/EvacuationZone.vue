@@ -136,7 +136,7 @@ export default {
     },
     submit() {
       this.$refs.observer.validate();
-      this.postEvacMEA();
+      // this.postEvacMEA();
       this.postEvacERU();
     },
     clear() {
@@ -152,9 +152,7 @@ export default {
       });
       const path = "http://127.0.0.1:5000/ERU_INPUT";
       axios
-        .post(path, this.EZ, {
-          headers: { "Content-Type": "application/json" },
-        })
+        .post(path, this.EZ)
         .then(() => {
           console.log("Posted Evacuation Zone coordinates to ERU_INPUT");
           console.log(this.EZ);
