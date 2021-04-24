@@ -34,7 +34,12 @@
               <v-row class="pt-0" align="auto">
                 <v-col cols="6" class="ml-0 pl-3">
                   <v-card class="pa-1" style="width: 100%">
-                    <EvacuationZone />
+                    <EvacuationZone
+                    @editEvac = "editEvac"
+                    :evacPointExists = "evacPointExists"
+                    @addEvac = "addEvac"
+
+                    />
                   </v-card>
                 </v-col>
                 <v-col cols="6">
@@ -222,7 +227,8 @@ export default {
     hiker_data: null,
     hiker_lng: -117.6318437,
     hiker_lat: 33.933729,
-    pointExists: false
+    pointExists: false,
+    evacPointExists: false
   }),
   mounted() {
     setTimeout(this.getCurrentData, 5000);
@@ -323,10 +329,16 @@ export default {
       this.buttonsActivated = value;
     },
     editERUHome(coord) {
-      this.pointExists = this.$refs.Map.editPointSource(coords);
+      this.pointExists = this.$refs.Map.editPointSource("eru_home",coords);
     },
     addERUHome(lng, lat) {
       this.$refs.Map.addCoord("eru_home", "home", lng, lat);
+    },
+    editEvac(coord){
+      this.evacPointExists = this.$refs.Map.editPointSource("evac_zone", coords);
+    },
+    addEvac(lng, lat) {
+      this.$refs.Map.addCoord("evac_zone", "evac-point", lng, lat);
     }
   },
 };

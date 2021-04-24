@@ -88,6 +88,7 @@ export default {
     Latitude: "",
     firstGetEvac: true,
   }),
+  props: ["evacPointExists"],
   mounted() {
     setTimeout(this.getCurrentEvac, 5000);
   },
@@ -122,12 +123,12 @@ export default {
     },
     setEvacPosition(lng, lat) {
       let coord = [lng, lat]; //array for editPointSource
-      let pointExists = this.$refs.Map.editPointSource("evac_zone", coord);
-      if (pointExists) {
+      this.$emit("editEvac", coord);
+      if (this.evacPointExists) {
         console.log("edited point");
       } else {
         console.log("added point");
-        this.$refs.Map.addCoord("evac_zone", "evac-point", lng, lat);
+        this.$emit("addEvac", lng, lat)
       }
       this.firstGetEvac = false;
     },
