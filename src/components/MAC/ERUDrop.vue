@@ -114,13 +114,13 @@ export default {
               this.Latitude = res.data.Drop_Loc_lat;
               this.setDropLocationPosition(
                 res.data.Drop_Loc_lng,
-                res.data.Drop_Loc_lng
+                res.data.Drop_Loc_lat
               );
             }
           } else {
             this.setDropLocationPosition(
               res.data.Drop_Loc_lng,
-              res.data.Drop_Loc_lng
+              res.data.Drop_Loc_lat
             );
           }
         })
@@ -134,7 +134,7 @@ export default {
       if (this.pointExists) {
         console.log("edited point");
       } else {
-        console.log("added point");
+        console.log("added ERUDrop point");
         this.$emit("addERUDrop", lng, lat);
       }
       this.firstGetERUDrop = false;
