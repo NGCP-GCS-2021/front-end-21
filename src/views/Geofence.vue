@@ -19,7 +19,6 @@
               <VehicleSelect
                 @selected="setVehicle"
               />
-              <!-- setVehicle("MAC") -->
             </v-row>
 
             <v-container class="" style="height: 720px" v-if="vehicle">
