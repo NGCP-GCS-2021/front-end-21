@@ -42,7 +42,12 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-btn class="mr-4" color="green" @click="submit" :disabled="invalid">
+            <v-btn
+              class="mr-4"
+              color="green"
+              @click="submit"
+              :disabled="invalid"
+            >
               Submit
             </v-btn>
             <v-btn @click="clear"> Clear </v-btn>
@@ -87,13 +92,13 @@ export default {
     Longitude: "",
     firstGetERUDrop: true,
   }),
-  props: ['ERUDropPointExists'],
+  props: ["ERUDropPointExists"],
   mounted() {
     this.getCurrentDropLocation();
     setTimeout(this.getCurrentDropLocation, 5000);
   },
   updated() {
-    if(!this.firstGetERUDrop){
+    if (!this.firstGetERUDrop) {
       this.getCurrentDropLocation();
     }
   },
@@ -103,20 +108,20 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          if(this.firstGetERUDrop) {
+          if (this.firstGetERUDrop) {
             if (res.data.Drop_loc_lng == 0 && res.data.Drop_loc_lng == 0) {
             } else {
               this.Longitude = res.data.Drop_loc_lng;
               this.Latitude = res.data.Drop_loc_lat;
               this.setDropLocationPosition(
-                  res.data.Drop_loc_lng,
-                  res.data.Drop_loc_lng
+                res.data.Drop_loc_lng,
+                res.data.Drop_loc_lng
               );
             }
           } else {
             this.setDropLocationPosition(
-                res.data.Travel_to_lng,
-                res.data.Travel_to_lng
+              res.data.Travel_to_lng,
+              res.data.Travel_to_lng
             );
           }
         })
@@ -131,13 +136,12 @@ export default {
         console.log("edited point");
       } else {
         console.log("added point");
-        this.$emit("addERUDrop", lng, lat)
+        this.$emit("addERUDrop", lng, lat);
       }
       this.firstGetERUDrop = false;
     },
     submit() {
       this.$refs.observer.validate();
-      console.log("whaddup stokers")
       this.postDropLoc();
     },
     clear() {
