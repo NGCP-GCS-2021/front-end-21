@@ -233,7 +233,7 @@ export default {
       this.firstGetHiker = false;
     },
     editMACHome(coord) {
-      this.pointExists = this.$refs.Map.editPointSource(coord);
+      this.pointExists = this.$refs.Map.editPointSource("mac_home", coord);
     }, 
     addMACHome(lng, lat) {
       this.$refs.Map.addCoord("mac_home", "home", lng, lat);
