@@ -132,8 +132,8 @@ export default {
               this.Latitude = res.data.Travel_to_lat;
               this.Altitude = res.data.Travel_to_alt;
               this.setHomePosition(
-                res.data.Drop_loc_lng,
-                res.data.Drop_loc_lat
+                res.data.Travel_to_lng,
+                res.data.Travel_to_lat
               );
             }
           } else {
@@ -153,8 +153,8 @@ export default {
       if (this.MACHomePointExists) {
         console.log("edited point");
       } else {
-        console.log("added point");
-        this.$emit("addMACHome", lng, lat)
+        console.log("added MACHome point");
+        this.$emit("addMACHome", lng, lat);
       }
       this.firstGetHome = false;
     },
