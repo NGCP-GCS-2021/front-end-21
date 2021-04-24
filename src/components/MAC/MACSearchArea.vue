@@ -117,8 +117,6 @@ export default {
         });
     },
     setSearchArea() {
-      console.log(this.Search_area.Coordinates);
-      console.log(this.Search_area.Coordinates.length);
       if (this.Search_area.Coordinates.length > 0) {
         if (this.Search_area.Circle_inputs.rad == null) {
           //Polygon
