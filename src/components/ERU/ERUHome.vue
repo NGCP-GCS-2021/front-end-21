@@ -96,6 +96,7 @@ export default {
       this.getCurrentTravelTo();
     }
   },
+  props: ["pointExists"],
   methods: {
     getCurrentTravelTo() {
       const path = "http://127.0.0.1:5000/ERU_INPUT";
@@ -125,12 +126,13 @@ export default {
     },
     setHomePosition(lng, lat) {
       let coord = [lng, lat]; //array for editPointSource
-      let pointExists = this.$refs.Map.editPointSource("eru_home", coord);
-      if (pointExists) {
+      this.$emit("editERUHome", coord);
+      //let pointExists = this.$refs.Map.editPointSource("mac_home", coord);
+      if (this.pointExists) {
         console.log("edited point");
       } else {
         console.log("added point");
-        this.$refs.Map.addCoord("eru_home", "home", lng, lat);
+        this.$emit("addERUHome", lng, lat);
       }
       this.firstGetHome = false;
     },
