@@ -151,7 +151,7 @@ export default {
       let coord = [lng, lat]; //array for editPointSource
       this.$emit("editMACHome", coord);
       if (this.MACHomePointExists) {
-        console.log("edited point");
+        console.log("edited MACHome point");
       } else {
         console.log("added MACHome point");
         this.$emit("addMACHome", lng, lat);

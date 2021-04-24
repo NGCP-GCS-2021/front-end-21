@@ -132,7 +132,7 @@ export default {
       let coord = [lng, lat]; //array for editPointSource
       this.$emit("editERUDrop", coord);
       if (this.pointExists) {
-        console.log("edited point");
+        console.log("edited ERUDrop point");
       } else {
         console.log("added ERUDrop point");
         this.$emit("addERUDrop", lng, lat);
