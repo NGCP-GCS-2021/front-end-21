@@ -7,7 +7,7 @@
         </v-col>
         <v-col align="center">
           <v-container>
-            <PolygonToggle @selected="selectShape" :ref="PolygonToggle" />
+            <PolygonToggle @selected="selectShape" ref="PolygonToggle" />
           </v-container>
         </v-col>
       </v-row>
@@ -113,7 +113,7 @@ export default {
           this.setSearchArea();
         })
         .catch((error) => {
-          console.error(error.response);
+          console.error(error);
         });
     },
     setSearchArea() {
