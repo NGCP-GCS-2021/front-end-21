@@ -76,7 +76,11 @@
                 </v-col>
                 <v-col class="d-flex">
                   <v-card class="pa-1">
-                    <MACHome />
+                    <MACHome 
+                    @editMACHome="editMACHome"
+                    @addMACHome="addMACHome"
+                    :pointExists="pointExists"
+                    />
                   </v-card>
                 </v-col>
               </v-row>
@@ -97,7 +101,7 @@ import EvacuationZone from "@/components/EvacuationZone.vue";
 import ERUDrop from "@/components/MAC/ERUDrop.vue";
 import MACSearchArea from "@/components/MAC/MACSearchArea.vue";
 import Map from "@/components/Map.vue";
-import PolygonForm from "@/components/MAC/PolygonForm.vue";
+import axios from "axios"
 
 export default {
   name: "",
@@ -126,6 +130,7 @@ export default {
     hiker_data: null,
     hiker_lng: -117.6318437,
     hiker_lat: 33.933729,
+    pointExists: false,
   }),
   mounted() {
     setTimeout(this.getCurrentData, 5000);
@@ -227,6 +232,12 @@ export default {
       }
       this.firstGetHiker = false;
     },
+    editMACHome(coord) {
+      this.pointExists = this.$refs.Map.editPointSource(coord);
+    }, 
+    addMACHome(lng, lat) {
+      this.$refs.Map.addCoord("mac_home", "home", lng, lat);
+    }
   },
 };
 </script>

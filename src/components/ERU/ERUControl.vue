@@ -99,7 +99,7 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.currentData = res.data.MAC;
+          this.currentData = res.data.ERU;
           this.setCurrentStage();
         })
         .catch((error) => {
