@@ -151,13 +151,7 @@ export default {
         EZ_lng: parseFloat(this.Longitude),
       });
       axios
-<<<<<<< HEAD
         .post(path, EZ_lng)
-=======
-        .post(path, this.EZ, {
-          headers: { "Content-Type": "application/json" },
-        })
->>>>>>> parent of d816b92 (Update EvacuationZone.vue)
         .then(() => {
           console.log("Posted Evacuation Zone lng coordinates to ERU_INPUT");
           console.log(EZ_lng);
