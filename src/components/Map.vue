@@ -413,15 +413,13 @@ export default {
       // vm.editLayerOpacity("test1", 0);
       // vm.editLayerColor("test2", "red");
       // vm.removeLayer("test3");
-      //   vm.addCoord("eru", "eru", vm.center_long, vm.center_lat);
+      // vm.addCoord("hometest", "home",  -117.63282, 33.9334264);
       // vm.setRotation("test_point", 90);
       // vm.setRotation("test_point", 70);
       // vm.editPointSource("test_point", [-117.63052445140261, 33.93404089266308]);
       // vm.editPolySource("test2", tempCoords);
       // vm.addCoord("test_point2", "hiker", vm.center_long, vm.center_lat);
-      vm.$emit("setMounted", true);
     });
-    
   },
   template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>',
 };
