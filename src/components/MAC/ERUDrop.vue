@@ -86,10 +86,14 @@ export default {
     Latitude: "",
     Longitude: "",
   }),
+  props: ['pointExists'],
   mounted() {
     this.getCurrentDropLocation();
+    setTimeOut(this.getCurrentDropLocation, 5000);
   },
+  updated() {
 
+  },
   methods: {
     getCurrentDropLocation() {
       const path = "http://127.0.0.1:5000/ERU_INPUT";
@@ -100,6 +104,10 @@ export default {
           } else {
             this.Longitude = res.data.Drop_loc_lng;
             this.Latitude = res.data.Drop_loc_lat;
+            this.setDropLocationPosition(
+                res.data.Drop_loc_lat,
+                res.data.Drop_loc_lng,
+            );
           }
         })
         .catch((error) => {
