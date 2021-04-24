@@ -100,7 +100,7 @@ export default {
           } else {
             this.Longitude = res.data.Drop_loc_lng;
             this.Latitude = res.data.Drop_loc_lat;
-            setDropLocationPosition(
+            this.setDropLocationPosition(
               res.data.Drop_loc_lng,
               res.data.Drop_loc_lng
             );
