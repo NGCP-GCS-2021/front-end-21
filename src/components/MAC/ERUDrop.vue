@@ -96,15 +96,22 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          if ((res.data.Drop_loc_lng) == 0 && (res.data.Drop_loc_lng == 0)) {
+          if (res.data.Drop_loc_lng == 0 && res.data.Drop_loc_lng == 0) {
           } else {
             this.Longitude = res.data.Drop_loc_lng;
             this.Latitude = res.data.Drop_loc_lat;
+            setDropLocationPosition(
+              res.data.Drop_loc_lng,
+              res.data.Drop_loc_lng
+            );
           }
         })
         .catch((error) => {
           console.error(error);
         });
+    },
+    setDropLocationPosition(lng, lat) {
+
     },
     submit() {
       this.$refs.observer.validate();
