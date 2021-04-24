@@ -413,7 +413,7 @@ export default {
       // vm.editLayerOpacity("test1", 0);
       // vm.editLayerColor("test2", "red");
       // vm.removeLayer("test3");
-      // vm.addCoord("hometest", "home",  -117.63282, 33.9334264);
+      // vm.addCoord("hometest", "drop-location",  -117.63282, 33.9334264);
       // vm.setRotation("test_point", 90);
       // vm.setRotation("test_point", 70);
       // vm.editPointSource("test_point", [-117.63052445140261, 33.93404089266308]);

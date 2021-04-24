@@ -103,24 +103,24 @@ export default {
   },
   methods: {
     getCurrentDropLocation() {
-      const path = "http://127.0.0.1:5000/ERU_INPUT";
+      const path = "http://127.0.0.1:5000/MAC_INPUT";
       axios
         .get(path)
         .then((res) => {
           if (this.firstGetERUDrop) {
-            if (res.data.Drop_loc_lng == 0 && res.data.Drop_loc_lng == 0) {
+            if (res.data.Drop_Loc_lng == 0 && res.data.Drop_Loc_lng == 0) {
             } else {
-              this.Longitude = res.data.Drop_loc_lng;
-              this.Latitude = res.data.Drop_loc_lat;
+              this.Longitude = res.data.Drop_Loc_lng;
+              this.Latitude = res.data.Drop_Loc_lat;
               this.setDropLocationPosition(
-                res.data.Drop_loc_lng,
-                res.data.Drop_loc_lng
+                res.data.Drop_Loc_lng,
+                res.data.Drop_Loc_lng
               );
             }
           } else {
             this.setDropLocationPosition(
-              res.data.Travel_to_lng,
-              res.data.Travel_to_lng
+              res.data.Drop_Loc_lng,
+              res.data.Drop_Loc_lng
             );
           }
         })
@@ -151,14 +151,12 @@ export default {
 
     postDropLoc() {
       this.drop_loc = JSON.stringify({
-        Drop_loc_lat: parseFloat(this.Latitude),
-        Drop_loc_lng: parseFloat(this.Longitude),
+        Drop_Loc_lat: parseFloat(this.Latitude),
+        Drop_Loc_lng: parseFloat(this.Longitude),
       });
       const path = "http://127.0.0.1:5000/MAC_INPUT";
       axios
-        .post(path, this.drop_loc, {
-          headers: { "Content-Type": "application/json" },
-        })
+        .post(path, this.drop_loc)
         .then(() => {
           console.log("Posted ERU Drop coordinates to MAC_INPUT");
           console.log(this.drop_loc);
