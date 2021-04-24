@@ -181,6 +181,7 @@ import ControllerBars from "@/components/ERU/ManualControl/Controller/Controller
 
 import KeyboardBars from "@/components/ERU/ManualControl/Keyboard/KeyboardBars";
 import Map from "@/components/Map.vue";
+import axios from "axios"
 
 export default {
   name: "",

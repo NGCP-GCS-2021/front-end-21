@@ -109,7 +109,7 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.Search_area = res.data.Search_area;
+          this.Search_area = res.data.Search_Area;
         })
         .catch((error) => {
           console.error(error.response);
