@@ -67,7 +67,12 @@
       <v-row>
         <v-col>
           <v-card-actions>
-            <v-btn class="mr-4" color="green" @click="submit" :disabled="invalid">
+            <v-btn
+              class="mr-4"
+              color="green"
+              @click="submit"
+              :disabled="invalid"
+            >
               Submit
             </v-btn>
             <v-btn @click="clear"> Clear </v-btn>
@@ -138,10 +143,10 @@ export default {
       Search_area: {
         Coordinates: [],
         Circle_inputs: {
-            lng: null,
-            lat: null,
-            rad: null,
-          },
+          lng: null,
+          lat: null,
+          rad: null,
+        },
       },
     },
     isInvalid: true,
@@ -149,7 +154,7 @@ export default {
   methods: {
     submit() {
       this.$refs.observer.validate();
-      console.log("hi max")
+      console.log("hi max");
       this.postSearchArea();
     },
     add() {
@@ -214,6 +219,13 @@ export default {
           console.log(error.response);
         });
     },
+    print() {
+      console.log("PolygonForm mounted");
+    },
+  },
+  mounted() {
+    // setTimeout(this.print, 5000);
+    this.$emit("setCoordinates");
   },
 };
 </script>

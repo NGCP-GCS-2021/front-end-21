@@ -58,10 +58,10 @@
                 </v-col>
                 <v-col class="d-flex">
                   <v-card class="pa-1">
-                    <MACHome 
-                    @editMACHome="editMACHome"
-                    @addMACHome="addMACHome"
-                    :pointExists="pointExists"
+                    <MACHome
+                      @editMACHome="editMACHome"
+                      @addMACHome="addMACHome"
+                      :pointExists="pointExists"
                     />
                   </v-card>
                 </v-col>
@@ -83,7 +83,7 @@ import EvacuationZone from "@/components/EvacuationZone.vue";
 import ERUDrop from "@/components/MAC/ERUDrop.vue";
 import MACSearchArea from "@/components/MAC/MACSearchArea.vue";
 import Map from "@/components/Map.vue";
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "",
@@ -118,7 +118,7 @@ export default {
     setTimeout(this.getCurrentData, 5000);
   },
   updated() {
-    if (!this.firstGetMAC && !this.firstGetHiker) { 
+    if (!this.firstGetMAC && !this.firstGetHiker) {
       this.getCurrentData();
     }
   },
@@ -130,7 +130,11 @@ export default {
     },
     addPolygon(coordinates) {
       this.$refs.Map.removeLayer("Search Area");
-      this.$refs.Map.addPoly(coordinates, "Search Area", "#00ff6a", 0.3);
+      console.log(coordinates);
+      console.log(
+        this.$refs.Map.addPoly(coordinates, "Search Area", "#00ff6a", 0.3)
+      );
+      console.log("added Search Area from endpoint");
     },
     addCircle(lng, lat, rad) {
       this.circleCoords = this.$refs.Map.addCircle(
@@ -140,7 +144,7 @@ export default {
         16,
         "SearchAreaCircle",
         "#00ff6a",
-        0.3 
+        0.3
       );
     },
     getCurrentData() {
@@ -216,10 +220,10 @@ export default {
     },
     editMACHome(coord) {
       this.pointExists = this.$refs.Map.editPointSource("mac_home", coord);
-    }, 
+    },
     addMACHome(lng, lat) {
       this.$refs.Map.addCoord("mac_home", "home", lng, lat);
-    }
+    },
   },
 };
 </script>

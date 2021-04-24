@@ -14,7 +14,11 @@
     </v-container>
     <v-container v-if="shape === 'polygon'">
       <v-row>
-        <PolygonForm @addPolygon="addPolygon" ref="PolygonForm" />
+        <PolygonForm
+          @addPolygon="addPolygon"
+          @setCoordinates="setCoordinates"
+          ref="PolygonForm"
+        />
       </v-row>
     </v-container>
 
@@ -83,12 +87,12 @@ export default {
   props: ["circleCoords"],
   data: () => ({
     dialog: false,
-    Coordinates: [
-      {
-        lng: "",
-        lat: "",
-      },
-    ],
+    // Coordinates: [
+    //   {
+    //     lng: "",
+    //     lat: "",
+    //   },
+    // ],
     Search_area: null,
     shape: null,
   }),
@@ -110,6 +114,9 @@ export default {
         .get(path)
         .then((res) => {
           this.Search_area = res.data.Search_Area;
+          // console.log(this.Search_area)
+          console.log(this.Search_area.Coordinates);
+          console.log("------");
           this.setSearchArea();
         })
         .catch((error) => {
@@ -120,14 +127,12 @@ export default {
       if (this.Search_area.Coordinates.length > 0) {
         if (this.Search_area.Circle_inputs.rad == null) {
           //Polygon
-          this.shape = "polygon";
-          this.$refs.PolygonToggle.selectPolygon()
-          this.$refs.PolygonForm.Coordinates = this.Search_area.Coordinates;
-          this.addPolygon(this.coordinates);
+          this.$refs.PolygonToggle.selectPolygon();
         } else if (this.Search_area.Circle_inputs.rad != null) {
           //Circle
           this.shape = "circle";
           this.$refs.PolygonToggle.selectCircle();
+
           this.$refs.CircleForm.Latitude = this.Search_area.lat;
           this.$refs.CircleForm.Longitude = this.Search_area.lng;
           this.$refs.CircleForm.Radius = this.Search_area.rad;
@@ -139,9 +144,16 @@ export default {
         }
       }
     },
+    setCoordinates() {
+      this.$refs.PolygonForm.print();
+      this.$refs.PolygonForm.Coordinates = this.Search_area.Coordinates;
+      console.log(this.Search_area.Coordinates);
+      this.addPolygon(this.Search_area.Coordinates);
+    },
   },
   mounted() {
-    this.getMACSearchArea();
+    setTimeout(this.getMACSearchArea, 5000);
+    // this.getMACSearchArea();
   },
 };
 </script>
