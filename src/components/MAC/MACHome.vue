@@ -106,7 +106,7 @@ export default {
       firstGetHome: true,
     };
   },
-  props: ["pointExists"],
+  props: ["MACHomePointExists"],
   mounted() {
     setTimeout(this.getCurrentTravelTo, 5000);
   },
@@ -150,7 +150,7 @@ export default {
     setHomePosition(lng, lat) {
       let coord = [lng, lat]; //array for editPointSource
       this.$emit("editMACHome", coord);
-      if (this.pointExists) {
+      if (this.MACHomePointExists) {
         console.log("edited point");
       } else {
         console.log("added point");

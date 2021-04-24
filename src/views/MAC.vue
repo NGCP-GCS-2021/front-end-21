@@ -65,7 +65,7 @@
                     <MACHome
                       @editMACHome="editMACHome"
                       @addMACHome="addMACHome"
-                      :pointExists="pointExists"
+                      :MACHomePointExists="MACHomePointExists"
                     />
                   </v-card>
                 </v-col>
@@ -116,7 +116,7 @@ export default {
     hiker_data: null,
     hiker_lng: -117.6318437,
     hiker_lat: 33.933729,
-    pointExists: false,
+    MACHomePointExists: false,
     ERUDropPointExists: false,
   }),
 
@@ -225,7 +225,7 @@ export default {
       this.firstGetHiker = false;
     },
     editMACHome(coord) {
-      this.pointExists = this.$refs.Map.editPointSource("mac_home", coord);
+      this.MACHomePointExists = this.$refs.Map.editPointSource("mac_home", coord);
     },
     addMACHome(lng, lat) {
       this.$refs.Map.addCoord("mac_home", "home", lng, lat);
