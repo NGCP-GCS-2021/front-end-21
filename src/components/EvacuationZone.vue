@@ -136,7 +136,7 @@ export default {
     },
     submit() {
       this.$refs.observer.validate();
-      this.postEvacMEA();
+      // this.postEvacMEA();
       this.postEvacERU();
     },
     clear() {
@@ -161,24 +161,24 @@ export default {
           console.log(error.response);
         });
     },
-    postEvacMEA() {
-      this.EZ = JSON.stringify({
-        EZ_lng: parseFloat(this.Latitude),
-        EZ_lat: parseFloat(this.Longitude),
-      });
-      const path = "http://127.0.0.1:5000/MEA_INPUT";
-      axios
-        .post(path, this.EZ, {
-          headers: { "Content-Type": "application/json" },
-        })
-        .then(() => {
-          console.log("Posted Evacuation Zone coordinates to MEA_INPUT");
-          console.log(this.EZ);
-        })
-        .catch((error) => {
-          console.log(error.response);
-        });
-    },
+    // postEvacMEA() {
+    //   this.EZ = JSON.stringify({
+    //     EZ_lng: parseFloat(this.Latitude),
+    //     EZ_lat: parseFloat(this.Longitude),
+    //   });
+    //   const path = "http://127.0.0.1:5000/MEA_INPUT";
+    //   axios
+    //     .post(path, this.EZ, {
+    //       headers: { "Content-Type": "application/json" },
+    //     })
+    //     .then(() => {
+    //       console.log("Posted Evacuation Zone coordinates to MEA_INPUT");
+    //       console.log(this.EZ);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error.response);
+    //     });
+    // },
   },
 };
 </script>
