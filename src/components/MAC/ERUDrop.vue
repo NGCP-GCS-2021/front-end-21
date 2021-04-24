@@ -85,24 +85,38 @@ export default {
     drop_loc: {},
     Latitude: "",
     Longitude: "",
+    firstGetERUDrop: true,
   }),
+  props: ['ERUDropPointExists'],
   mounted() {
     this.getCurrentDropLocation();
+    setTimeout(this.getCurrentDropLocation, 5000);
   },
-
+  updated() {
+    if(!this.firstGetERUDrop){
+      this.getCurrentDropLocation();
+    }
+  },
   methods: {
     getCurrentDropLocation() {
       const path = "http://127.0.0.1:5000/ERU_INPUT";
       axios
         .get(path)
         .then((res) => {
-          if (res.data.Drop_loc_lng == 0 && res.data.Drop_loc_lng == 0) {
+          if(this.firstGetERUDrop) {
+            if (res.data.Drop_loc_lng == 0 && res.data.Drop_loc_lng == 0) {
+            } else {
+              this.Longitude = res.data.Drop_loc_lng;
+              this.Latitude = res.data.Drop_loc_lat;
+              this.setDropLocationPosition(
+                  res.data.Drop_loc_lng,
+                  res.data.Drop_loc_lng
+              );
+            }
           } else {
-            this.Longitude = res.data.Drop_loc_lng;
-            this.Latitude = res.data.Drop_loc_lat;
             this.setDropLocationPosition(
-              res.data.Drop_loc_lng,
-              res.data.Drop_loc_lng
+                res.data.Travel_to_lng,
+                res.data.Travel_to_lng
             );
           }
         })
@@ -111,7 +125,15 @@ export default {
         });
     },
     setDropLocationPosition(lng, lat) {
-
+      let coord = [lng, lat]; //array for editPointSource
+      this.$emit("editERUDrop", coord);
+      if (this.pointExists) {
+        console.log("edited point");
+      } else {
+        console.log("added point");
+        this.$emit("addERUDrop", lng, lat)
+      }
+      this.firstGetERUDrop = false;
     },
     submit() {
       this.$refs.observer.validate();
