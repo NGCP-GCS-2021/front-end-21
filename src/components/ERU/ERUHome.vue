@@ -42,7 +42,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-btn class="mr-4" color="green" type="submit" :disabled="invalid">
+            <v-btn class="mr-4" color="green" @click="submit" :disabled="invalid">
               Submit
             </v-btn>
             <v-btn @click="clear"> Clear </v-btn>
@@ -153,9 +153,7 @@ export default {
       const path = "http://127.0.0.1:5000/ERU_INPUT";
       // console.log(this.travelTo);
       axios
-        .post(path, this.travelTo, {
-          headers: { "Content-Type": "application/json" },
-        })
+        .post(path, this.travelTo)
         .then(() => {
           console.log("Posted Travel to/Home coordinates to ERU_INPUT");
           console.log(this.travelTo);
