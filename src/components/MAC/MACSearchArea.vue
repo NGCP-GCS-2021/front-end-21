@@ -115,7 +115,8 @@ export default {
         .then((res) => {
           this.Search_area = res.data.Search_Area;
           // console.log(this.Search_area)
-          console.log("Search Area Coordinates: " + this.Search_area.Coordinates);
+          console.log("Search Area Coordinates: ");
+          console.log(this.Search_area.Coordinates)
           // console.log("------");
           this.setSearchArea();
         })
