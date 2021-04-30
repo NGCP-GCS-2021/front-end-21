@@ -16,7 +16,7 @@
       <v-row>
         <PolygonForm
           @addPolygon="addPolygon"
-          @setCoordinates="setCoordinates"
+          @setPolygonCoordinates="setPolygonCoordinates"
           ref="PolygonForm"
         />
       </v-row>
@@ -100,7 +100,7 @@ export default {
   methods: {
     selectShape(shape) {
       this.shape = shape;
-      console.log(this.shape);
+      // console.log(this.shape);
     },
     addPolygon(coordinates) {
       this.$emit("addPolygon", coordinates);
@@ -115,10 +115,6 @@ export default {
         .then((res) => {
           this.Search_Area = res.data.Search_Area;
           // console.log(this.Search_Area)
-
-          console.log("Search Area Coordinates: ");
-          console.log(this.Search_Area.Coordinates)
-          // console.log("------");
           this.setSearchArea();
         })
         .catch((error) => {
@@ -130,7 +126,6 @@ export default {
         if (this.Search_Area.Circle_inputs.rad == null) {
           //Polygon
           this.$refs.PolygonToggle.selectPolygon();
-          this.addPolygon(this.Search_Area.Coordinates);
         } else if (this.Search_Area.Circle_inputs.rad != null) {
           //Circle
           this.shape = "circle";
@@ -147,11 +142,18 @@ export default {
         }
       }
     },
-    setCoordinates() {
-      // this.$refs.PolygonForm.print();
+    setPolygonCoordinates() {
       this.$refs.PolygonForm.Coordinates = this.Search_Area.Coordinates;
-      // console.log(this.Search_Area.Coordinates);
-      this.addPolygon(this.Search_Area.Coordinates);
+      let tempCoordinates = new Array(this.Search_Area.Coordinates.length);
+      let temp = [];
+      for (let i = 0; i < this.Search_Area.Coordinates.length; i++) {
+        temp = new Array(2);
+        temp[0] = this.Search_Area.Coordinates[i].lng;
+        temp[1] = this.Search_Area.Coordinates[i].lat;
+        tempCoordinates[i] = temp;
+      }
+      this.addPolygon(tempCoordinates);
+      console.log(this.$refs.PolygonForm.Coordinates);
     },
   },
   mounted() {

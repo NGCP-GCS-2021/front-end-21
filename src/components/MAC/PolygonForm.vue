@@ -226,7 +226,7 @@ export default {
   },
   mounted() {
     // setTimeout(this.print, 5000);
-    this.$emit("setCoordinates");
+    this.$emit("setPolygonCoordinates");
   },
 };
 </script>
