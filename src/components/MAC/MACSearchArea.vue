@@ -115,8 +115,9 @@ export default {
         .then((res) => {
           this.Search_area = res.data.Search_Area;
           // console.log(this.Search_area)
-          console.log(this.Search_area.Coordinates);
-          console.log("------");
+          console.log("Search Area Coordinates: ");
+          console.log(this.Search_area.Coordinates)
+          // console.log("------");
           this.setSearchArea();
         })
         .catch((error) => {
@@ -128,31 +129,32 @@ export default {
         if (this.Search_area.Circle_inputs.rad == null) {
           //Polygon
           this.$refs.PolygonToggle.selectPolygon();
+          this.addPolygon(this.Search_area.Coordinates);
         } else if (this.Search_area.Circle_inputs.rad != null) {
           //Circle
           this.shape = "circle";
           this.$refs.PolygonToggle.selectCircle();
 
-          this.$refs.CircleForm.Latitude = this.Search_area.lat;
-          this.$refs.CircleForm.Longitude = this.Search_area.lng;
-          this.$refs.CircleForm.Radius = this.Search_area.rad;
+          this.$refs.CircleForm.Latitude = this.Search_area.Circle_inputs.lat;
+          this.$refs.CircleForm.Longitude = this.Search_area.Circle_inputs.lng;
+          this.$refs.CircleForm.Radius = this.Search_area.Circle_inputs.rad;
           this.addCircle(
-            this.Search_area.lng,
-            this.Search_area.lat,
-            this.Search_area.rad
+            this.Search_area.Circle_inputs.lng,
+            this.Search_area.Circle_inputs.lat,
+            this.Search_area.Circle_inputs.rad
           );
         }
       }
     },
     setCoordinates() {
-      this.$refs.PolygonForm.print();
+      // this.$refs.PolygonForm.print();
       this.$refs.PolygonForm.Coordinates = this.Search_area.Coordinates;
-      console.log(this.Search_area.Coordinates);
+      // console.log(this.Search_area.Coordinates);
       this.addPolygon(this.Search_area.Coordinates);
     },
   },
   mounted() {
-    setTimeout(this.getMACSearchArea, 5000);
+    setTimeout(this.getMACSearchArea, 3000);
     // this.getMACSearchArea();
   },
 };
