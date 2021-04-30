@@ -127,7 +127,7 @@ export default {
         });
     },
     removeDuplicates(data) {
-      return data.filter((value, index) => data.indexOF(value) === index);
+      return data.filter((value, index) => data.indexOf(value) === index);
     },
     setSearchArea() {
       if (this.Search_Area.Coordinates.length > 0) {
