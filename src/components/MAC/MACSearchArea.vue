@@ -116,7 +116,7 @@ export default {
           this.Search_area = res.data.Search_Area;
           // console.log(this.Search_area)
           console.log(this.Search_area.Coordinates);
-          console.log("------");
+          // console.log("------");
           this.setSearchArea();
         })
         .catch((error) => {
