@@ -72,7 +72,7 @@ export default {
           var newarray = JSON.parse(JSON.stringify( res.data.MAC, newOrderArray));
           this.mac_data = newarray;
 
-          console.log("getting data....")
+          // console.log("getting data....")
           this.mac_data = res.data.MAC;
           // console.log("getting data....")
           this.setCurrentStage();
