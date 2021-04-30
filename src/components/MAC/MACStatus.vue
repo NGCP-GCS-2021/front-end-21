@@ -67,7 +67,6 @@ export default {
         .then((res) => {
           console.log("getting data....")
           this.mac_data = res.data.MAC;
-          // console.log("getting data....")
           this.setCurrentStage();
         })
         .catch((error) => {
