@@ -113,10 +113,10 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.Search_area = res.data.Search_Area;
-          // console.log(this.Search_area)
-          console.log("Search Area Coordinates: ");
-          console.log(this.Search_area.Coordinates)
+          this.Search_area = res.data.Search_area;
+          console.log(this.Search_area)
+          //console.log("Search Area Coordinates: ");
+          //console.log(this.Search_area.Coordinates)
           // console.log("------");
           this.setSearchArea();
         })
@@ -154,7 +154,7 @@ export default {
     },
   },
   mounted() {
-    setTimeout(this.getMACSearchArea, 3000);
+    setTimeout(this.getMACSearchArea, 5000);
     // this.getMACSearchArea();
   },
 };
