@@ -208,7 +208,7 @@ export default {
         );
       }
       const searchAreaStringify = JSON.stringify(this.Search_area);
-      console.log(searchAreaStringify);
+      // console.log(searchAreaStringify);
       const path = "http://127.0.0.1:5000/MAC_INPUT";
       axios
         .post(path, searchAreaStringify)
