@@ -90,6 +90,9 @@ export default {
             }
           }
         }
+        if (pair.title == "Battery") { 
+          this.mac_data[i].value = (Math.round((pair.value + Number.EPSILON) * 100) / 100)
+        }
       }
     }
   },
