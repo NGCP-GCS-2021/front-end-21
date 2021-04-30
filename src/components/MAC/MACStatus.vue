@@ -66,7 +66,7 @@ export default {
         .get(path)
         .then((res) => {
           this.mac_data = res.data.MAC;
-          console.log("getting data....")
+          // console.log("getting data....")
           this.setCurrentStage();
         })
         .catch((error) => {
@@ -97,7 +97,7 @@ export default {
     this.getMACData();
   },
   updated() {
-    console.log("updated data")
+    // console.log("updated data")
     this.getMACData();
   },
 };
