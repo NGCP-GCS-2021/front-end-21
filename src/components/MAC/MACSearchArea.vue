@@ -114,7 +114,9 @@ export default {
         .get(path)
         .then((res) => {
           this.Search_Area = res.data.Search_Area;
+          this.Search_Area.Coordinates = this.removeDuplicates(this.Search_Area.Coordinates);
           // console.log(this.Search_Area)
+
           console.log("Search Area Coordinates: ");
           console.log(this.Search_Area.Coordinates)
           // console.log("------");
@@ -123,6 +125,9 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+    },
+    removeDuplicates(data) {
+      return data.filter((value, index) => data.indexOF(value) === index);
     },
     setSearchArea() {
       if (this.Search_Area.Coordinates.length > 0) {
