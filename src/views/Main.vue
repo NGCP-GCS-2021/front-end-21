@@ -2,9 +2,18 @@
   <div class="home">
     <v-container fill-height fluid class="pa-2 mt-1">
       <v-row align="auto">
-        <Map cols="col col-8" center_lat="33.932116" center_long="-117.630109" zoom="9"
-           SW_bound_lat="33.93154919990249" SW_bound_long="-117.63616828159178"
-           NE_bound_lat="33.93569086311143" NE_bound_long="-117.6263621141112" />
+        <Map
+          cols="col col-8"
+          center_lat="33.932116"
+          center_long="-117.630109"
+          zoom="9"
+          SW_bound_lat="33.93154919990249"
+          SW_bound_long="-117.63616828159178"
+          NE_bound_lat="33.93569086311143"
+          NE_bound_long="-117.6263621141112"
+          ref="Map"
+        />
+
         <v-col :cols="4">
           <v-container>
             <v-row class="pa-2 mb-3">
@@ -55,9 +64,7 @@
                       >
                         ERU
                       </h1>
-                      <v-icon large color="orange"
-                        >mdi-car</v-icon
-                      >
+                      <v-icon large color="orange">mdi-car</v-icon>
                     </v-row>
                     <ERUStatus />
                     <v-row justify="center">
@@ -114,33 +121,33 @@ import MEAStatus from "@/components/MEA/MEAStatus.vue";
 import ERUStatus from "@/components/ERU/ERUStatus.vue";
 import MACStatus from "@/components/MAC/MACStatus.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
-import Map from '@/components/Map.vue';
+import Map from "@/components/Map.vue";
 
 export default {
-  data () {
-      return {
-        value: 0,
-        query: false,
-        show: true,
-        interval: 0,
-      }
-    },
+  data() {
+    return {
+      value: 0,
+      query: false,
+      show: true,
+      interval: 0,
+    };
+  },
 
-    mounted () {
-      this.queryAndIndeterminate()
-    },
+  mounted() {
+    this.queryAndIndeterminate();
+  },
 
-    beforeDestroy () {
-      clearInterval(this.interval)
-    },
+  beforeDestroy() {
+    clearInterval(this.interval);
+  },
 
-    methods: {
-      queryAndIndeterminate () {
-        this.query = true
-        this.show = true
-        this.value = 0
-      },
+  methods: {
+    queryAndIndeterminate() {
+      this.query = true;
+      this.show = true;
+      this.value = 0;
     },
+  },
   name: "",
   props: ["stage", "vehicle"],
   components: {
@@ -154,24 +161,144 @@ export default {
     ERUStatus,
     MACStatus,
     GeneralStage,
-    Map
+    Map,
   },
   data: () => ({
     updatedStage: null,
     updatedVehicle: null,
+    mac_data: [],
+    hiker_data: [],
+    eru_data: [],
+    firstGetMAC: true,
+    firstGetERU: true,
   }),
+  mounted() {
+    this.getMACCurrentData();
+    this.getERUCurrentData();
+    this.getHikerCurrentData();
+  },
   methods: {
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
       this.updatedStage = stage;
       this.updatedVehicle = vehicle;
     },
+    getMACCurrentData() {
+      //MAC information
+      let path = "http://127.0.0.1:5000/MAC_XBEE";
+      axios
+        .get(path)
+        .then((res) => {
+          this.mac_data = res.data.MAC;
+          this.setMACPosition();
+        })
+        .catch((error) => {
+          console.error(error.response);
+        });
+    },
+    setMACPosition() {
+      for (let i = 0; i < this.mac_data.length; i++) {
+        if (this.mac_data[i].title == "Latitude") {
+          this.current_lat = this.mac_data[i].value;
+        } else if (this.mac_data[i].title == "Longitude") {
+          this.current_lng = this.mac_data[i].value;
+        }
+      }
+      let coord = [this.current_lng, this.current_lat]; //array for editPointSource
+      let pointExists = this.$refs.Map.editPointSource("mac", coord);
+      if (pointExists) {
+        console.log("edited MAC point");
+      } else {
+        console.log("added MAC point");
+        this.$refs.Map.addCoord(
+          "mac",
+          "mac",
+          this.current_lng,
+          this.current_lat
+        );
+      }
+      this.firstGetMAC = false;
+    },
+    getERUCurrentData() {
+      //ERU information
+      let path = "http://127.0.0.1:5000/ERU_XBEE";
+      axios
+        .get(path)
+        .then((res) => {
+          this.eru_data = res.data.ERU;
+          this.setERUPosition();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    setERUPosition() {
+      for (let i = 0; i < this.eru_data.length; i++) {
+        if (this.eru_data[i].title == "Latitude") {
+          this.current_lat = this.eru_data[i].value;
+        } else if (this.eru_data[i].title == "Longitude") {
+          this.current_lng = this.eru_data[i].value;
+        }
+      }
+      let coord = [this.current_lng, this.current_lat]; //array for editPointSource
+      let pointExists = this.$refs.Map.editPointSource("eru", coord);
+      if (pointExists) {
+        console.log("edited point");
+      } else {
+        console.log("added point");
+        this.$refs.Map.addCoord(
+          "eru",
+          "eru",
+          this.current_lng,
+          this.current_lat
+        );
+      }
+      this.firstGetERU = false;
+    },
+    getHikerCurrentData() {
+      //Hiker information
+      let path = "http://127.0.0.1:5000/Hiker";
+      axios
+        .get(path)
+        .then((res) => {
+          this.hiker_data = res.data.Hiker;
+          this.setHikerPosition();
+        })
+        .catch((error) => {
+          console.error(error.response);
+        });
+    },
+    setHikerPosition() {
+      for (let i = 0; i < this.hiker_data.length; i++) {
+        if (this.hiker_data[i].title == "Hiker_lat") {
+          this.hiker_lat = this.hiker_data[i].value;
+        } else if (this.hiker_data[i].title == "Hiker_lng") {
+          this.hiker_lng = this.hiker_data[i].value;
+        }
+      }
+      let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
+      let pointExists = this.$refs.Map.editPointSource("hiker", coord);
+      if (pointExists) {
+        console.log("edited point");
+      } else {
+        console.log("added point");
+        this.$refs.Map.addCoord(
+          "hiker",
+          "hiker",
+          this.hiker_lng,
+          this.hiker_lat
+        );
+      }
+      this.firstGetHiker = false;
+    },
   },
 };
 </script>
 
 <style>
-.scrollable:hover, .scrollable:active, .scrollable:focus {
-    overflow-y: auto !important;
+.scrollable:hover,
+.scrollable:active,
+.scrollable:focus {
+  overflow-y: auto !important;
 }
 </style>

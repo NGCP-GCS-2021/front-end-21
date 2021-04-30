@@ -183,7 +183,6 @@ export default {
           console.error(error.response);
         });
     },
-
     setMACPosition() {
       for (let i = 0; i < this.mac_data.length; i++) {
         if (this.mac_data[i].title == "Latitude") {
@@ -216,7 +215,6 @@ export default {
           this.hiker_lng = this.hiker_data[i].value;
         }
       }
-
       let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("hiker", coord);
       if (pointExists) {
