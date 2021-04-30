@@ -136,10 +136,8 @@ export default {
     },
     addPolygon(coordinates) {
       this.$refs.Map.removeLayer("Search Area");
-      console.log(coordinates);
-      console.log(
-        this.$refs.Map.addPoly(coordinates, "Search Area", "#00ff6a", 0.3)
-      );
+      // console.log(coordinates);
+      this.$refs.Map.addPoly(coordinates, "Search Area", "#00ff6a", 0.3);
       console.log("added Search Area from endpoint");
     },
     addCircle(lng, lat, rad) {
@@ -223,17 +221,23 @@ export default {
       this.firstGetHiker = false;
     },
     editMACHome(coord) {
-      this.MACHomePointExists = this.$refs.Map.editPointSource("mac_home", coord);
+      this.MACHomePointExists = this.$refs.Map.editPointSource(
+        "mac_home",
+        coord
+      );
     },
     addMACHome(lng, lat) {
       this.$refs.Map.addCoord("mac_home", "home", lng, lat);
     },
     editERUDrop(coord) {
-      this.ERUDropPointExists = this.$refs.Map.editPointSource("eru_drop_loc", coord);
+      this.ERUDropPointExists = this.$refs.Map.editPointSource(
+        "eru_drop_loc",
+        coord
+      );
     },
     addERUDrop(lng, lat) {
       this.$refs.Map.addCoord("eru_drop_loc", "drop-location", lng, lat); //not sure if naming is correct
-    }
+    },
   },
 };
 </script>
