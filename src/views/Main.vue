@@ -153,6 +153,11 @@ export default {
     this.getERUCurrentData();
     this.getHikerCurrentData();
   },
+  updated() {
+    this.getMACCurrentData();
+    this.getERUCurrentData();
+    this.getHikerCurrentData();
+  },
   methods: {
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
