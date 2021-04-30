@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Coords: {{Coordinates}}</h1>
+    <!-- <h5>Coords: {{Coordinates}}</h5> -->
     <validation-observer ref="observer" v-slot="{ invalid }">
       <form
         class="scrollable"
