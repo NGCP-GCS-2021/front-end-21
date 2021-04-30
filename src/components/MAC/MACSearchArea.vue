@@ -129,7 +129,6 @@ export default {
         if (this.Search_area.Circle_inputs.rad == null) {
           //Polygon
           this.$refs.PolygonToggle.selectPolygon();
-          this.$refs.PolygonForm = this.Search_area.Coordinates;
           this.addPolygon(this.Search_area.Coordinates);
         } else if (this.Search_area.Circle_inputs.rad != null) {
           //Circle
@@ -148,9 +147,9 @@ export default {
       }
     },
     setCoordinates() {
-      this.$refs.PolygonForm.print();
+      // this.$refs.PolygonForm.print();
       this.$refs.PolygonForm.Coordinates = this.Search_area.Coordinates;
-      console.log(this.Search_area.Coordinates);
+      // console.log(this.Search_area.Coordinates);
       this.addPolygon(this.Search_area.Coordinates);
     },
   },
