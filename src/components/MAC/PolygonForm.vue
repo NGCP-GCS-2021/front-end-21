@@ -140,8 +140,8 @@ export default {
     //     lng: "-117.6294458",
     //   },
     // ],
-    Search_area: {
-      Search_area: {
+    Search_Area: {
+      Search_Area: {
         Coordinates: [],
         Circle_inputs: {
           lng: null,
@@ -193,22 +193,22 @@ export default {
       this.$emit("addPolygon", tempCoordinates);
     },
     postSearchArea() {
-      this.Search_area.Search_area.Coordinates = this.Coordinates;
+      this.Search_Area.Search_Area.Coordinates = this.Coordinates;
 
       for (
         let i = 0;
-        i < this.Search_area.Search_area.Coordinates.length;
+        i < this.Search_Area.Search_Area.Coordinates.length;
         i++
       ) {
-        this.Search_area.Search_area.Coordinates[i].lat = parseFloat(
-          this.Search_area.Search_area.Coordinates[i].lat
+        this.Search_Area.Search_Area.Coordinates[i].lat = parseFloat(
+          this.Search_Area.Search_Area.Coordinates[i].lat
         );
-        this.Search_area.Search_area.Coordinates[i].lng = parseFloat(
-          this.Search_area.Search_area.Coordinates[i].lng
+        this.Search_Area.Search_Area.Coordinates[i].lng = parseFloat(
+          this.Search_Area.Search_Area.Coordinates[i].lng
         );
       }
-      const searchAreaStringify = JSON.stringify(this.Search_area);
-      console.log(searchAreaStringify);
+      const searchAreaStringify = JSON.stringify(this.Search_Area);
+      // console.log(searchAreaStringify);
       const path = "http://127.0.0.1:5000/MAC_INPUT";
       axios
         .post(path, searchAreaStringify)

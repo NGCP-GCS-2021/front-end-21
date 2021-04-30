@@ -93,7 +93,7 @@ export default {
     //     lat: "",
     //   },
     // ],
-    Search_area: null,
+    Search_Area: null,
     shape: null,
   }),
 
@@ -113,10 +113,10 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.Search_area = res.data.Search_area;
-          console.log(this.Search_area)
-          //console.log("Search Area Coordinates: ");
-          //console.log(this.Search_area.Coordinates)
+          this.Search_Area = res.data.Search_Area;
+          // console.log(this.Search_Area)
+          console.log("Search Area Coordinates: ");
+          console.log(this.Search_Area.Coordinates)
           // console.log("------");
           this.setSearchArea();
         })
@@ -125,32 +125,32 @@ export default {
         });
     },
     setSearchArea() {
-      if (this.Search_area.Coordinates.length > 0) {
-        if (this.Search_area.Circle_inputs.rad == null) {
+      if (this.Search_Area.Coordinates.length > 0) {
+        if (this.Search_Area.Circle_inputs.rad == null) {
           //Polygon
           this.$refs.PolygonToggle.selectPolygon();
-          this.addPolygon(this.Search_area.Coordinates);
-        } else if (this.Search_area.Circle_inputs.rad != null) {
+          this.addPolygon(this.Search_Area.Coordinates);
+        } else if (this.Search_Area.Circle_inputs.rad != null) {
           //Circle
           this.shape = "circle";
           this.$refs.PolygonToggle.selectCircle();
 
-          this.$refs.CircleForm.Latitude = this.Search_area.Circle_inputs.lat;
-          this.$refs.CircleForm.Longitude = this.Search_area.Circle_inputs.lng;
-          this.$refs.CircleForm.Radius = this.Search_area.Circle_inputs.rad;
+          this.$refs.CircleForm.Latitude = this.Search_Area.Circle_inputs.lat;
+          this.$refs.CircleForm.Longitude = this.Search_Area.Circle_inputs.lng;
+          this.$refs.CircleForm.Radius = this.Search_Area.Circle_inputs.rad;
           this.addCircle(
-            this.Search_area.Circle_inputs.lng,
-            this.Search_area.Circle_inputs.lat,
-            this.Search_area.Circle_inputs.rad
+            this.Search_Area.Circle_inputs.lng,
+            this.Search_Area.Circle_inputs.lat,
+            this.Search_Area.Circle_inputs.rad
           );
         }
       }
     },
     setCoordinates() {
       // this.$refs.PolygonForm.print();
-      this.$refs.PolygonForm.Coordinates = this.Search_area.Coordinates;
-      // console.log(this.Search_area.Coordinates);
-      this.addPolygon(this.Search_area.Coordinates);
+      this.$refs.PolygonForm.Coordinates = this.Search_Area.Coordinates;
+      // console.log(this.Search_Area.Coordinates);
+      this.addPolygon(this.Search_Area.Coordinates);
     },
   },
   mounted() {
