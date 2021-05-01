@@ -140,7 +140,7 @@ export default {
   },
 
   data: () => ({
-    vehicle: "MAC", //"MAC", "ERU", "MEA"
+    vehicle: null, //"MAC", "ERU", "MEA"
     submitDisabled: true,
     deleteDisabled: true,
     Geofence: {
@@ -154,24 +154,25 @@ export default {
     keepOutCount: 0,
     keepInCircleCoords: null,
     keepOutCircleCoords: null,
+    mapMounted: false,
   }),
   methods: {
     mapMounted() {
-      if ((vehicle = null)) {
-        this.mapMounted();
-      } else {
-        this.getCurrentGeofence();
-      }
+      this.mapMounted = true;
     },
     setVehicle(vehicle) {
       this.vehicle = vehicle;
-      if (vehicle != null) {
-        this.getCurrentGeofence(vehicle);
+      if (this.mapMounted == false) {
+        this.setVehicle(vehicle);
       } else {
-        this.keepInEmpty = true;
-        this.keepOutEmpty = true;
-        this.$refs.KeepInCart.CoordinatesArray = [];
-        this.$refs.KeepOutCart.CoordinatesArray = [];
+        if (vehicle != null) {
+          this.getCurrentGeofence(vehicle);
+        } else {
+          this.keepInEmpty = true;
+          this.keepOutEmpty = true;
+          this.$refs.KeepInCart.CoordinatesArray = [];
+          this.$refs.KeepOutCart.CoordinatesArray = [];
+        }
       }
     },
     getCurrentGeofence() {
@@ -206,7 +207,7 @@ export default {
     addToKeepIn(coordinates, lng, lat, rad) {
       this.$refs.KeepInCart.CoordinatesArray.push(coordinates);
       let circleInputs = { lng: lng, lat: lat, rad: rad };
-      console.log(circleInputs);
+      // console.log(circleInputs);
       this.$refs.KeepInCart.CircleInputsArray.push(circleInputs);
       this.submitDisabled = false;
       this.deleteDisabled = false;
@@ -216,7 +217,7 @@ export default {
     addToKeepOut(coordinates, lng, lat, rad) {
       this.$refs.KeepOutCart.CoordinatesArray.push(coordinates);
       let circleInputs = { lng: lng, lat: lat, rad: rad };
-      console.log(circleInputs);
+      // console.log(circleInputs);
       this.$refs.KeepOutCart.CircleInputsArray.push(circleInputs);
       this.submitDisabled = false;
       this.deleteDisabled = false;
@@ -304,7 +305,7 @@ export default {
       let layerName = "Keep In " + this.keepInCount;
       this.$refs.Map.removeLayer(layerName);
       let coords = this.$refs.Map.addPoly(coordinates, layerName, "green", 0.4);
-      console.log(coords);
+      // console.log(coords);
     },
     addKeepInCircle(lng, lat, rad) {
       let layerName = "Keep In " + this.keepInCount;
