@@ -349,6 +349,9 @@ export default {
         return false;
       }
     },
+    styleLoaded() {
+      this.$emit("mapMounted")
+    }
   },
 
   data: {
@@ -419,9 +422,9 @@ export default {
       // vm.editPointSource("test_point", [-117.63052445140261, 33.93404089266308]);
       // vm.editPolySource("test2", tempCoords);
       // vm.addCoord("test_point2", "hiker", vm.center_long, vm.center_lat);
-      
+      vm.styleLoaded();
     });
-    this.$emit("mapMounted");
+    
   },
   template: '<v-col :cols={{ cols }} height="100%" id="map"></v-col>',
 };
