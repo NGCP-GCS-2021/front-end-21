@@ -26,6 +26,7 @@
       <v-row>
         <CircleForm
           @addCircle="addCircle"
+          @setCircleCoordinates="setCircleCoordinates"
           :circleCoords="circleCoords"
           ref="CircleForm"
         />
@@ -126,20 +127,11 @@ export default {
         if (this.Search_Area.Circle_inputs.rad == null) {
           //Polygon
           this.$refs.PolygonToggle.selectPolygon();
-        } else if (this.Search_Area.Circle_inputs.rad != null) {
-          //Circle
-          this.shape = "circle";
-          this.$refs.PolygonToggle.selectCircle();
-
-          this.$refs.CircleForm.Latitude = this.Search_Area.Circle_inputs.lat;
-          this.$refs.CircleForm.Longitude = this.Search_Area.Circle_inputs.lng;
-          this.$refs.CircleForm.Radius = this.Search_Area.Circle_inputs.rad;
-          this.addCircle(
-            this.Search_Area.Circle_inputs.lng,
-            this.Search_Area.Circle_inputs.lat,
-            this.Search_Area.Circle_inputs.rad
-          );
         }
+      }
+      if (this.Search_Area.Circle_inputs.rad != null) {
+        //Circle
+        this.$refs.PolygonToggle.selectCircle();
       }
     },
     setPolygonCoordinates() {
@@ -154,6 +146,17 @@ export default {
       }
       this.addPolygon(tempCoordinates);
       console.log(this.$refs.PolygonForm.Coordinates);
+    },
+    setCircleCoordinates() {
+      console.log(this.Search_Area.Circle_inputs.lat)
+      this.$refs.CircleForm.Latitude = this.Search_Area.Circle_inputs.lat;
+      this.$refs.CircleForm.Longitude = this.Search_Area.Circle_inputs.lng;
+      this.$refs.CircleForm.Radius = this.Search_Area.Circle_inputs.rad;
+      this.addCircle(
+        this.Search_Area.Circle_inputs.lng,
+        this.Search_Area.Circle_inputs.lat,
+        this.Search_Area.Circle_inputs.rad
+      );
     },
   },
   mounted() {

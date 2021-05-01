@@ -119,8 +119,8 @@ export default {
   props: ["circleCoords"],
   data() {
     return {
-      Search_area: {
-        Search_area: {
+      Search_Area: {
+        Search_Area: {
           Coordinates: [],
           Circle_inputs: {
             lng: null,
@@ -133,6 +133,9 @@ export default {
       Latitude: "",
       Radius: "",
     };
+  },
+  mounted() {
+    this.$emit("setCircleCoordinates")
   },
 
   methods: {
@@ -151,28 +154,28 @@ export default {
       this.$emit("addCircle", this.Longitude, this.Latitude, this.Radius);
     },
     postSearchArea() {
-      for (
-        let i = 0;
-        i < this.Search_area.Search_area.Coordinates.length;
-        i++
-      ) {
-        this.Search_area.Search_area.Coordinates[i].lat = parseFloat(
-          this.Search_area.Search_area.Coordinates[i].lat
-        );
-        this.Search_area.Search_area.Coordinates[i].lng = parseFloat(
-          this.Search_area.Search_area.Coordinates[i].lng
-        );
-      }
+      // for (
+      //   let i = 0;
+      //   i < this.Search_Area.Search_Area.Coordinates.length;
+      //   i++
+      // ) {
+      //   this.Search_Area.Search_Area.Coordinates[i].lat = parseFloat(
+      //     this.Search_Area.Search_Area.Coordinates[i].lat
+      //   );
+      //   this.Search_Area.Search_Area.Coordinates[i].lng = parseFloat(
+      //     this.Search_Area.Search_Area.Coordinates[i].lng
+      //   );
+      // }
 
-      this.Search_area.Search_area.Circle_inputs.lng = parseFloat(
-        this.Latitude
-      );
-      this.Search_area.Search_area.Circle_inputs.lat = parseFloat(
+      this.Search_Area.Search_Area.Circle_inputs.lng = parseFloat(
         this.Longitude
       );
-      this.Search_area.Search_area.Circle_inputs.rad = parseFloat(this.Radius);
+      this.Search_Area.Search_Area.Circle_inputs.lat = parseFloat(
+        this.Latitude
+      );
+      this.Search_Area.Search_Area.Circle_inputs.rad = parseFloat(this.Radius);
 
-      const searchAreaStringify = JSON.stringify(this.Search_area);
+      const searchAreaStringify = JSON.stringify(this.Search_Area);
       const path = "http://127.0.0.1:5000/MAC_INPUT";
       axios
         .post(path, searchAreaStringify)

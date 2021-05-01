@@ -33,7 +33,7 @@ export default {
       mac_messages: [],
       current_stage: {
         stage: "No stage",
-        id: -1
+        id: -1,
       },
       stages: [
         {
@@ -65,7 +65,6 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          console.log("getting data....")
           this.mac_data = res.data.MAC;
           this.setCurrentStage();
         })
@@ -78,7 +77,7 @@ export default {
         let pair = this.mac_data[i];
         if (pair.title == "Current_stage") {
           this.current_stage.id = pair.value;
-          console.log(pair)
+          console.log(pair);
           for (let k = 0; k < this.stages.length; k++) {
             if (this.current_stage.id == this.stages[k].id) {
               this.current_stage.stage = this.stages[k].stage;
@@ -87,8 +86,9 @@ export default {
             }
           }
         }
-        if (pair.title == "Battery") { 
-          this.mac_data[i].value = (Math.round(((pair.value * 100) + Number.EPSILON) * 100) / 100) + "%"
+        if (pair.title == "Battery") {
+          this.mac_data[i].value =
+            Math.round((pair.value * 100 + Number.EPSILON) * 100) / 100 + "%";
         }
       }
     },

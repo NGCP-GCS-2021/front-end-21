@@ -11,6 +11,7 @@
           SW_bound_long="-117.63616828159178"
           NE_bound_lat="33.93569086311143"
           NE_bound_long="-117.6263621141112"
+          @mapMounted="mapMounted"
           ref="Map"
         />
         <v-col :cols="6">
@@ -121,7 +122,7 @@ export default {
   }),
 
   mounted() {
-    setTimeout(this.getCurrentData, 5000);
+    // setTimeout(this.getCurrentData, 5000);
   },
   updated() {
     if (!this.firstGetMAC && !this.firstGetHiker) {
@@ -129,6 +130,9 @@ export default {
     }
   },
   methods: {
+    mapMounted() {
+      this.getCurrentData();
+    },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
       this.updatedStage = stage;
@@ -141,12 +145,13 @@ export default {
       console.log("added Search Area from endpoint");
     },
     addCircle(lng, lat, rad) {
+      this.$refs.Map.removeLayer("Search Area");
       this.circleCoords = this.$refs.Map.addCircle(
         lng,
         lat,
         rad,
         16,
-        "SearchAreaCircle",
+        "Search Area",
         "#00ff6a",
         0.3
       );

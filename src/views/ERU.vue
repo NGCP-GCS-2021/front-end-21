@@ -11,6 +11,7 @@
           SW_bound_long="-117.63616828159178"
           NE_bound_lat="33.93569086311143"
           NE_bound_long="-117.6263621141112"
+          @mapMounted="mapMounted"
           ref="Map"
         />
         <template v-if="!manualControlView">
@@ -72,7 +73,7 @@
               <v-card width="100%">
                 <v-container fluid-flex>
                   <v-row>
-                    <v-col col="1" style="flex-grow: 0.5;">
+                    <v-col col="1" style="flex-grow: 0.5">
                       <BackButton
                         @back="setManualControlView"
                         @deactivate="setButtonsActivated"
@@ -151,7 +152,7 @@
             </v-row>
             <v-row v-if="input === 'keyboard'" style="padding-top: 1%">
               <v-card width="100%">
-                <v-container fluid-flex> 
+                <v-container fluid-flex>
                   <h1 class="font-weight-light">Controls:</h1>
                   <v-row style="padding-top: 1%">
                     <v-col cols="6">
@@ -233,7 +234,7 @@ export default {
     evacPointExists: false,
   }),
   mounted() {
-    setTimeout(this.getCurrentData, 5000);
+    // setTimeout(this.getCurrentData, 5000);
   },
   updated() {
     if (!this.firstGetERU && !this.firstGetHiker) {
@@ -241,6 +242,9 @@ export default {
     }
   },
   methods: {
+    mapMounted() {
+      this.getCurrentData;
+    },
     getCurrentData() {
       //ERU information
       let path = "http://127.0.0.1:5000/ERU_XBEE";
@@ -279,9 +283,9 @@ export default {
       let coord = [this.current_lng, this.current_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("eru", coord);
       if (pointExists) {
-        console.log("edited point");
+        console.log("edited ERU point");
       } else {
-        console.log("added point");
+        console.log("added ERU point");
         this.$refs.Map.addCoord(
           "eru",
           "eru",
@@ -303,9 +307,9 @@ export default {
       let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("hiker", coord);
       if (pointExists) {
-        console.log("edited point");
+        console.log("edited Hiker point");
       } else {
-        console.log("added point");
+        console.log("added Hiker point");
         this.$refs.Map.addCoord(
           "hiker",
           "hiker",
