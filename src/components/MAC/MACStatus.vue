@@ -15,7 +15,12 @@
       <div v-for="(mac_data, index) in mac_data" :key="index">
         <div style="display: flex; padding-right: 3px">
           <h4 class="font-weight-regular pr-1">{{ mac_data.title }}:</h4>
-          <h4 :id="mac_data.title" :style="{color: battery_color}" class="font-weight-bold" style="float: right">
+          <h4
+            :id="mac_data.title"
+            :style="{ color: battery_color }"
+            class="font-weight-bold"
+            style="float: right"
+          >
             {{ mac_data.value }}
           </h4>
         </div>
@@ -29,7 +34,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      battery_color: 'green',
+      battery_color: "green",
       mac_data: [],
       mac_messages: [],
       current_stage: {
@@ -69,15 +74,15 @@ export default {
           //this.mac_data = res.data.MAC;
           var dataArray = res.data.MAC;
 
-          let altitude =  dataArray[0]
-          let latitude = dataArray[4]
-          let longitude = dataArray[5]
+          let altitude = dataArray[0];
+          let latitude = dataArray[4];
+          let longitude = dataArray[5];
 
-          let removedAlt = dataArray.splice(0, 1)
-          let removedLatLong = dataArray.splice(3, 2)
-          let removedExtra = dataArray.splice(11, 2)
+          let removedAlt = dataArray.splice(0, 1);
+          let removedLatLong = dataArray.splice(3, 2);
+          let removedExtra = dataArray.splice(11, 2);
 
-          dataArray.push(altitude,latitude, longitude);
+          dataArray.push(altitude, latitude, longitude);
           this.mac_data = dataArray;
 
           this.setCurrentStage();
@@ -102,16 +107,16 @@ export default {
         }
         if (pair.title == "Battery") {
           this.mac_data[i].value =
-            Math.round((pair.value * 100 + Number.EPSILON) * 100) / 100 + "%";
+            Math.round((pair.value * 100 + Number.EPSILON) * 100) / 100;
 
           if (pair.value < 50) {
-            this.battery_color= "red";
+            this.battery_color = "red";
           } else if (pair.value < 70) {
-            this.battery_color= "orange";
+            this.battery_color = "orange";
+          } else {
+            this.battery_color = "green";
           }
-          else {
-            this.battery_color= "green";
-          }
+          this.mac_data[i].value = this.mac_data[i].value + "%"
         }
       }
     },
