@@ -123,6 +123,7 @@ export default {
         });
     },
     setSearchArea() {
+      console.log("length: "+ this.Search_Area.Coordinates.length)
       if (this.Search_Area.Coordinates.length > 0) {
         if (this.Search_Area.Circle_inputs.rad == null) {
           //Polygon
@@ -145,7 +146,7 @@ export default {
         tempCoordinates[i] = temp;
       }
       this.addPolygon(tempCoordinates);
-      console.log(this.$refs.PolygonForm.Coordinates);
+      // console.log(this.$refs.PolygonForm.Coordinates);
     },
     setCircleCoordinates() {
       console.log(this.Search_Area.Circle_inputs.lat)
