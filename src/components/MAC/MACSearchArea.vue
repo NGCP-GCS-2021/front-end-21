@@ -151,15 +151,17 @@ export default {
       }
     },
     setCircleCoordinates() {
-      console.log(this.Search_Area.Circle_inputs.lat);
-      this.$refs.CircleForm.Latitude = this.Search_Area.Circle_inputs.lat;
-      this.$refs.CircleForm.Longitude = this.Search_Area.Circle_inputs.lng;
-      this.$refs.CircleForm.Radius = this.Search_Area.Circle_inputs.rad;
-      this.addCircle(
-        this.Search_Area.Circle_inputs.lng,
-        this.Search_Area.Circle_inputs.lat,
-        this.Search_Area.Circle_inputs.rad
-      );
+      // console.log(this.Search_Area.Circle_inputs.lat);
+      if (this.Search_Area.Circle_inputs.rad != null) {
+        this.$refs.CircleForm.Latitude = this.Search_Area.Circle_inputs.lat;
+        this.$refs.CircleForm.Longitude = this.Search_Area.Circle_inputs.lng;
+        this.$refs.CircleForm.Radius = this.Search_Area.Circle_inputs.rad;
+        this.addCircle(
+          this.Search_Area.Circle_inputs.lng,
+          this.Search_Area.Circle_inputs.lat,
+          this.Search_Area.Circle_inputs.rad
+        );
+      }
     },
   },
   // mounted() {
