@@ -39,6 +39,7 @@
                       @editEvac="editEvac"
                       :evacPointExists="evacPointExists"
                       @addEvac="addEvac"
+                      ref="EvacutationZone"
                     />
                   </v-card>
                 </v-col>
@@ -48,6 +49,7 @@
                       @editERUHome="editERUHome"
                       @addERUHome="addERUHome"
                       :pointExists="pointExists"
+                      ref="ERUHome"
                     />
                   </v-card>
                 </v-col>
@@ -244,6 +246,8 @@ export default {
   methods: {
     mapMounted() {
       this.getCurrentData;
+      this.$refs.EvacuationZone.getCurrentEvac();
+      this.$refs.ERUHome.getCurrentTravelTo();
     },
     getCurrentData() {
       //ERU information

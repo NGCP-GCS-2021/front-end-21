@@ -94,9 +94,9 @@ export default {
     firstGetEvac: true,
   }),
   props: ["evacPointExists"],
-  mounted() {
-    setTimeout(this.getCurrentEvac, 5000);
-  },
+  // mounted() {
+  //   setTimeout(this.getCurrentEvac, 5000);
+  // },
   updated() {
     if (!this.firstGetEvac) {
       this.getCurrentEvac();
