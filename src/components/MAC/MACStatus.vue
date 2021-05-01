@@ -15,12 +15,7 @@
       <div v-for="(mac_data, index) in mac_data" :key="index">
         <div style="display: flex; padding-right: 3px">
           <h4 class="font-weight-regular pr-1">{{ mac_data.title }}:</h4>
-          <h4
-            :id="mac_data.title"
-            :style="{ color: battery_color }"
-            class="font-weight-bold"
-            style="float: right"
-          >
+          <h4 :id="mac_data.title" class="font-weight-bold" style="float: right">
             {{ mac_data.value }}
           </h4>
         </div>
@@ -34,7 +29,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      battery_color: "green",
+      //battery_color: 'green',
       mac_data: [],
       mac_messages: [],
       current_stage: {
@@ -107,16 +102,7 @@ export default {
         }
         if (pair.title == "Battery") {
           this.mac_data[i].value =
-            Math.round((pair.value * 100 + Number.EPSILON) * 100) / 100;
-
-          if (pair.value < 50) {
-            this.battery_color = "red";
-          } else if (pair.value < 70) {
-            this.battery_color = "orange";
-          } else {
-            this.battery_color = "green";
-          }
-          this.mac_data[i].value = this.mac_data[i].value + "%"
+            Math.round((pair.value * 100 + Number.EPSILON) * 100) / 100 + "%";
         }
       }
     },
