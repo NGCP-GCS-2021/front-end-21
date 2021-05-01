@@ -140,7 +140,7 @@ export default {
   },
 
   data: () => ({
-    vehicle: "MAC", //"MAC", "ERU", "MEA"
+    vehicle: null, //"MAC", "ERU", "MEA"
     submitDisabled: true,
     deleteDisabled: true,
     Geofence: {
