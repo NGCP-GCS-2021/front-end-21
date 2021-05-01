@@ -204,10 +204,30 @@ export default {
     setGeofenceCarts() {
       for (let i = 0; i < this.currentGeofence.length; i++) {
         let area = this.currentGeofence[i];
+        let tempCoordinates = new Array(area.Coordinates.length);
+        let temp = [];
+        for (let i = 0; i < area.Coordinates.length; i++) {
+          temp = new Array(2);
+          temp[0] = parseFloat(area.Coordinates[i].lng);
+          temp[1] = parseFloat(area.Coordinates[i].lat);
+          tempCoordinates[i] = temp;
+        }
         if (area.Keep_in == true) {
-          this.$refs.KeepInCart.CoordinatesArray.push(area);
+          this.addKeepInPolygon(tempCoordinates);
+          this.addToKeepIn(
+            tempCoordinates,
+            area.Circle_inputs.lng,
+            area.Circle_inputs.lat,
+            area.Circle_inputs.rad
+          );
         } else if (area.Keep_in == false) {
-          this.$refs.KeepOutCart.CoordinatesArray.push(area);
+          this.addKeepInPolygon(tempCoordinates);
+          this.addToKeepOut(
+            tempCoordinates,
+            area.Circle_inputs.lng,
+            area.Circle_inputs.lat,
+            area.Circle_inputs.rad
+          );
         }
       }
     },
