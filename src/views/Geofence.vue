@@ -11,6 +11,7 @@
           SW_bound_long="-117.63616828159178"
           NE_bound_lat="33.93569086311143"
           NE_bound_long="-117.6263621141112"
+          @mapMounted="mapMounted"
           ref="Map"
         />
         <v-col :cols="6">
@@ -53,6 +54,7 @@
                       <KeepInCart
                         :keepInEmpty="keepInEmpty"
                         @setKeepInEmpty="setKeepInEmpty"
+                        @removeKeepInArea="removeKeepInArea"
                         ref="KeepInCart"
                       />
                     </v-col>
@@ -154,7 +156,7 @@ export default {
     keepOutCount: 0,
     keepInCircleCoords: null,
     keepOutCircleCoords: null,
-  }),
+  }), 
   methods: {
     setVehicle(vehicle) {
       this.vehicle = vehicle;
@@ -338,9 +340,16 @@ export default {
       }
       this.keepInCircleCoords = tempCoords;
     },
-    removeKeepOutArea(k) {
-      let layerName = "Keep Out " + k
+    removeKeepInArea(k) {
+      let layerName = "Keep In " + (k - 1)
       this.$refs.Map.removeLayer(layerName);
+    },
+    removeKeepOutArea(k) {
+      let layerName = "Keep Out " + (k - 1)
+      this.$refs.Map.removeLayer(layerName);
+    },
+    mapMounted() {
+      this.getCurrentGeofence();
     }
   },
 };

@@ -42,6 +42,7 @@
                       @addPolygon="addPolygon"
                       @addCircle="addCircle"
                       :circleCoords="circleCoords"
+                      ref="MACSearchArea"
                     />
                   </v-card>
                 </v-col>
@@ -132,6 +133,7 @@ export default {
   methods: {
     mapMounted() {
       this.getCurrentData();
+      this.$refs.MACSearchArea.getSearchArea();
     },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
