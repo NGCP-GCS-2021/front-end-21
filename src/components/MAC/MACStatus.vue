@@ -7,7 +7,7 @@
     <div
       style="
         display: grid;
-        grid-template-columns: auto auto auto auto auto;
+        grid-template-columns: auto auto auto auto;
         grid-gap: 5px;
         padding-bottom: 15px;
       "
@@ -74,6 +74,7 @@ export default {
 
           let removedAlt = dataArray.splice(0, 1)
           let removedLatLong = dataArray.splice(3, 2)
+          let removedExtra = dataArray.splice(11, 2)
 
           dataArray.push(altitude,latitude, longitude);
           this.mac_data = dataArray;
