@@ -123,6 +123,7 @@ export default {
         });
     },
     setSearchArea() {
+      console.log("length: " + this.Search_Area.Coordinates.length);
       if (this.Search_Area.Coordinates.length > 0) {
         if (this.Search_Area.Circle_inputs.rad == null) {
           //Polygon
@@ -135,20 +136,22 @@ export default {
       }
     },
     setPolygonCoordinates() {
-      this.$refs.PolygonForm.Coordinates = this.Search_Area.Coordinates;
-      let tempCoordinates = new Array(this.Search_Area.Coordinates.length);
-      let temp = [];
-      for (let i = 0; i < this.Search_Area.Coordinates.length; i++) {
-        temp = new Array(2);
-        temp[0] = this.Search_Area.Coordinates[i].lng;
-        temp[1] = this.Search_Area.Coordinates[i].lat;
-        tempCoordinates[i] = temp;
+      if (this.Search_Area.Coordinates.length > 0) {
+        this.$refs.PolygonForm.Coordinates = this.Search_Area.Coordinates;
+        let tempCoordinates = new Array(this.Search_Area.Coordinates.length);
+        let temp = [];
+        for (let i = 0; i < this.Search_Area.Coordinates.length; i++) {
+          temp = new Array(2);
+          temp[0] = this.Search_Area.Coordinates[i].lng;
+          temp[1] = this.Search_Area.Coordinates[i].lat;
+          tempCoordinates[i] = temp;
+        }
+        this.addPolygon(tempCoordinates);
+        // console.log(this.$refs.PolygonForm.Coordinates);
       }
-      this.addPolygon(tempCoordinates);
-      console.log(this.$refs.PolygonForm.Coordinates);
     },
     setCircleCoordinates() {
-      console.log(this.Search_Area.Circle_inputs.lat)
+      console.log(this.Search_Area.Circle_inputs.lat);
       this.$refs.CircleForm.Latitude = this.Search_Area.Circle_inputs.lat;
       this.$refs.CircleForm.Longitude = this.Search_Area.Circle_inputs.lng;
       this.$refs.CircleForm.Radius = this.Search_Area.Circle_inputs.rad;

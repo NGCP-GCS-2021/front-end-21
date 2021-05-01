@@ -69,6 +69,7 @@
                       @editMACHome="editMACHome"
                       @addMACHome="addMACHome"
                       :MACHomePointExists="MACHomePointExists"
+                      ref="MACHome"
                     />
                   </v-card>
                 </v-col>
