@@ -14,8 +14,8 @@
     >
       <div v-for="(mac_data, index) in mac_data" :key="index">
         <div style="display: flex; padding-right: 3px">
-          <h4 class= "font-weight-regular pr-1">{{ mac_data.title }}:</h4>
-          <h4 class="font-weight-bold" style="float: right">
+          <h4 class="font-weight-regular pr-1">{{ mac_data.title }}:</h4>
+          <h4 :id="mac_data.title" class="font-weight-bold" style="float: right">
             {{ mac_data.value }}
           </h4>
         </div>
@@ -102,6 +102,10 @@ export default {
         if (pair.title == "Battery") {
           this.mac_data[i].value =
             Math.round((pair.value * 100 + Number.EPSILON) * 100) / 100 + "%";
+
+          if (battery < 50) {
+            document.getElementById("Battery").style.color = "red";
+          }
         }
       }
     },
