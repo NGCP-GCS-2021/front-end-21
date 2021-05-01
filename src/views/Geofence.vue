@@ -17,9 +17,7 @@
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row class="pb-3 px-5">
-              <VehicleSelect
-                @selected="setVehicle"
-              />
+              <VehicleSelect @selected="setVehicle" />
             </v-row>
 
             <v-container class="" style="height: 720px" v-if="vehicle">
@@ -156,8 +154,15 @@ export default {
     keepOutCount: 0,
     keepInCircleCoords: null,
     keepOutCircleCoords: null,
-  }), 
+  }),
   methods: {
+    mapMounted() {
+      if ((vehicle = null)) {
+        this.mapMounted();
+      } else {
+        this.getCurrentGeofence();
+      }
+    },
     setVehicle(vehicle) {
       this.vehicle = vehicle;
       if (vehicle != null) {
@@ -341,16 +346,13 @@ export default {
       this.keepInCircleCoords = tempCoords;
     },
     removeKeepInArea(k) {
-      let layerName = "Keep In " + (k - 1)
+      let layerName = "Keep In " + (k - 1);
       this.$refs.Map.removeLayer(layerName);
     },
     removeKeepOutArea(k) {
-      let layerName = "Keep Out " + (k - 1)
+      let layerName = "Keep Out " + (k - 1);
       this.$refs.Map.removeLayer(layerName);
     },
-    mapMounted() {
-      this.getCurrentGeofence();
-    }
   },
 };
 </script>
