@@ -52,6 +52,7 @@
                       @editERUDrop="editERUDrop"
                       @addERUDrop="addERUDrop"
                       :ERUDropPointExists="ERUDropPointExists"
+                      ref=ERUDrop
                     />
                   </v-card>
                 </v-col>
@@ -133,7 +134,9 @@ export default {
   methods: {
     mapMounted() {
       this.getCurrentData();
-      this.$refs.MACSearchArea.getSearchArea();
+      this.$refs.MACSearchArea.getMACSearchArea();
+      this.$refs.ERUDrop.getCurrentDropLocation();
+      this.$refs.MACHome.getCurrentTravelTo();
     },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
