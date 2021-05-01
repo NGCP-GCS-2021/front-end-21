@@ -160,7 +160,7 @@ export default {
     },
   },
   mounted() {
-    setTimeout(this.getMACSearchArea, 5000);
+    // setTimeout(this.getMACSearchArea, 5000);
     // this.getMACSearchArea();
   },
 };

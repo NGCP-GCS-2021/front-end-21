@@ -107,9 +107,9 @@ export default {
     };
   },
   props: ["MACHomePointExists"],
-  mounted() {
-    setTimeout(this.getCurrentTravelTo, 5000);
-  },
+  // mounted() {
+  //   setTimeout(this.getCurrentTravelTo, 5000);
+  // },
   updated() {
     if (!this.firstGetHome) {
       this.getCurrentTravelTo();

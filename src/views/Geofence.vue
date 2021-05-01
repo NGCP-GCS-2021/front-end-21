@@ -11,14 +11,13 @@
           SW_bound_long="-117.63616828159178"
           NE_bound_lat="33.93569086311143"
           NE_bound_long="-117.6263621141112"
+          @mapMounted="mapMounted"
           ref="Map"
         />
         <v-col :cols="6">
           <v-container fluid flex>
             <v-row class="pb-3 px-5">
-              <VehicleSelect
-                @selected="setVehicle"
-              />
+              <VehicleSelect @selected="setVehicle" />
             </v-row>
 
             <v-container class="" style="height: 720px" v-if="vehicle">
@@ -53,6 +52,7 @@
                       <KeepInCart
                         :keepInEmpty="keepInEmpty"
                         @setKeepInEmpty="setKeepInEmpty"
+                        @removeKeepInArea="removeKeepInArea"
                         ref="KeepInCart"
                       />
                     </v-col>
@@ -156,6 +156,13 @@ export default {
     keepOutCircleCoords: null,
   }),
   methods: {
+    mapMounted() {
+      if ((vehicle = null)) {
+        this.mapMounted();
+      } else {
+        this.getCurrentGeofence();
+      }
+    },
     setVehicle(vehicle) {
       this.vehicle = vehicle;
       if (vehicle != null) {
@@ -338,10 +345,14 @@ export default {
       }
       this.keepInCircleCoords = tempCoords;
     },
-    removeKeepOutArea(k) {
-      let layerName = "Keep Out " + k
+    removeKeepInArea(k) {
+      let layerName = "Keep In " + (k - 1);
       this.$refs.Map.removeLayer(layerName);
-    }
+    },
+    removeKeepOutArea(k) {
+      let layerName = "Keep Out " + (k - 1);
+      this.$refs.Map.removeLayer(layerName);
+    },
   },
 };
 </script>
