@@ -14,7 +14,7 @@
     >
       <div v-for="(mac_data, index) in mac_data" :key="index">
         <div style="display: flex; padding-right: 3px">
-          <h4 class="font-weight-regular pr-1">{{ mac_data.title }}:</h4>
+          <h4 class= "font-weight-regular pr-1">{{ mac_data.title }}:</h4>
           <h4 class="font-weight-bold" style="float: right">
             {{ mac_data.value }}
           </h4>
