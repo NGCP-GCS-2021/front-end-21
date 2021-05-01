@@ -171,13 +171,15 @@ export default {
         setTimeout(this.setVehicle, 500, vehicle);
       } else {
         if (vehicle != null) {
-          this.getCurrentGeofence(vehicle);
+          this.getCurrentGeofence();
         } else {
           try {
             this.keepInEmpty = true;
             this.keepOutEmpty = true;
             this.$refs.KeepInCart.CoordinatesArray = [];
             this.$refs.KeepOutCart.CoordinatesArray = [];
+            this.keepInCount = 0;
+            this.keepOutCount = 0;
           } catch (error) {}
         }
       }
@@ -215,7 +217,7 @@ export default {
         if (area.Keep_in == true) {
           this.addKeepInPolygon(tempCoordinates);
           this.addToKeepIn(
-            tempCoordinates,
+            area.Coordinates,
             area.Circle_inputs.lng,
             area.Circle_inputs.lat,
             area.Circle_inputs.rad
@@ -223,7 +225,7 @@ export default {
         } else if (area.Keep_in == false) {
           this.addKeepInPolygon(tempCoordinates);
           this.addToKeepOut(
-            tempCoordinates,
+            area.Coordinates,
             area.Circle_inputs.lng,
             area.Circle_inputs.lat,
             area.Circle_inputs.rad
@@ -330,6 +332,7 @@ export default {
     },
     addKeepInPolygon(coordinates) {
       let layerName = "Keep In " + this.keepInCount;
+      console.log(layerName);
       this.$refs.Map.removeLayer(layerName);
       let coords = this.$refs.Map.addPoly(coordinates, layerName, "green", 0.4);
       // console.log(coords);
@@ -373,12 +376,17 @@ export default {
       }
       this.keepInCircleCoords = tempCoords;
     },
-    removeKeepInArea(k) {
-      let layerName = "Keep In " + (k - 1);
+    removeKeepInArea(k) {      
+      let layerName = "Keep In " + (k);
       this.$refs.Map.removeLayer(layerName);
+      for (let i = 0; i < this.$refs.KeepInCart.CoordinatesArray.length; i++) {
+        let area = this.$refs.KeepInCart.CoordinatesArray[i]
+        this.addKeepInPolygon(area);
+        this.keepInCount++;
+      }
     },
     removeKeepOutArea(k) {
-      let layerName = "Keep Out " + (k - 1);
+      let layerName = "Keep Out " + (k);
       this.$refs.Map.removeLayer(layerName);
     },
   },
