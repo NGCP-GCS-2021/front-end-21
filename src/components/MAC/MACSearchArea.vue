@@ -162,10 +162,10 @@ export default {
       );
     },
   },
-  mounted() {
-    // setTimeout(this.getMACSearchArea, 5000);
-    // this.getMACSearchArea();
-  },
+  // mounted() {
+  //   setTimeout(this.getMACSearchArea, 5000);
+  //   this.getMACSearchArea();
+  // },
 };
 </script>
 <style>
