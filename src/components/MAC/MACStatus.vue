@@ -69,15 +69,15 @@ export default {
           //this.mac_data = res.data.MAC;
           var dataArray = res.data.MAC;
 
-          let altitude =  dataArray[0]
-          let latitude = dataArray[4]
-          let longitude = dataArray[5]
+          let altitude = dataArray[0];
+          let latitude = dataArray[4];
+          let longitude = dataArray[5];
 
-          let removedAlt = dataArray.splice(0, 1)
-          let removedLatLong = dataArray.splice(3, 2)
-          let removedExtra = dataArray.splice(11, 2)
+          let removedAlt = dataArray.splice(0, 1);
+          let removedLatLong = dataArray.splice(3, 2);
+          let removedExtra = dataArray.splice(11, 2);
 
-          dataArray.push(altitude,latitude, longitude);
+          dataArray.push(altitude, latitude, longitude);
           this.mac_data = dataArray;
 
           this.setCurrentStage();
