@@ -103,7 +103,7 @@ export default {
           this.mac_data[i].value =
             Math.round((pair.value * 100 + Number.EPSILON) * 100) / 100 + "%";
 
-          if (battery < 50) {
+          if (pair.value < 50) {
             document.getElementById("Battery").style.color = "red";
           }
         }
