@@ -140,7 +140,7 @@ export default {
   },
 
   data: () => ({
-    vehicle: null, //"MAC", "ERU", "MEA"
+    vehicle: "MAC", //"MAC", "ERU", "MEA"
     submitDisabled: true,
     deleteDisabled: true,
     Geofence: {
@@ -154,24 +154,31 @@ export default {
     keepOutCount: 0,
     keepInCircleCoords: null,
     keepOutCircleCoords: null,
-    mapMounted: false,
+    mapMountedCheck: false,
   }),
+  beforeDestroy() {
+    try {
+      this.clearInterval();
+    } catch (error) {}
+  },
   methods: {
     mapMounted() {
-      this.mapMounted = true;
+      this.mapMountedCheck = true;
     },
     setVehicle(vehicle) {
       this.vehicle = vehicle;
-      if (this.mapMounted == false) {
-        this.setVehicle(vehicle);
+      if (this.mapMountedCheck == false) {
+        setTimeout(this.setVehicle, 500, vehicle);
       } else {
         if (vehicle != null) {
           this.getCurrentGeofence(vehicle);
         } else {
-          this.keepInEmpty = true;
-          this.keepOutEmpty = true;
-          this.$refs.KeepInCart.CoordinatesArray = [];
-          this.$refs.KeepOutCart.CoordinatesArray = [];
+          try {
+            this.keepInEmpty = true;
+            this.keepOutEmpty = true;
+            this.$refs.KeepInCart.CoordinatesArray = [];
+            this.$refs.KeepOutCart.CoordinatesArray = [];
+          } catch (error) {}
         }
       }
     },
