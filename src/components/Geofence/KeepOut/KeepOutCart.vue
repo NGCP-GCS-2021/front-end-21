@@ -61,10 +61,10 @@ export default {
   methods: {
     removeArea(k) {
       this.CoordinatesArray.splice(k, 1);
+      this.$emit("removeKeepOutArea");
       if (this.CoordinatesArray.length == 0) {
         this.$emit("setKeepOutEmpty", true);
       }
-      //this.$emit("removeArea", k)
     },
   },
 };

@@ -62,7 +62,7 @@ export default {
   methods: {
     removeArea(k) {
       this.CoordinatesArray.splice(k, 1);
-      this.$emit("removeKeepInArea", k);
+      this.$emit("removeKeepInArea");
       if (this.CoordinatesArray.length == 0) {
         this.$emit("setKeepInEmpty", true);
       }

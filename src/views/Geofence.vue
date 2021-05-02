@@ -170,17 +170,18 @@ export default {
       if (this.mapMountedCheck == false) {
         setTimeout(this.setVehicle, 500, vehicle);
       } else {
+        try {
+          this.clearKeepInLayers();
+          this.clearKeepOutLayers();
+          this.$refs.KeepInCart.CoordinatesArray = [];
+          this.$refs.KeepOutCart.CoordinatesArray = [];
+          this.deleteDisabled = true;
+          this.submitDisabled = true;
+          this.keepInEmpty = true;
+          this.keepOutEmpty = true;
+        } catch (error) {}
         if (vehicle != null) {
           this.getCurrentGeofence();
-        } else {
-          try {
-            this.keepInEmpty = true;
-            this.keepOutEmpty = true;
-            this.$refs.KeepInCart.CoordinatesArray = [];
-            this.$refs.KeepOutCart.CoordinatesArray = [];
-            this.keepInCount = 0;
-            this.keepOutCount = 0;
-          } catch (error) {}
         }
       }
     },
@@ -223,7 +224,7 @@ export default {
             area.Circle_inputs.rad
           );
         } else if (area.Keep_in == false) {
-          this.addKeepInPolygon(tempCoordinates);
+          this.addKeepOutPolygon(tempCoordinates);
           this.addToKeepOut(
             area.Coordinates,
             area.Circle_inputs.lng,
@@ -244,6 +245,7 @@ export default {
       this.keepInCount++;
     },
     addToKeepOut(coordinates, lng, lat, rad) {
+      console.log(coordinates);
       this.$refs.KeepOutCart.CoordinatesArray.push(coordinates);
       let circleInputs = { lng: lng, lat: lat, rad: rad };
       // console.log(circleInputs);
@@ -255,12 +257,15 @@ export default {
     },
     deleteAll() {
       this.dialog = false;
+      this.clearKeepInLayers();
+      this.clearKeepOutLayers();
       this.$refs.KeepInCart.CoordinatesArray = [];
       this.$refs.KeepOutCart.CoordinatesArray = [];
       this.deleteDisabled = true;
       this.submitDisabled = true;
       this.keepInEmpty = true;
       this.keepOutEmpty = true;
+      this.postGeofence();
     },
     postGeofence() {
       this.Geofence.Geofence = [];
@@ -286,15 +291,24 @@ export default {
         });
       }
       let keepOutAreas = this.$refs.KeepOutCart.CoordinatesArray;
+      let keepOutCircleInputs = this.$refs.KeepOutCart.CircleInputsArray;
       for (let i = 0; i < keepOutAreas.length; i++) {
         let keepOutArea = keepOutAreas[i];
         for (let j = 0; j < keepOutArea.length; j++) {
           keepOutArea[j].lat = parseFloat(keepOutArea[j].lat);
           keepOutArea[j].lng = parseFloat(keepOutArea[j].lng);
         }
+        keepOutCircleInputs.lng = parseFloat(keepOutCircleInputs.lng);
+        keepOutCircleInputs.lat = parseFloat(keepOutCircleInputs.lat);
+        keepOutCircleInputs.rad = parseFloat(keepOutCircleInputs.rad);
         this.Geofence.Geofence.push({
           Coordinates: keepOutArea,
           Keep_in: false,
+          Circle_inputs: {
+            lng: keepOutCircleInputs.lng,
+            lat: keepOutCircleInputs.lat,
+            rad: keepOutCircleInputs.rad,
+          },
         });
       }
 
@@ -332,7 +346,7 @@ export default {
     },
     addKeepInPolygon(coordinates) {
       let layerName = "Keep In " + this.keepInCount;
-      console.log(layerName);
+      // console.log(layerName);
       this.$refs.Map.removeLayer(layerName);
       let coords = this.$refs.Map.addPoly(coordinates, layerName, "green", 0.4);
       // console.log(coords);
@@ -374,20 +388,53 @@ export default {
       for (let i = 0; i < tempCoords.length; i++) {
         tempCoords[i] = { lng: tempCoords[i][0], lat: tempCoords[i][1] };
       }
-      this.keepInCircleCoords = tempCoords;
+      this.keepOutCircleCoords = tempCoords;
     },
-    removeKeepInArea(k) {      
-      let layerName = "Keep In " + (k);
-      this.$refs.Map.removeLayer(layerName);
+    removeKeepInArea() {
+      this.clearKeepInLayers();
+      this.keepInCount = 0;
       for (let i = 0; i < this.$refs.KeepInCart.CoordinatesArray.length; i++) {
-        let area = this.$refs.KeepInCart.CoordinatesArray[i]
-        this.addKeepInPolygon(area);
+        let area = this.$refs.KeepInCart.CoordinatesArray[i];
+        let tempCoordinates = new Array(area.length);
+        let temp = [];
+        for (let i = 0; i < area.length; i++) {
+          temp = new Array(2);
+          temp[0] = parseFloat(area[i].lng);
+          temp[1] = parseFloat(area[i].lat);
+          tempCoordinates[i] = temp;
+        }
+        this.addKeepInPolygon(tempCoordinates);
         this.keepInCount++;
       }
     },
-    removeKeepOutArea(k) {
-      let layerName = "Keep Out " + (k);
-      this.$refs.Map.removeLayer(layerName);
+    removeKeepOutArea() {
+      this.clearKeepOutLayers();
+      this.keepOutCount = 0;
+      for (let i = 0; i < this.$refs.KeepOutCart.CoordinatesArray.length; i++) {
+        let area = this.$refs.KeepOutCart.CoordinatesArray[i];
+        let tempCoordinates = new Array(area.length);
+        let temp = [];
+        for (let i = 0; i < area.length; i++) {
+          temp = new Array(2);
+          temp[0] = parseFloat(area[i].lng);
+          temp[1] = parseFloat(area[i].lat);
+          tempCoordinates[i] = temp;
+        }
+        this.addKeepOutPolygon(tempCoordinates);
+        this.keepOutCount++;
+      }
+    },
+    clearKeepInLayers() {
+      for (let x = 0; x < this.keepInCount; x++) {
+        let layerName = "Keep In " + x;
+        this.$refs.Map.removeLayer(layerName);
+      }
+    },
+    clearKeepOutLayers() {
+      for (let x = 0; x < this.keepOutCount; x++) {
+        let layerName = "Keep Out " + x;
+        this.$refs.Map.removeLayer(layerName);
+      }
     },
   },
 };
