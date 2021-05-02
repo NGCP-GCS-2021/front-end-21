@@ -144,6 +144,7 @@ export default {
         this.Latitude,
         this.Radius
       );
+      this.clear();
     },
     clear() {
       this.Longitude = "";
