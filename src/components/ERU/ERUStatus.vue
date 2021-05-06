@@ -82,7 +82,6 @@ export default {
 
           let removedAlt = dataArray.splice(0, 1)
           let removedLatLong = dataArray.splice(3, 2)
-          let removedExtra = dataArray.splice(11, 2)
 
           dataArray.push(altitude,latitude, longitude);
           this.mac_data = dataArray;
