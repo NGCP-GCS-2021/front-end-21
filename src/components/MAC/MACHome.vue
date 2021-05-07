@@ -110,11 +110,11 @@ export default {
   // mounted() {
   //   setTimeout(this.getCurrentTravelTo, 5000);
   // },
-  updated() {
-    if (!this.firstGetHome) {
-      this.getCurrentTravelTo();
-    }
-  },
+  // updated() {
+  //   if (!this.firstGetHome) {
+  //     this.getCurrentTravelTo();
+  //   }
+  // },
   methods: {
     getCurrentTravelTo() {
       const path = "http://127.0.0.1:5000/MAC_INPUT";
@@ -181,6 +181,7 @@ export default {
         .then(() => {
           console.log("Posted Travel to/Home coordinates to MAC_INPUT");
           console.log(this.travelTo);
+          this.getCurrentTravelTo();
         })
         .catch((error) => {
           console.log(error.response);
