@@ -125,15 +125,16 @@ export default {
     postCurrentStage() {
       if (this.currentStage.id == -1) {
       } else {
+        this.currentStage.Perform_stage = this.select.id - 1;
         const path = "http://127.0.0.1:5000/ERU_INPUT";
         const currentStageStringify = JSON.stringify({
-          Perform_stage: this.currentStage.id - 1,
+          Perform_stage: this.select.id - 1,
         });
         axios
           .post(path, currentStageStringify)
           .then(() => {
             console.log("Posted stage to ERU_INPUT");
-            this.$emit("setGeneralStage", this.currentStage.stage, "ERU");
+            this.$emit("setGeneralStage", this.select.stage, "ERU");
           })
           .catch((error) => {
             console.log(error.response);

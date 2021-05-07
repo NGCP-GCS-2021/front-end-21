@@ -108,6 +108,7 @@ export default {
       axios
         .get(path)
         .then((res) => {
+          console.log("test")
           if (this.firstGetEvac) {
             if (res.data.EZ_lng == 0 && res.data.EZ_lat == 0) {
             } else {

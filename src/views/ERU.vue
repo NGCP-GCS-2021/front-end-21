@@ -39,7 +39,7 @@
                       @editEvac="editEvac"
                       :evacPointExists="evacPointExists"
                       @addEvac="addEvac"
-                      ref="EvacutationZone"
+                      ref="EvacuationZone"
                     />
                   </v-card>
                 </v-col>
