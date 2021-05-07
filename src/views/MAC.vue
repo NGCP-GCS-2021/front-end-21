@@ -208,9 +208,9 @@ export default {
       let coord = [this.current_lng, this.current_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("mac", coord);
       if (pointExists) {
-        console.log("edited MAC point");
+        // console.log("edited MAC point");
       } else {
-        console.log("added MAC point");
+        // console.log("added MAC point");
         this.$refs.Map.addCoord(
           "mac",
           "mac",
@@ -232,9 +232,9 @@ export default {
       let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("hiker", coord);
       if (pointExists) {
-        console.log("edited Hiker point");
+        // console.log("edited Hiker point");
       } else {
-        console.log("added Hiker point");
+        // console.log("added Hiker point");
         this.$refs.Map.addCoord(
           "hiker",
           "hiker",
