@@ -103,7 +103,7 @@ export default {
     setCurrentStage() {
       for (let i = 0; i < this.currentData.length; i++) {
         let pair = this.currentData[i];
-        if (pair.title == "Current_stage") {
+        if (pair.title == "Current Stage") {
           this.currentStage.id = pair.value;
 
           for (let k = 0; k < this.stages.length; k++) {

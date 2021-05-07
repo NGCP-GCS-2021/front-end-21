@@ -88,7 +88,7 @@ export default {
     setCurrentStage() {
       for (let i = 0; i < this.mac_data.length; i++) {
         let pair = this.mac_data[i];
-        if (pair.title == "Current_stage") {
+        if (pair.title == "Current Stage") {
           this.current_stage.id = pair.value;
           console.log(pair);
           for (let k = 0; k < this.stages.length; k++) {

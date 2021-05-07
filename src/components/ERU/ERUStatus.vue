@@ -2,7 +2,9 @@
   <div>
     <v-row justify="center">
       <h2 class="font-weight-light pr-2">Vehicle Mission Stage:</h2>
-      <h2 class="font-weight-regular pb-2">{{ current_stage.stage }}</h2>
+      <h2 class="font-weight-regular pb-2">
+        {{ current_stage.stage }}
+      </h2>
     </v-row>
     <div
       style="
@@ -35,6 +37,7 @@ export default {
         stage: "No stage",
         id: -1,
       },
+      tempstuff: "temp",
       stages: [
         {
           stage: "Ready to Start",
@@ -76,14 +79,14 @@ export default {
         .then((res) => {
           var dataArray = res.data.ERU;
 
-          let altitude =  dataArray[0]
-          let latitude = dataArray[4]
-          let longitude = dataArray[5]
+          let altitude = dataArray[0];
+          let latitude = dataArray[4];
+          let longitude = dataArray[5];
 
-          let removedAlt = dataArray.splice(0, 1)
-          let removedLatLong = dataArray.splice(3, 2)
+          let removedAlt = dataArray.splice(0, 1);
+          let removedLatLong = dataArray.splice(3, 2);
 
-          dataArray.push(altitude,latitude, longitude);
+          dataArray.push(altitude, latitude, longitude);
           this.eru_data = dataArray;
           this.setCurrentStage();
         })
@@ -94,9 +97,8 @@ export default {
     setCurrentStage() {
       for (let i = 0; i < this.eru_data.length; i++) {
         let pair = this.eru_data[i];
-        if (pair.title == "Current_stage") {
+        if (pair.title == "Current Stage") {
           this.current_stage.id = pair.value;
-
           for (let k = 0; k < this.stages.length; k++) {
             if (this.current_stage.id == this.stages[k].id) {
               this.current_stage.stage = this.stages[k].stage;
@@ -105,8 +107,9 @@ export default {
             }
           }
         }
-        if (pair.title == "Battery") { 
-          this.eru_data[i].value = (Math.round(((pair.value * 100) + Number.EPSILON) * 100) / 100) + "%"
+        if (pair.title == "Battery") {
+          this.eru_data[i].value =
+            Math.round((pair.value * 100 + Number.EPSILON) * 100) / 100 + "%";
         }
       }
     },
