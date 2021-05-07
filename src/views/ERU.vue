@@ -29,9 +29,6 @@
                 <v-card class="pa-1" style="width: 100%">
                   <v-container fluid flex>
                     <ERUStatus />
-                    <p>
-                      Current Yaw: {{ current_yaw }} - Counter: {{ counter }}
-                    </p>
                   </v-container>
                 </v-card>
               </v-row>
@@ -258,7 +255,7 @@ export default {
       this.getCurrentData();
       this.$refs.EvacuationZone.getCurrentEvac();
       this.$refs.ERUHome.getCurrentTravelTo();
-      this.interval = setInterval(() => this.updateERULoop(), 50);
+      this.interval = setInterval(() => this.updateERULoop(), 500);
     },
     updateERULoop() {
       if (!this.firstGetERU && !this.firstGetHiker) {
@@ -305,9 +302,9 @@ export default {
       let coord = [this.current_lng, this.current_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("eru", coord);
       if (pointExists) {
-        console.log("edited ERU point");
+        // console.log("edited ERU point");
       } else {
-        console.log("added ERU point");
+        // console.log("added ERU point");
         this.$refs.Map.addCoord(
           "eru",
           "eru",
@@ -318,7 +315,7 @@ export default {
       this.$refs.Map.setRotation("eru", this.current_yaw);
       this.firstGetERU = false;
       let booltest = !this.firstGetERU && !this.firstGetHiker;
-      console.log("booltest: " + booltest);
+      // console.log("booltest: " + booltest);
     },
     setHikerPosition() {
       for (let i = 0; i < this.hiker_data.length; i++) {
@@ -332,9 +329,9 @@ export default {
       let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("hiker", coord);
       if (pointExists) {
-        console.log("edited Hiker point");
+        // console.log("edited Hiker point");
       } else {
-        console.log("added Hiker point");
+        // console.log("added Hiker point");
         this.$refs.Map.addCoord(
           "hiker",
           "hiker",
@@ -345,7 +342,7 @@ export default {
       this.firstGetHiker = false;
       // console.log("firstGetHiker: " + this.firstGetHiker);
       let booltest = !this.firstGetERU && !this.firstGetHiker;
-      console.log("booltest: " + booltest);
+      // console.log("booltest: " + booltest);
     },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
