@@ -122,6 +122,7 @@ import ERUStatus from "@/components/ERU/ERUStatus.vue";
 import MACStatus from "@/components/MAC/MACStatus.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
 import Map from "@/components/Map.vue";
+import axios from "axios"
 
 export default {
   name: "",
@@ -147,18 +148,30 @@ export default {
     eru_data: [],
     firstGetMAC: true,
     firstGetERU: true,
+    firstGetHiker: true,
   }),
-  mounted() {
-    this.getMACCurrentData();
-    this.getERUCurrentData();
-    this.getHikerCurrentData();
-  },
-  updated() {
-    this.getMACCurrentData();
-    this.getERUCurrentData();
-    this.getHikerCurrentData();
-  },
+  // mounted() {
+  //   this.getMACCurrentData();
+  //   this.getERUCurrentData();
+  //   this.getHikerCurrentData();
+  // },
+  // updated() {
+  //   this.getMACCurrentData();
+  //   this.getERUCurrentData();
+  //   this.getHikerCurrentData();
+  // },
   methods: {
+    mapMounted() {
+      this.getMACCurrentData();
+      this.getERUCurrentData();
+      this.getHikerCurrentData();
+      this.interval = setInterval(() => this.updateLoop(), 500);
+    },
+    updateLoop() {
+     if (!this.firstGetERU && !this.firstGetHiker && !this.firstGetMAC) {
+        this.getCurrentData();
+      }
+    },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
       this.updatedStage = stage;

@@ -228,27 +228,39 @@ export default {
     eru_data: null,
     current_lng: -117.6316988,
     current_lat: 33.9336,
-    current_yaw: null,
+    current_yaw: 42,
     firstGetHiker: true,
     hiker_data: null,
     hiker_lng: -117.6318437,
     hiker_lat: 33.933729,
     pointExists: false,
     evacPointExists: false,
+    counter: 0,
   }),
-  mounted() {
-    // setTimeout(this.getCurrentData, 5000);
-  },
-  updated() {
-    if (!this.firstGetERU && !this.firstGetHiker) {
-      this.getCurrentData();
-    }
+  // mounted() {
+  //   // setTimeout(this.getCurrentData, 5000);
+  // },
+  // updated() {
+  //   // this.counter += 1
+  //   if (!this.firstGetERU && !this.firstGetHiker) {
+  //     // this.counter += 1;
+  //     this.getCurrentData();
+  //   }
+  // },
+  beforeDestroy() {
+    this.clearInterval();
   },
   methods: {
     mapMounted() {
-      this.getCurrentData;
+      this.getCurrentData();
       this.$refs.EvacuationZone.getCurrentEvac();
       this.$refs.ERUHome.getCurrentTravelTo();
+      this.interval = setInterval(() => this.updateERULoop(), 500);
+    },
+    updateERULoop() {
+      if (!this.firstGetERU && !this.firstGetHiker) {
+        this.getCurrentData();
+      }
     },
     getCurrentData() {
       //ERU information
@@ -290,9 +302,9 @@ export default {
       let coord = [this.current_lng, this.current_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("eru", coord);
       if (pointExists) {
-        console.log("edited ERU point");
+        // console.log("edited ERU point");
       } else {
-        console.log("added ERU point");
+        // console.log("added ERU point");
         this.$refs.Map.addCoord(
           "eru",
           "eru",
@@ -302,6 +314,8 @@ export default {
       }
       this.$refs.Map.setRotation("eru", this.current_yaw);
       this.firstGetERU = false;
+      let booltest = !this.firstGetERU && !this.firstGetHiker;
+      // console.log("booltest: " + booltest);
     },
     setHikerPosition() {
       for (let i = 0; i < this.hiker_data.length; i++) {
@@ -315,9 +329,9 @@ export default {
       let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("hiker", coord);
       if (pointExists) {
-        console.log("edited Hiker point");
+        // console.log("edited Hiker point");
       } else {
-        console.log("added Hiker point");
+        // console.log("added Hiker point");
         this.$refs.Map.addCoord(
           "hiker",
           "hiker",
@@ -326,6 +340,9 @@ export default {
         );
       }
       this.firstGetHiker = false;
+      // console.log("firstGetHiker: " + this.firstGetHiker);
+      let booltest = !this.firstGetERU && !this.firstGetHiker;
+      // console.log("booltest: " + booltest);
     },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);

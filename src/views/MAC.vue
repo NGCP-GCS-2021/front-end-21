@@ -138,19 +138,16 @@ export default {
     interval: 0
   }),
 
-  mounted() {
-    // setTimeout(this.getCurrentData, 5000);
-    this.queryAndIndeterminate()
-  },
-
-  beforeDestroy () {
-    clearInterval(this.interval)
-  },
-
-  updated() {
-    if (!this.firstGetMAC && !this.firstGetHiker) {
-      this.getCurrentData();
-    }
+  // mounted() {
+  //   // setTimeout(this.getCurrentData, 5000);
+  // },
+  // updated() {
+  //   if (!this.firstGetMAC && !this.firstGetHiker) {
+  //     this.getCurrentData();
+  //   }
+  // },
+  beforeDestroy() {
+    this.clearInterval();
   },
   methods: {
     mapMounted() {
@@ -158,6 +155,12 @@ export default {
       this.$refs.MACSearchArea.getMACSearchArea();
       this.$refs.ERUDrop.getCurrentDropLocation();
       this.$refs.MACHome.getCurrentTravelTo();
+      this.interval = setInterval(() => this.updateMACLoop(), 500);
+    },
+    updateMACLoop() {
+      if (!this.firstGetMAC && !this.firstGetHiker) {
+        this.getCurrentData();
+      }
     },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
@@ -218,9 +221,9 @@ export default {
       let coord = [this.current_lng, this.current_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("mac", coord);
       if (pointExists) {
-        console.log("edited MAC point");
+        // console.log("edited MAC point");
       } else {
-        console.log("added MAC point");
+        // console.log("added MAC point");
         this.$refs.Map.addCoord(
           "mac",
           "mac",
@@ -242,9 +245,9 @@ export default {
       let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("hiker", coord);
       if (pointExists) {
-        console.log("edited Hiker point");
+        // console.log("edited Hiker point");
       } else {
-        console.log("added Hiker point");
+        // console.log("added Hiker point");
         this.$refs.Map.addCoord(
           "hiker",
           "hiker",
