@@ -102,6 +102,7 @@ export default {
         const currentStageStringify = JSON.stringify({
           Perform_stage: this.select.id - 1,
         });
+        console.log(currentStageStringify);
         axios
           .post(path, currentStageStringify)
           .then(() => {

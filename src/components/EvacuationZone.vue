@@ -97,12 +97,12 @@ export default {
   // mounted() {
   //   setTimeout(this.getCurrentEvac, 5000);
   // },
-  updated() {
-    console.log(this.firstGetEvac);
-    if (!this.firstGetEvac) {
-      this.getCurrentEvac();
-    }
-  },
+  // updated() {
+  //   console.log(this.firstGetEvac);
+  //   if (!this.firstGetEvac) {
+  //     this.getCurrentEvac();
+  //   }
+  // },
   methods: {
     getCurrentEvac() {
       const path = "http://127.0.0.1:5000/ERU_INPUT";
@@ -157,6 +157,7 @@ export default {
         .then(() => {
           console.log("Posted Evacuation Zone coordinates to ERU_INPUT");
           console.log(this.EZ);
+          this.getCurrentEvac();
         })
         .catch((error) => {
           console.log(error.response);
