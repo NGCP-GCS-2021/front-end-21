@@ -228,6 +228,7 @@ export default {
     eru_data: null,
     current_lng: -117.6316988,
     current_lat: 33.9336,
+    current_yaw: null,
     firstGetHiker: true,
     hiker_data: null,
     hiker_lng: -117.6318437,

@@ -74,17 +74,17 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          var dataArray = res.data.MAC;
+          var dataArray = res.data.ERU;
 
           let altitude =  dataArray[0]
           let latitude = dataArray[4]
           let longitude = dataArray[5]
 
-          let removedAlt = dataArray.splice(0, 1)
-          let removedLatLong = dataArray.splice(3, 2)
+          // let removedAlt = dataArray.splice(0, 1)
+          // let removedLatLong = dataArray.splice(3, 2)
 
           dataArray.push(altitude,latitude, longitude);
-          this.mac_data = dataArray;
+          this.eru_data = dataArray;
           this.setCurrentStage();
         })
         .catch((error) => {
