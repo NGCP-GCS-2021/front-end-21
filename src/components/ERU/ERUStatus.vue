@@ -80,8 +80,8 @@ export default {
           let latitude = dataArray[4]
           let longitude = dataArray[5]
 
-          // let removedAlt = dataArray.splice(0, 1)
-          // let removedLatLong = dataArray.splice(3, 2)
+          let removedAlt = dataArray.splice(0, 1)
+          let removedLatLong = dataArray.splice(3, 2)
 
           dataArray.push(altitude,latitude, longitude);
           this.eru_data = dataArray;
