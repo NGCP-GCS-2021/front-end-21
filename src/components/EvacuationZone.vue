@@ -98,6 +98,7 @@ export default {
   //   setTimeout(this.getCurrentEvac, 5000);
   // },
   updated() {
+    console.log(this.firstGetEvac);
     if (!this.firstGetEvac) {
       this.getCurrentEvac();
     }
@@ -108,7 +109,6 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          console.log("test")
           if (this.firstGetEvac) {
             if (res.data.EZ_lng == 0 && res.data.EZ_lat == 0) {
             } else {

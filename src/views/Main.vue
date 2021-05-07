@@ -122,6 +122,7 @@ import ERUStatus from "@/components/ERU/ERUStatus.vue";
 import MACStatus from "@/components/MAC/MACStatus.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
 import Map from "@/components/Map.vue";
+import axios from "axios"
 
 export default {
   name: "",
