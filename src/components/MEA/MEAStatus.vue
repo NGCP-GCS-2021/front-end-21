@@ -68,9 +68,18 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          this.mea_data = res.data.MEA;
+          var dataArray = res.data.MAC;
+
+          let altitude =  dataArray[0]
+          let latitude = dataArray[4]
+          let longitude = dataArray[5]
+
+          let removedAlt = dataArray.splice(0, 1)
+          let removedLatLong = dataArray.splice(3, 2)
+
+          dataArray.push(altitude,latitude, longitude);
+          this.mea_data = dataArray;
           this.setCurrentStage();
-          console.log(new Date().getTime());
         })
         .catch((error) => {
           console.error(error);

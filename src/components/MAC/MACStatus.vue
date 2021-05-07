@@ -7,15 +7,15 @@
     <div
       style="
         display: grid;
-        grid-template-columns: auto auto auto auto auto;
+        grid-template-columns: auto auto auto auto;
         grid-gap: 5px;
         padding-bottom: 15px;
       "
     >
       <div v-for="(mac_data, index) in mac_data" :key="index">
         <div style="display: flex; padding-right: 3px">
-          <h4 class= "font-weight-regular pr-1">{{ mac_data.title }}:</h4>
-          <h4 class="font-weight-bold" style="float: right">
+          <h4 class="font-weight-regular pr-1">{{ mac_data.title }}:</h4>
+          <h4 :id="mac_data.title" class="font-weight-bold" style="float: right">
             {{ mac_data.value }}
           </h4>
         </div>
@@ -29,6 +29,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      //battery_color: 'green',
       mac_data: [],
       mac_messages: [],
       current_stage: {
@@ -68,14 +69,14 @@ export default {
           //this.mac_data = res.data.MAC;
           var dataArray = res.data.MAC;
 
-          let altitude =  dataArray[0]
-          let latitude = dataArray[4]
-          let longitude = dataArray[5]
+          let altitude = dataArray[0];
+          let latitude = dataArray[4];
+          let longitude = dataArray[5];
 
-          let removedAlt = dataArray.splice(0, 1)
-          let removedLatLong = dataArray.splice(3, 2)
+          let removedAlt = dataArray.splice(0, 1);
+          let removedLatLong = dataArray.splice(3, 2);
 
-          dataArray.push(altitude,latitude, longitude);
+          dataArray.push(altitude, latitude, longitude);
           this.mac_data = dataArray;
 
           this.setCurrentStage();

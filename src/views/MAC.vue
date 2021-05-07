@@ -61,7 +61,7 @@
                       @editERUDrop="editERUDrop"
                       @addERUDrop="addERUDrop"
                       :ERUDropPointExists="ERUDropPointExists"
-                      ref=ERUDrop
+                      ref="ERUDrop"
                     />
                   </v-card>
                 </v-col>
@@ -78,6 +78,7 @@
                       @editMACHome="editMACHome"
                       @addMACHome="addMACHome"
                       :MACHomePointExists="MACHomePointExists"
+                      ref="MACHome"
                     />
                   </v-card>
                 </v-col>
@@ -121,6 +122,7 @@ export default {
     circleCoords: null,
     current_lng: -117.6316988,
     current_lat: 33.9336,
+    current_yaw: null,
     mac_data: null,
     map_mounted: false,
     firstGetMAC: true,
@@ -208,6 +210,8 @@ export default {
           this.current_lat = this.mac_data[i].value;
         } else if (this.mac_data[i].title == "Longitude") {
           this.current_lng = this.mac_data[i].value;
+        } else if (this.mac_data[i].title == "Yaw") {
+          this.current_yaw = this.mac_data[i].value;
         }
       }
 
@@ -224,6 +228,7 @@ export default {
           this.current_lat
         );
       }
+      this.$refs.Map.setRotation("mac", this.current_yaw);
       this.firstGetMAC = false;
     },
     setHikerPosition() {
