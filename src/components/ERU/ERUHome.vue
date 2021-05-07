@@ -91,11 +91,11 @@ export default {
   mounted() {
     setTimeout(this.getCurrentTravelTo, 5000);
   },
-  updated() {
-    if (!this.firstGetHome) {
-      this.getCurrentTravelTo();
-    }
-  },
+  // updated() {
+  //   if (!this.firstGetHome) {
+  //     this.getCurrentTravelTo();
+  //   }
+  // },
   props: ["pointExists"],
   methods: {
     getCurrentTravelTo() {
@@ -157,6 +157,7 @@ export default {
         .then(() => {
           console.log("Posted Travel to/Home coordinates to ERU_INPUT");
           console.log(this.travelTo);
+          this.getCurrentTravelTo();
         })
         .catch((error) => {
           console.log(error.response);
