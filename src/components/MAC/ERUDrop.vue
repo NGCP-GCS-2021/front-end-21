@@ -96,11 +96,11 @@ export default {
   // mounted() {
   //   setTimeout(this.getCurrentDropLocation, 5000);
   // },
-  updated() {
-    if (!this.firstGetERUDrop) {
-      this.getCurrentDropLocation();
-    }
-  },
+  // updated() {
+  //   if (!this.firstGetERUDrop) {
+  //     this.getCurrentDropLocation();
+  //   }
+  // },
   methods: {
     getCurrentDropLocation() {
       const path = "http://127.0.0.1:5000/MAC_INPUT";
@@ -160,6 +160,7 @@ export default {
         .then(() => {
           console.log("Posted ERU Drop coordinates to MAC_INPUT");
           console.log(this.drop_loc);
+          this.getCurrentDropLocation();
         })
         .catch((error) => {
           console.log(error.response);

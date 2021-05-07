@@ -16,6 +16,15 @@
         />
         <v-col :cols="6">
           <v-container fluid flex>
+            <v-row id="progressBar">
+              <v-progress-linear indeterminate color="green"
+                                 v-model="value"
+                                 :active="show"
+                                 :indeterminate="query"
+                                 :query="true"
+              ></v-progress-linear>
+            </v-row>
+
             <v-row class="pb-3 px-5">
               <GeneralStage
                 :stage="stage"
@@ -123,6 +132,10 @@ export default {
     hiker_lat: 33.933729,
     MACHomePointExists: false,
     ERUDropPointExists: false,
+    value: 0,
+    query: false,
+    show: true,
+    interval: 0
   }),
 
   // mounted() {
@@ -261,6 +274,24 @@ export default {
     },
     addERUDrop(lng, lat) {
       this.$refs.Map.addCoord("eru_drop_loc", "drop-location", lng, lat); //not sure if naming is correct
+    },
+    queryAndIndeterminate () {
+      this.query = true
+      this.show = true
+      this.value = 0
+
+      setTimeout(() => {
+        this.query = false
+
+        this.interval = setInterval(() => {
+          if (this.value === 100) {
+            clearInterval(this.interval)
+            this.show = false
+            return setTimeout(this.queryAndIndeterminate, 2000)
+          }
+          this.value += 25
+        }, 1000)
+      }, 2500)
     },
   },
 };
