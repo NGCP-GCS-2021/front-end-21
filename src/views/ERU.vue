@@ -282,6 +282,8 @@ export default {
           this.current_lat = this.eru_data[i].value;
         } else if (this.eru_data[i].title == "Longitude") {
           this.current_lng = this.eru_data[i].value;
+        } else if (this.eru_data[i].title == "Yaw") {
+          this.current_yaw = this.eru_data[i].value;
         }
       }
 
@@ -298,6 +300,7 @@ export default {
           this.current_lat
         );
       }
+      this.$refs.Map.setRotation("eru", this.current_yaw)
       this.firstGetERU = false;
     },
     setHikerPosition() {
