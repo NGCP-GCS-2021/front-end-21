@@ -125,13 +125,16 @@ export default {
     ERUDropPointExists: false,
   }),
 
-  mounted() {
-    // setTimeout(this.getCurrentData, 5000);
-  },
-  updated() {
-    if (!this.firstGetMAC && !this.firstGetHiker) {
-      this.getCurrentData();
-    }
+  // mounted() {
+  //   // setTimeout(this.getCurrentData, 5000);
+  // },
+  // updated() {
+  //   if (!this.firstGetMAC && !this.firstGetHiker) {
+  //     this.getCurrentData();
+  //   }
+  // },
+  beforeDestroy() {
+    this.clearInterval();
   },
   methods: {
     mapMounted() {
@@ -139,6 +142,12 @@ export default {
       this.$refs.MACSearchArea.getMACSearchArea();
       this.$refs.ERUDrop.getCurrentDropLocation();
       this.$refs.MACHome.getCurrentTravelTo();
+      this.interval = setInterval(() => this.updateMACLoop(), 500);
+    },
+    updateMACLoop() {
+      if (!this.firstGetMAC && !this.firstGetHiker) {
+        this.getCurrentData();
+      }
     },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
