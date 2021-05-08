@@ -1,6 +1,10 @@
 <template>
+  <v-container>
+    <v-row>
+      <h1 class="font-weight-light">Travel to/Home Coordinates</h1>
+      <img src="../../assets/map_icons/home.png" width="30" height="30"/>
+    </v-row>
   <div>
-    <h1 class="font-weight-light">Travel to/Home Coordinates</h1>
     <validation-observer ref="observer" v-slot="{ invalid }">
       <form @submit.prevent="submit" style="height: 150px;">
         <v-container>
@@ -51,6 +55,7 @@
       </form>
     </validation-observer>
   </div>
+  </v-container>
 </template>
 
 <script>
