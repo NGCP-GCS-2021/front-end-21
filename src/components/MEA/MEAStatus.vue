@@ -7,7 +7,7 @@
     <div
       style="
         display: grid;
-        grid-template-columns: auto auto auto auto auto;
+        grid-template-columns: auto auto auto auto;
         grid-gap: 5px;
         padding-bottom: 15px;
       "

@@ -9,7 +9,7 @@
     <div
       style="
         display: grid;
-        grid-template-columns: auto auto auto auto auto;
+        grid-template-columns: auto auto auto auto;
         grid-gap: 5px;
         padding-bottom: 15px;
       "
@@ -98,7 +98,7 @@ export default {
       for (let i = 0; i < this.eru_data.length; i++) {
         let pair = this.eru_data[i];
         if (pair.title == "Current Stage") {
-          this.current_stage.id = pair.value;
+          this.current_stage.id = pair.value + 1;
           for (let k = 0; k < this.stages.length; k++) {
             if (this.current_stage.id == this.stages[k].id) {
               this.current_stage.stage = this.stages[k].stage;
