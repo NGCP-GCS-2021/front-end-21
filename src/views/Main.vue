@@ -170,6 +170,9 @@ export default {
     updateLoop() {
      if (!this.firstGetERU && !this.firstGetHiker && !this.firstGetMAC) {
         this.getCurrentData();
+        this.getMACCurrentData();
+        this.getERUCurrentData();
+        this.getHikerCurrentData();
       }
     },
     setGeneralStage(stage, vehicle) {
