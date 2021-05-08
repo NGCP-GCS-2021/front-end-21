@@ -11,6 +11,7 @@
           SW_bound_long="-117.63616828159178"
           NE_bound_lat="33.93569086311143"
           NE_bound_long="-117.6263621141112"
+          @mapMounted="mapMounted"
           ref="Map"
         />
 
@@ -149,6 +150,9 @@ export default {
     firstGetMAC: true,
     firstGetERU: true,
     firstGetHiker: true,
+    current_mac_lng: -117.6316988,
+    current_mac_lat: 33.9336,
+    current_mac_yaw: null,
   }),
   // mounted() {
   //   this.getMACCurrentData();
@@ -172,7 +176,6 @@ export default {
     },
     updateLoop() {
       if (!this.firstGetERU && !this.firstGetHiker && !this.firstGetMAC) {
-        this.getCurrentData();
         this.getMACCurrentData();
         this.getERUCurrentData();
         this.getHikerCurrentData();
@@ -199,12 +202,14 @@ export default {
     setMACPosition() {
       for (let i = 0; i < this.mac_data.length; i++) {
         if (this.mac_data[i].title == "Latitude") {
-          this.current_lat = this.mac_data[i].value;
+          this.current_mac_lat = this.mac_data[i].value;
         } else if (this.mac_data[i].title == "Longitude") {
-          this.current_lng = this.mac_data[i].value;
+          this.current_mac_lng = this.mac_data[i].value;
+        } else if (this.mac_data[i].title == "Yaw") {
+          this.current_mac_yaw = this.mac_data[i].value;
         }
       }
-      let coord = [this.current_lng, this.current_lat]; //array for editPointSource
+      let coord = [this.current_mac_lng, this.current_mac_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("mac", coord);
       if (pointExists) {
         console.log("edited MAC point");
@@ -213,10 +218,11 @@ export default {
         this.$refs.Map.addCoord(
           "mac",
           "mac",
-          this.current_lng,
-          this.current_lat
+          this.current_mac_lng,
+          this.current_mac_lat
         );
       }
+      this.$refs.Map.setRotation("mac", this.current_mac_yaw);
       this.firstGetMAC = false;
     },
     getERUCurrentData() {
