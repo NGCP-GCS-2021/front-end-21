@@ -16,7 +16,6 @@
         />
         <v-col :cols="6">
           <v-container fluid flex>
-
             <v-row class="pb-3 px-5">
               <GeneralStage
                 :stage="stage"
@@ -127,7 +126,7 @@ export default {
     value: 0,
     query: false,
     show: true,
-    interval: 0
+    interval: 0,
   }),
 
   // mounted() {
@@ -139,7 +138,7 @@ export default {
   //   }
   // },
   beforeDestroy() {
-    this.clearInterval();
+    this.clearInterval(this.interval);
   },
   methods: {
     mapMounted() {
@@ -267,23 +266,23 @@ export default {
     addERUDrop(lng, lat) {
       this.$refs.Map.addCoord("eru_drop_loc", "drop-location", lng, lat); //not sure if naming is correct
     },
-    queryAndIndeterminate () {
-      this.query = true
-      this.show = true
-      this.value = 0
+    queryAndIndeterminate() {
+      this.query = true;
+      this.show = true;
+      this.value = 0;
 
       setTimeout(() => {
-        this.query = false
+        this.query = false;
 
         this.interval = setInterval(() => {
           if (this.value === 100) {
-            clearInterval(this.interval)
-            this.show = false
-            return setTimeout(this.queryAndIndeterminate, 2000)
+            clearInterval(this.interval);
+            this.show = false;
+            return setTimeout(this.queryAndIndeterminate, 2000);
           }
-          this.value += 25
-        }, 1000)
-      }, 2500)
+          this.value += 25;
+        }, 1000);
+      }, 2500);
     },
   },
 };

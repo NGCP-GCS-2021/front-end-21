@@ -158,7 +158,7 @@ export default {
   }),
   beforeDestroy() {
     try {
-      this.clearInterval();
+      this.clearInterval(this.interval);
     } catch (error) {}
   },
   methods: {

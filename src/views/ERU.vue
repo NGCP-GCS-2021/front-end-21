@@ -248,7 +248,7 @@ export default {
   //   }
   // },
   beforeDestroy() {
-    this.clearInterval();
+    this.clearInterval(this.interval);
   },
   methods: {
     mapMounted() {

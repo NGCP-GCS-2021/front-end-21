@@ -81,7 +81,7 @@ export default {
     this.interval = setInterval(() => this.getControllerState(), 50);
   },
   beforeDestroy() {
-    this.clearInterval();
+    this.clearInterval(this.interval);
   },
 };
 </script>
