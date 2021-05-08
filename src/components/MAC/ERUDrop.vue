@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <h1 class="font-weight-light">ERU Drop Location</h1>
+  <v-container>
+    <v-row>
+      <h1 class="font-weight-light">ERU Drop Location</h1>
+      <img src="../../assets/map_icons/search-area.png" width="30" height="30"/>
+    </v-row>
+
     <validation-observer ref="observer" v-slot="{ invalid }">
       <form @submit.prevent="submit">
         <v-container>
@@ -56,7 +60,7 @@
         <p></p>
       </form>
     </validation-observer>
-  </div>
+  </v-container>
 </template>
 
 <script>
