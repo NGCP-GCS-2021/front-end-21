@@ -82,7 +82,7 @@ export default {
       for (let i = 0; i < this.currentData.length; i++) {
         let pair = this.currentData[i];
         if (pair.title == "Current Stage") {
-          this.currentStage.id = pair.value;
+          this.currentStage.id = pair.value + 1;
 
           for (let k = 0; k < this.stages.length; k++) {
             if (this.currentStage.id == this.stages[k].id) {
