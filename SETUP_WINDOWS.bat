@@ -1,3 +1,2 @@
 npm install vue
-npm install mapbox-gl
-@pause
+npm install --save @mapbox/mapbox-gl-draw mapbox-gl
