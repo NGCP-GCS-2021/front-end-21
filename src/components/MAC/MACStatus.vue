@@ -15,8 +15,24 @@
       <div v-for="(mac_data, index) in mac_data" :key="index">
         <div style="display: flex; padding-right: 3px">
           <h4 class="font-weight-regular pr-1">{{ mac_data.title }}:</h4>
-          <h4 :id="mac_data.title" class="font-weight-bold" style="float: right">
+          <h4
+            :id="mac_data.title"
+            class="font-weight-bold"
+            style="float: right"
+          >
             {{ mac_data.value }}
+          </h4>
+        </div>
+      </div>
+      <div v-for="(mac_position, index) in mac_position" :key="index">
+        <div style="display: flex; padding-right: 3px">
+          <h4 class="font-weight-regular pr-1">{{ mac_position.title }}:</h4>
+          <h4
+            :id="mac_position.title"
+            class="font-weight-bold"
+            style="float: right"
+          >
+            {{ mac_position.value }}
           </h4>
         </div>
       </div>
@@ -31,7 +47,7 @@ export default {
     return {
       //battery_color: 'green',
       mac_data: [],
-      mac_messages: [],
+      mac_position: [],
       current_stage: {
         stage: "No stage",
         id: -1,
@@ -73,8 +89,13 @@ export default {
           let latitude = dataArray[4];
           let longitude = dataArray[5];
 
+          this.mac_position.push(dataArray[0]); //Altitude
+          this.mac_position.push(dataArray[4]); //Longitude --
+          this.mac_position.push(dataArray[5]); //Latitude ---
+
           let removedAlt = dataArray.splice(0, 1);
           let removedLatLong = dataArray.splice(3, 2);
+          let removedTime = dataArray.splice(12, 1);
 
           dataArray.push(altitude, latitude, longitude);
           this.mac_data = dataArray;
