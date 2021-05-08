@@ -153,6 +153,9 @@ export default {
     current_mac_lng: -117.6316988,
     current_mac_lat: 33.9336,
     current_mac_yaw: null,
+    current_eru_lng: -117.6316988,
+    current_eru_lat: 33.9336,
+    current_yaw: 42,
   }),
   // mounted() {
   //   this.getMACCurrentData();
@@ -241,12 +244,14 @@ export default {
     setERUPosition() {
       for (let i = 0; i < this.eru_data.length; i++) {
         if (this.eru_data[i].title == "Latitude") {
-          this.current_lat = this.eru_data[i].value;
+          this.current_eru_lat = this.eru_data[i].value;
         } else if (this.eru_data[i].title == "Longitude") {
-          this.current_lng = this.eru_data[i].value;
+          this.current_eru_lng = this.eru_data[i].value;
+        } else if (this.eru_data[i].title == "Yaw") {
+          this.current_eru_yaw = this.eru_data[i].value;
         }
       }
-      let coord = [this.current_lng, this.current_lat]; //array for editPointSource
+      let coord = [this.current_eru_lng, this.current_eru_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("eru", coord);
       if (pointExists) {
         console.log("edited point");
@@ -255,10 +260,11 @@ export default {
         this.$refs.Map.addCoord(
           "eru",
           "eru",
-          this.current_lng,
-          this.current_lat
+          this.current_eru_lng,
+          this.current_eru_lat
         );
       }
+      this.$refs.Map.setRotation("eru", this.current_eru_yaw);
       this.firstGetERU = false;
     },
     getHikerCurrentData() {
@@ -280,7 +286,7 @@ export default {
           this.hiker_lat = this.hiker_data[i].value;
         } else if (this.hiker_data[i].title == "Hiker_lng") {
           this.hiker_lng = this.hiker_data[i].value;
-        }
+        } 
       }
       let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("hiker", coord);
