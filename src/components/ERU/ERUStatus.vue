@@ -31,14 +31,6 @@
         padding-bottom: 15px;
       "
     >
-      <div v-for="(eru_position, index) in eru_ppsition" :key="index">
-        <div style="display: flex; padding-right: 3px">
-          <h4 class="font-weight-regular pr-1">{{ eru_position.title }}:</h4>
-          <h4 class="font-weight-bold" style="float: right">
-            {{ eru_position.value }}
-          </h4>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -101,9 +93,6 @@ export default {
           let latitude = dataArray[4];
           let longitude = dataArray[5];
 
-          this.eru_position.push(dataArray[0]); //Altitude
-          this.eru_position.push(dataArray[4]); //Longitude --
-          this.eru_position.push(dataArray[5]); //Latitude ---
 
           let removedAlt = dataArray.splice(0, 1);
           let removedLatLong = dataArray.splice(3, 2);

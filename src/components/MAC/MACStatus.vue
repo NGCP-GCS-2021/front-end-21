@@ -24,18 +24,6 @@
           </h4>
         </div>
       </div>
-      <div v-for="(mac_position, index) in mac_position" :key="index">
-        <div style="display: flex; padding-right: 3px">
-          <h4 class="font-weight-regular pr-1">{{ mac_position.title }}:</h4>
-          <h4
-            :id="mac_position.title"
-            class="font-weight-bold"
-            style="float: right"
-          >
-            {{ mac_position.value }}
-          </h4>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -88,10 +76,6 @@ export default {
           let altitude = dataArray[0];
           let latitude = dataArray[4];
           let longitude = dataArray[5];
-
-          this.mac_position.push(dataArray[0]); //Altitude
-          this.mac_position.push(dataArray[4]); //Longitude --
-          this.mac_position.push(dataArray[5]); //Latitude ---
 
           let removedAlt = dataArray.splice(0, 1);
           let removedLatLong = dataArray.splice(3, 2);
