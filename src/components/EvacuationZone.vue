@@ -1,6 +1,10 @@
 <template>
+  <v-container>
+    <v-row>
+      <h1 class="font-weight-light">Evacuation Zone</h1>
+      <img src="../assets/map_icons/evac-point.png" width="30" height="30"/>
+    </v-row>
   <div>
-    <h1 class="font-weight-light">Evacuation Zone</h1>
     <!-- <h3>Current Data: {{ Longitude }}, {{ Latitude }}</h3> -->
     <validation-observer ref="observer" v-slot="{ invalid }">
       <form @submit.prevent="submit" style="height: 150px">
@@ -58,6 +62,7 @@
       </form>
     </validation-observer>
   </div>
+  </v-container>
 </template>
 
 <script>
