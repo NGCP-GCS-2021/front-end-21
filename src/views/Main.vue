@@ -122,7 +122,7 @@ import ERUStatus from "@/components/ERU/ERUStatus.vue";
 import MACStatus from "@/components/MAC/MACStatus.vue";
 import GeneralStage from "@/components/GeneralStage.vue";
 import Map from "@/components/Map.vue";
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "",
@@ -160,6 +160,9 @@ export default {
   //   this.getERUCurrentData();
   //   this.getHikerCurrentData();
   // },
+  beforeDestroy() {
+    clearInterval(this.interval);
+  },
   methods: {
     mapMounted() {
       this.getMACCurrentData();
@@ -168,8 +171,10 @@ export default {
       this.interval = setInterval(() => this.updateLoop(), 500);
     },
     updateLoop() {
-     if (!this.firstGetERU && !this.firstGetHiker && !this.firstGetMAC) {
-        this.getCurrentData();
+      if (!this.firstGetERU && !this.firstGetHiker && !this.firstGetMAC) {
+        this.getMACCurrentData();
+        this.getERUCurrentData();
+        this.getHikerCurrentData();
       }
     },
     setGeneralStage(stage, vehicle) {
