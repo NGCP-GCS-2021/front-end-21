@@ -16,14 +16,6 @@
         />
         <v-col :cols="6">
           <v-container fluid flex>
-            <v-row id="progressBar">
-              <v-progress-linear indeterminate color="green"
-                                 v-model="value"
-                                 :active="show"
-                                 :indeterminate="query"
-                                 :query="true"
-              ></v-progress-linear>
-            </v-row>
 
             <v-row class="pb-3 px-5">
               <GeneralStage
