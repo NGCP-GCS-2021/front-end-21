@@ -177,10 +177,11 @@ export default {
       this.getMACCurrentData();
       this.getERUCurrentData();
       this.getHikerCurrentData();
+      this.getCurrentTravelTo();
       this.interval = setInterval(() => this.updateLoop(), 500);
     },
     updateLoop() {
-      if (!this.firstGetERU && !this.firstGetHiker && !this.firstGetMAC) {
+      if (!this.firstGetERU && !this.firstGetHiker && !this.firstGetMAC && !this.firstGetHome) {
         this.getMACCurrentData();
         this.getERUCurrentData();
         this.getHikerCurrentData();
