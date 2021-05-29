@@ -150,6 +150,8 @@ export default {
     firstGetMAC: true,
     firstGetERU: true,
     firstGetHiker: true,
+    firstGetHome: true,
+    MACHomePointExists: false,
     current_mac_lng: -117.6316988,
     current_mac_lat: 33.9336,
     current_mac_yaw: null,
@@ -182,6 +184,7 @@ export default {
         this.getMACCurrentData();
         this.getERUCurrentData();
         this.getHikerCurrentData();
+        this.getCurrentTravelTo();
       }
     },
     setGeneralStage(stage, vehicle) {
@@ -286,7 +289,7 @@ export default {
           this.hiker_lat = this.hiker_data[i].value;
         } else if (this.hiker_data[i].title == "Hiker_lng") {
           this.hiker_lng = this.hiker_data[i].value;
-        } 
+        }
       }
       let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
       let pointExists = this.$refs.Map.editPointSource("hiker", coord);
@@ -302,6 +305,54 @@ export default {
         );
       }
       this.firstGetHiker = false;
+    },
+    getCurrentTravelTo() {
+      const path = "http://127.0.0.1:5000/MAC_INPUT";
+      axios
+        .get(path)
+        .then((res) => {
+          if (this.firstGetHome) {
+            if (
+              res.data.Travel_to_lng == 0 &&
+              res.data.Travel_to_lat == 0 &&
+              res.data.Travel_to_alt == 0
+            ) {
+            } else {
+              this.setHomePosition(
+                res.data.Travel_to_lng,
+                res.data.Travel_to_lat
+              );
+            }
+          } else {
+            this.setHomePosition(
+              res.data.Travel_to_lng,
+              res.data.Travel_to_lat
+            );
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    setHomePosition(lng, lat) {
+      let coord = [lng, lat]; //array for editPointSource
+      this.editMACHome(coord);
+      if (this.MACHomePointExists) {
+        console.log("edited MACHome point");
+      } else {
+        console.log("added MACHome point");
+        this.addMACHome(lng, lat);
+      }
+      this.firstGetHome = false;
+    },
+    editMACHome(coord) {
+      this.MACHomePointExists = this.$refs.Map.editPointSource(
+        "mac_home",
+        coord
+      );
+    },
+    addMACHome(lng, lat) {
+      this.$refs.Map.addCoord("mac_home", "home", lng, lat);
     },
   },
 };
