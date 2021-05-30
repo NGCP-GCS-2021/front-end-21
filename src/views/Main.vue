@@ -147,11 +147,14 @@ export default {
     mac_data: [],
     hiker_data: [],
     eru_data: [],
+    Search_Area: [],
     firstGetMAC: true,
     firstGetERU: true,
     firstGetHiker: true,
     firstGetHome: true,
+    firstGetERUDrop: true,
     MACHomePointExists: false,
+    ERUDropPointExists: false,
     current_mac_lng: -117.6316988,
     current_mac_lat: 33.9336,
     current_mac_yaw: null,
@@ -178,14 +181,15 @@ export default {
       this.getERUCurrentData();
       this.getHikerCurrentData();
       this.getCurrentTravelTo();
+      this.getCurrentDropLocation();
+      this.getMACSearchArea();
       this.interval = setInterval(() => this.updateLoop(), 500);
     },
     updateLoop() {
-      if (!this.firstGetERU && !this.firstGetHiker && !this.firstGetMAC && !this.firstGetHome) {
+      if (!this.firstGetERU && !this.firstGetHiker && !this.firstGetMAC) {
         this.getMACCurrentData();
         this.getERUCurrentData();
         this.getHikerCurrentData();
-        this.getCurrentTravelTo();
       }
     },
     setGeneralStage(stage, vehicle) {
@@ -354,6 +358,153 @@ export default {
     },
     addMACHome(lng, lat) {
       this.$refs.Map.addCoord("mac_home", "home", lng, lat);
+    },
+    getCurrentDropLocation() {
+      const path = "http://127.0.0.1:5000/MAC_INPUT";
+      axios
+        .get(path)
+        .then((res) => {
+          if (this.firstGetERUDrop) {
+            if (res.data.Drop_Loc_lng == 0 && res.data.Drop_Loc_lng == 0) {
+            } else {
+              this.setDropLocationPosition(
+                res.data.Drop_Loc_lng,
+                res.data.Drop_Loc_lat
+              );
+            }
+          } else {
+            this.setDropLocationPosition(
+              res.data.Drop_Loc_lng,
+              res.data.Drop_Loc_lat
+            );
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    setDropLocationPosition(lng, lat) {
+      let coord = [lng, lat]; //array for editPointSource
+      this.editERUDrop(coord);
+      if (this.pointExists) {
+        console.log("edited ERUDrop point");
+      } else {
+        console.log("added ERUDrop point");
+        this.addERUDrop(lng, lat);
+      }
+      this.firstGetERUDrop = false;
+    },
+    editERUDrop(coord) {
+      this.ERUDropPointExists = this.$refs.Map.editPointSource(
+        "eru_drop_loc",
+        coord
+      );
+    },
+    addERUDrop(lng, lat) {
+      this.$refs.Map.addCoord("eru_drop_loc", "drop-location", lng, lat); //not sure if naming is correct
+    },
+    getCurrentEvac() {
+      const path = "http://127.0.0.1:5000/ERU_INPUT";
+      axios
+        .get(path)
+        .then((res) => {
+          if (this.firstGetEvac) {
+            if (res.data.EZ_lng == 0 && res.data.EZ_lat == 0) {
+            } else {
+              this.setEvacPosition(res.data.EZ_lng, res.data.EZ_lat);
+            }
+          } else {
+            this.setEvacPosition(res.data.EZ_lng, res.data.EZ_lat);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    setEvacPosition(lng, lat) {
+      let coord = [lng, lat]; //array for editPointSource
+      this.editEvac(coord);
+      if (this.evacPointExists) {
+        console.log("edited point");
+      } else {
+        console.log("added point");
+        this.addEvac(lng, lat);
+      }
+      this.firstGetEvac = false;
+    },
+    editEvac(coord) {
+      this.evacPointExists = this.$refs.Map.editPointSource("evac_zone", coord);
+    },
+    addEvac(lng, lat) {
+      this.$refs.Map.addCoord("evac_zone", "evac-point", lng, lat);
+    },
+    getMACSearchArea() {
+      const path = "http://127.0.0.1:5000/MAC_INPUT";
+      axios
+        .get(path)
+        .then((res) => {
+          this.Search_Area = res.data.Search_Area;
+          // console.log(this.Search_Area)
+          this.setSearchArea();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    setSearchArea() {
+      console.log("length: " + this.Search_Area.Coordinates.length);
+      if (this.Search_Area.Coordinates.length > 0) {
+        if (this.Search_Area.Circle_inputs.rad == null) {
+          //Polygon
+          this.setPolygonCoordinates();
+        }
+      }
+      if (this.Search_Area.Circle_inputs.rad != null) {
+        //Circle
+        this.setCircleCoordinates();
+      }
+    },
+    setPolygonCoordinates() {
+      if (this.Search_Area.Coordinates.length > 0) {
+        let tempCoordinates = new Array(this.Search_Area.Coordinates.length);
+        let temp = [];
+        for (let i = 0; i < this.Search_Area.Coordinates.length; i++) {
+          temp = new Array(2);
+          temp[0] = this.Search_Area.Coordinates[i].lng;
+          temp[1] = this.Search_Area.Coordinates[i].lat;
+          tempCoordinates[i] = temp;
+        }
+        this.addPolygon(tempCoordinates);
+        // console.log(this.$refs.PolygonForm.Coordinates);
+      }
+    },
+    setCircleCoordinates() {
+      // console.log(this.Search_Area.Circle_inputs.lat);
+      if (this.Search_Area.Circle_inputs.rad != null) {
+        this.addCircle(
+          this.Search_Area.Circle_inputs.lng,
+          this.Search_Area.Circle_inputs.lat,
+          this.Search_Area.Circle_inputs.rad
+        );
+      }
+    },
+    addPolygon(coordinates) {
+      this.$refs.Map.removeLayer("Search Area");
+      // console.log(coordinates);
+      this.$refs.Map.addPoly(coordinates, "Search Area", "#00ff6a", 0.3);
+      console.log("added Search Area from endpoint");
+    },
+    addCircle(lng, lat, rad) {
+      this.$refs.Map.removeLayer("Search Area");
+      this.circleCoords = this.$refs.Map.addCircle(
+        lng,
+        lat,
+        rad,
+        16,
+        "Search Area",
+        "#00ff6a",
+        0.3
+      );
     },
   },
 };
