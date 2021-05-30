@@ -152,9 +152,11 @@ export default {
     firstGetERU: true,
     firstGetHiker: true,
     firstGetHome: true,
+    firstGetEvac: true,
     firstGetERUDrop: true,
     MACHomePointExists: false,
     ERUDropPointExists: false,
+    evacPointExists: false,
     current_mac_lng: -117.6316988,
     current_mac_lat: 33.9336,
     current_mac_yaw: null,
@@ -183,6 +185,7 @@ export default {
       this.getCurrentTravelTo();
       this.getCurrentDropLocation();
       this.getMACSearchArea();
+      this.getCurrentEvac()
       this.interval = setInterval(() => this.updateLoop(), 500);
     },
     updateLoop() {
