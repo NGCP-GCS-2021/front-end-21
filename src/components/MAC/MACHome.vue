@@ -56,7 +56,7 @@
                 <v-text-field
                   v-model="Altitude"
                   :error-messages="errors"
-                  label="Altidude"
+                  label="Altitude"
                   required
                 ></v-text-field>
               </validation-provider>
