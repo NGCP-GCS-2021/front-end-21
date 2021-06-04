@@ -65,7 +65,7 @@ export default {
         id: 2,
       },
       {
-        stage: "Drive to Hiker",
+        stage: "Find the Hiker",
         id: 3,
       },
       {

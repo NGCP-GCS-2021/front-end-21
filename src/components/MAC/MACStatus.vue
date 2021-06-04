@@ -95,7 +95,7 @@ export default {
         let pair = this.mac_data[i];
         if (pair.title == "Current Stage") {
           this.current_stage.id = pair.value + 1;
-          console.log(pair);
+          // console.log(pair);
           for (let k = 0; k < this.stages.length; k++) {
             if (this.current_stage.id == this.stages[k].id) {
               this.current_stage.stage = this.stages[k].stage;

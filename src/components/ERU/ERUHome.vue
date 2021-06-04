@@ -2,59 +2,64 @@
   <v-container>
     <v-row>
       <h1 class="font-weight-light">Travel to/Home Coordinates</h1>
-      <img src="../../assets/map_icons/home.png" width="30" height="30"/>
+      <img src="../../assets/map_icons/home.png" width="30" height="30" />
     </v-row>
-  <div>
-    <validation-observer ref="observer" v-slot="{ invalid }">
-      <form @submit.prevent="submit" style="height: 150px;">
-        <v-container>
-          <v-row>
-            <v-col cols="6">
-              <validation-provider
-                v-slot="{ errors }"
-                name="Latitude"
-                :rules="{
-                  required: true,
-                  regex: /^-?[0-9]\d*(.\d+)?$/,
-                }"
-                class="pa-0 ma-0"
+    <div>
+      <validation-observer ref="observer" v-slot="{ invalid }">
+        <form @submit.prevent="submit" style="height: 150px">
+          <v-container>
+            <v-row>
+              <v-col cols="6">
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Latitude"
+                  :rules="{
+                    required: true,
+                    regex: /^-?[0-9]\d*(.\d+)?$/,
+                  }"
+                  class="pa-0 ma-0"
+                >
+                  <v-text-field
+                    v-model="Latitude"
+                    :error-messages="errors"
+                    label="Latitude"
+                    required
+                  ></v-text-field>
+                </validation-provider>
+              </v-col>
+              <v-col cols="6">
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Longitude"
+                  :rules="{
+                    required: true,
+                    regex: /^-?[0-9]\d*(.\d+)?$/,
+                  }"
+                >
+                  <v-text-field
+                    v-model="Longitude"
+                    :error-messages="errors"
+                    label="Longitude"
+                    required
+                  ></v-text-field>
+                </validation-provider>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-btn
+                class="mr-4"
+                color="green"
+                @click="submit"
+                :disabled="invalid"
               >
-                <v-text-field
-                  v-model="Latitude"
-                  :error-messages="errors"
-                  label="Latitude"
-                  required
-                ></v-text-field>
-              </validation-provider>
-            </v-col>
-            <v-col cols="6">
-              <validation-provider
-                v-slot="{ errors }"
-                name="Longitude"
-                :rules="{
-                  required: true,
-                  regex: /^-?[0-9]\d*(.\d+)?$/,
-                }"
-              >
-                <v-text-field
-                  v-model="Longitude"
-                  :error-messages="errors"
-                  label="Longitude"
-                  required
-                ></v-text-field>
-              </validation-provider>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-btn class="mr-4" color="green" @click="submit" :disabled="invalid">
-              Submit
-            </v-btn>
-            <v-btn @click="clear"> Clear </v-btn>
-          </v-row>
-        </v-container>
-      </form>
-    </validation-observer>
-  </div>
+                Submit
+              </v-btn>
+              <v-btn @click="clear"> Clear </v-btn>
+            </v-row>
+          </v-container>
+        </form>
+      </validation-observer>
+    </div>
   </v-container>
 </template>
 
@@ -91,6 +96,7 @@ export default {
       Longitude: "",
       Latitude: "",
       firstGetHome: true,
+      pointExists: false,
     };
   },
   mounted() {
@@ -101,42 +107,39 @@ export default {
   //     this.getCurrentTravelTo();
   //   }
   // },
-  props: ["pointExists"],
   methods: {
     getCurrentTravelTo() {
       const path = "http://127.0.0.1:5000/ERU_INPUT";
       axios
-          .get(path)
-          .then((res) => {
-            if (this.firstGetHome) {
-              if (
-                  res.data.Travel_to_lng == 0 &&
-                  res.data.Travel_to_lat == 0
-              ) {
-              } else {
-                this.Longitude = res.data.Travel_to_lng;
-                this.Latitude = res.data.Travel_to_lat;
-                this.setHomePosition(this.Longitude, this.Latitude);
-              }
+        .get(path)
+        .then((res) => {
+          if (this.firstGetHome) {
+            if (res.data.Travel_to_lng == 0 && res.data.Travel_to_lat == 0) {
             } else {
-              this.setHomePosition(
-                  res.data.Travel_to_lng,
-                  res.data.Travel_to_lat
-              );
+              this.Longitude = res.data.Travel_to_lng;
+              this.Latitude = res.data.Travel_to_lat;
+              this.setHomePosition(this.Longitude, this.Latitude);
             }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+          } else {
+            this.setHomePosition(
+              res.data.Travel_to_lng,
+              res.data.Travel_to_lat
+            );
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
     setHomePosition(lng, lat) {
       let coord = [lng, lat]; //array for editPointSource
       this.$emit("editERUHome", coord);
       //let pointExists = this.$refs.Map.editPointSource("mac_home", coord);
+      console.log("pointExists: " + this.pointExists);
       if (this.pointExists) {
-        console.log("edited point");
+        console.log("edited ERUHome point");
       } else {
-        console.log("added point");
+        console.log("added ERUHome point");
         this.$emit("addERUHome", lng, lat);
       }
       this.firstGetHome = false;

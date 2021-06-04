@@ -48,7 +48,6 @@
                     <ERUHome
                       @editERUHome="editERUHome"
                       @addERUHome="addERUHome"
-                      :pointExists="pointExists"
                       ref="ERUHome"
                     />
                   </v-card>
@@ -233,7 +232,7 @@ export default {
     hiker_data: null,
     hiker_lng: -117.6318437,
     hiker_lat: 33.933729,
-    pointExists: false,
+    // pointExists: false,
     evacPointExists: false,
     counter: 0,
   }),
@@ -314,8 +313,6 @@ export default {
       }
       this.$refs.Map.setRotation("eru", this.current_yaw);
       this.firstGetERU = false;
-      let booltest = !this.firstGetERU && !this.firstGetHiker;
-      // console.log("booltest: " + booltest);
     },
     setHikerPosition() {
       for (let i = 0; i < this.hiker_data.length; i++) {
@@ -340,9 +337,6 @@ export default {
         );
       }
       this.firstGetHiker = false;
-      // console.log("firstGetHiker: " + this.firstGetHiker);
-      let booltest = !this.firstGetERU && !this.firstGetHiker;
-      // console.log("booltest: " + booltest);
     },
     setGeneralStage(stage, vehicle) {
       this.$emit("setGeneralStage", stage, vehicle);
@@ -357,7 +351,9 @@ export default {
       console.log(this.input);
     },
     editERUHome(coord) {
-      this.pointExists = this.$refs.Map.editPointSource("eru_home", coord);
+      let pointExists = this.$refs.Map.editPointSource("eru_home", coord);
+      this.$refs.ERUHome.pointExists = pointExists;
+      console.log("editERUHome result: " + pointExists);
     },
     addERUHome(lng, lat) {
       this.$refs.Map.addCoord("eru_home", "home", lng, lat);
