@@ -4,7 +4,7 @@
             "Coordinates": [],
             "Keep_in": true,
             "Circle_inputs": {
-                "lng": null,
+                "lng": 10,
                 "lat": null,
                 "rad": null
             }
