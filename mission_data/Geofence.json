@@ -5,7 +5,7 @@
             "Keep_in": true,
             "Circle_inputs": {
                 "lng": 10,
-                "lat": null,
+                "lat": 15,
                 "rad": null
             }
         },
