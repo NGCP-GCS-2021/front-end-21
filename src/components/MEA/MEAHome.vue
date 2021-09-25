@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <h1 class="font-weight-light">Travel to/Home Coordinates</h1>
+  <v-container>
+    <v-row>
+      <h1 class="font-weight-light">Travel to/Home Coordinates</h1>
+      <img src="../../assets/map_icons/home.png" width="30" height="30" />
+    </v-row>
     <validation-observer ref="observer" v-slot="{ invalid }">
-      <form @submit.prevent="submit" style="height: 150px;">
+      <form @submit.prevent="submit" style="height: 150px">
         <v-container>
           <v-row>
             <v-col cols="4">
@@ -67,7 +70,7 @@
         </v-container>
       </form>
     </validation-observer>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -109,18 +112,18 @@ export default {
     this.getCurrentTravelTo();
   },
   methods: {
-    getCurrentTravelTo(){
+    getCurrentTravelTo() {
       const path = "http://127.0.0.1:5000/MEA_INPUT";
       axios
-          .get(path)
-          .then((res) => {
-            this.Longitude = res.data.Travel_to_lng;
-            this.Latitude = res.data.Travel_to_lat;
-            this.Altitude = res.data.Travel_to_alt;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+        .get(path)
+        .then((res) => {
+          this.Longitude = res.data.Travel_to_lng;
+          this.Latitude = res.data.Travel_to_lat;
+          this.Altitude = res.data.Travel_to_alt;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
     submit() {
       this.$refs.observer.validate();
