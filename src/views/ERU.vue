@@ -65,6 +65,20 @@
                   </v-card>
                 </v-col>
               </v-row>
+              <v-row class="pt-0 px-3" align="auto">
+                <v-col cols="6">
+                  <v-card class="pa-1" style="width: 100%">
+                    <!-- Team A -->
+
+                  </v-card>
+                </v-col>
+                <v-col cols="6">
+                  <v-card class="pa-1" style="width: 100%; height: 100%">
+                   <!-- Team B -->
+
+                  </v-card>
+                </v-col>
+              </v-row>
             </v-container>
           </v-col>
         </template>
@@ -175,6 +189,7 @@
           </v-col>
         </template>
       </v-row>
+
     </v-container>
   </div>
 </template>
@@ -246,9 +261,9 @@ export default {
   //     this.getCurrentData();
   //   }
   // },
-  beforeDestroy() {
-    clearInterval(this.interval);
-  },
+  // beforeDestroy() {
+  //   clearInterval(this.interval);
+  // },
   methods: {
     // mapMounted() {
     //   this.getCurrentData();
