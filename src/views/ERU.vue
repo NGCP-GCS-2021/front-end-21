@@ -250,120 +250,120 @@ export default {
     clearInterval(this.interval);
   },
   methods: {
-    mapMounted() {
-      this.getCurrentData();
-      this.$refs.EvacuationZone.getCurrentEvac();
-      this.$refs.ERUHome.getCurrentTravelTo();
-      this.interval = setInterval(() => this.updateERULoop(), 500);
-    },
-    updateERULoop() {
-      if (!this.firstGetERU && !this.firstGetHiker) {
-        this.getCurrentData();
-      }
-    },
-    getCurrentData() {
-      //ERU information
-      let path = "http://127.0.0.1:5000/ERU_XBEE";
-      axios
-        .get(path)
-        .then((res) => {
-          this.eru_data = res.data.ERU;
-          this.setERUPosition();
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    // mapMounted() {
+    //   this.getCurrentData();
+    //   this.$refs.EvacuationZone.getCurrentEvac();
+    //   this.$refs.ERUHome.getCurrentTravelTo();
+    //   this.interval = setInterval(() => this.updateERULoop(), 500);
+    // },
+    // updateERULoop() {
+    //   if (!this.firstGetERU && !this.firstGetHiker) {
+    //     this.getCurrentData();
+    //   }
+    // },
+    // getCurrentData() {
+    //   //ERU information
+    //   let path = "http://127.0.0.1:5000/ERU_XBEE";
+    //   axios
+    //     .get(path)
+    //     .then((res) => {
+    //       this.eru_data = res.data.ERU;
+    //       this.setERUPosition();
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
 
-      //Hiker Information
-      path = "http://127.0.0.1:5000/Hiker";
-      axios
-        .get(path)
-        .then((res) => {
-          this.hiker_data = res.data.Hiker;
-          this.setHikerPosition();
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
+    //   //Hiker Information
+    //   path = "http://127.0.0.1:5000/Hiker";
+    //   axios
+    //     .get(path)
+    //     .then((res) => {
+    //       this.hiker_data = res.data.Hiker;
+    //       this.setHikerPosition();
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+    // },
 
-    setERUPosition() {
-      for (let i = 0; i < this.eru_data.length; i++) {
-        if (this.eru_data[i].title == "Latitude") {
-          this.current_lat = this.eru_data[i].value;
-        } else if (this.eru_data[i].title == "Longitude") {
-          this.current_lng = this.eru_data[i].value;
-        } else if (this.eru_data[i].title == "Yaw") {
-          this.current_yaw = this.eru_data[i].value;
-        }
-      }
+    // setERUPosition() {
+    //   for (let i = 0; i < this.eru_data.length; i++) {
+    //     if (this.eru_data[i].title == "Latitude") {
+    //       this.current_lat = this.eru_data[i].value;
+    //     } else if (this.eru_data[i].title == "Longitude") {
+    //       this.current_lng = this.eru_data[i].value;
+    //     } else if (this.eru_data[i].title == "Yaw") {
+    //       this.current_yaw = this.eru_data[i].value;
+    //     }
+    //   }
 
-      let coord = [this.current_lng, this.current_lat]; //array for editPointSource
-      let pointExists = this.$refs.Map.editPointSource("eru", coord);
-      if (pointExists) {
-        // console.log("edited ERU point");
-      } else {
-        // console.log("added ERU point");
-        this.$refs.Map.addCoord(
-          "eru",
-          "eru",
-          this.current_lng,
-          this.current_lat
-        );
-      }
-      this.$refs.Map.setRotation("eru", this.current_yaw);
-      this.firstGetERU = false;
-    },
-    setHikerPosition() {
-      for (let i = 0; i < this.hiker_data.length; i++) {
-        if (this.hiker_data[i].title == "Hiker_lat") {
-          this.hiker_lat = this.hiker_data[i].value;
-        } else if (this.hiker_data[i].title == "Hiker_lng") {
-          this.hiker_lng = this.hiker_data[i].value;
-        }
-      }
+    //   let coord = [this.current_lng, this.current_lat]; //array for editPointSource
+    //   let pointExists = this.$refs.Map.editPointSource("eru", coord);
+    //   if (pointExists) {
+    //     // console.log("edited ERU point");
+    //   } else {
+    //     // console.log("added ERU point");
+    //     this.$refs.Map.addCoord(
+    //       "eru",
+    //       "eru",
+    //       this.current_lng,
+    //       this.current_lat
+    //     );
+    //   }
+    //   this.$refs.Map.setRotation("eru", this.current_yaw);
+    //   this.firstGetERU = false;
+    // },
+    // setHikerPosition() {
+    //   for (let i = 0; i < this.hiker_data.length; i++) {
+    //     if (this.hiker_data[i].title == "Hiker_lat") {
+    //       this.hiker_lat = this.hiker_data[i].value;
+    //     } else if (this.hiker_data[i].title == "Hiker_lng") {
+    //       this.hiker_lng = this.hiker_data[i].value;
+    //     }
+    //   }
 
-      let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
-      let pointExists = this.$refs.Map.editPointSource("hiker", coord);
-      if (pointExists) {
-        // console.log("edited Hiker point");
-      } else {
-        // console.log("added Hiker point");
-        this.$refs.Map.addCoord(
-          "hiker",
-          "hiker",
-          this.hiker_lng,
-          this.hiker_lat
-        );
-      }
-      this.firstGetHiker = false;
-    },
-    setGeneralStage(stage, vehicle) {
-      this.$emit("setGeneralStage", stage, vehicle);
-      this.updatedStage = stage;
-      this.updatedVehicle = vehicle;
-    },
-    setManualControlView(value) {
-      this.manualControlView = value;
-    },
-    setInput(input) {
-      this.input = input;
-      console.log(this.input);
-    },
-    editERUHome(coord) {
-      let pointExists = this.$refs.Map.editPointSource("eru_home", coord);
-      this.$refs.ERUHome.pointExists = pointExists;
-      console.log("editERUHome result: " + pointExists);
-    },
-    addERUHome(lng, lat) {
-      this.$refs.Map.addCoord("eru_home", "home", lng, lat);
-    },
-    editEvac(coord) {
-      this.evacPointExists = this.$refs.Map.editPointSource("evac_zone", coord);
-    },
-    addEvac(lng, lat) {
-      this.$refs.Map.addCoord("evac_zone", "evac-point", lng, lat);
-    },
+    //   let coord = [this.hiker_lng, this.hiker_lat]; //array for editPointSource
+    //   let pointExists = this.$refs.Map.editPointSource("hiker", coord);
+    //   if (pointExists) {
+    //     // console.log("edited Hiker point");
+    //   } else {
+    //     // console.log("added Hiker point");
+    //     this.$refs.Map.addCoord(
+    //       "hiker",
+    //       "hiker",
+    //       this.hiker_lng,
+    //       this.hiker_lat
+    //     );
+    //   }
+    //   this.firstGetHiker = false;
+    // },
+    // setGeneralStage(stage, vehicle) {
+    //   this.$emit("setGeneralStage", stage, vehicle);
+    //   this.updatedStage = stage;
+    //   this.updatedVehicle = vehicle;
+    // },
+    // setManualControlView(value) {
+    //   this.manualControlView = value;
+    // },
+    // setInput(input) {
+    //   this.input = input;
+    //   console.log(this.input);
+    // },
+    // editERUHome(coord) {
+    //   let pointExists = this.$refs.Map.editPointSource("eru_home", coord);
+    //   this.$refs.ERUHome.pointExists = pointExists;
+    //   console.log("editERUHome result: " + pointExists);
+    // },
+    // addERUHome(lng, lat) {
+    //   this.$refs.Map.addCoord("eru_home", "home", lng, lat);
+    // },
+    // editEvac(coord) {
+    //   this.evacPointExists = this.$refs.Map.editPointSource("evac_zone", coord);
+    // },
+    // addEvac(lng, lat) {
+    //   this.$refs.Map.addCoord("evac_zone", "evac-point", lng, lat);
+    // },
   },
 };
 </script>

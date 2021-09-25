@@ -61,59 +61,59 @@ export default {
     ],
     currentData: null,
   }),
-  mounted() {
-    this.getCurrentStage();
-  },
-  methods: {
-    getCurrentStage() {
-      const path = "http://127.0.0.1:5000/ERU_XBEE";
+  // mounted() {
+  //   this.getCurrentStage();
+  // },
+  // methods: {
+  //   getCurrentStage() {
+  //     const path = "http://127.0.0.1:5000/ERU_XBEE";
 
-      axios
-        .get(path)
-        .then((res) => {
-          this.currentData = res.data.ERU;
-          this.setCurrentStage();
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-    setCurrentStage() {
-      for (let i = 0; i < this.currentData.length; i++) {
-        let pair = this.currentData[i];
-        if (pair.title == "Current Stage") {
-          this.currentStage.id = pair.value + 1;
+  //     axios
+  //       .get(path)
+  //       .then((res) => {
+  //         this.currentData = res.data.ERU;
+  //         this.setCurrentStage();
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
+  //   },
+  //   setCurrentStage() {
+  //     for (let i = 0; i < this.currentData.length; i++) {
+  //       let pair = this.currentData[i];
+  //       if (pair.title == "Current Stage") {
+  //         this.currentStage.id = pair.value + 1;
 
-          for (let k = 0; k < this.stages.length; k++) {
-            if (this.currentStage.id == this.stages[k].id) {
-              this.currentStage.stage = this.stages[k].stage;
-              i = this.currentData.length; //ends loop
-              k = this.stages.length; //ends loop
-            }
-          }
-        }
-      }
-    },
-    postCurrentStage() {
-      if (this.currentStage.id == -1) {
-      } else {
-        this.currentStage.Perform_stage = this.select.id - 1;
-        const path = "http://127.0.0.1:5000/ERU_INPUT";
-        const currentStageStringify = JSON.stringify({
-          Perform_stage: this.select.id - 1,
-        });
-        console.log(currentStageStringify);
-        axios
-          .post(path, currentStageStringify)
-          .then(() => {
-            console.log("Posted stage to ERU_INPUT");
-            this.$emit("setGeneralStage", this.select.stage, "ERU");
-          })
-          .catch((error) => {
-            console.log(error.response);
-          });
-      }
-    },
-  },
+  //         for (let k = 0; k < this.stages.length; k++) {
+  //           if (this.currentStage.id == this.stages[k].id) {
+  //             this.currentStage.stage = this.stages[k].stage;
+  //             i = this.currentData.length; //ends loop
+  //             k = this.stages.length; //ends loop
+  //           }
+  //         }
+  //       }
+  //     }
+  //   },
+  //   postCurrentStage() {
+  //     if (this.currentStage.id == -1) {
+  //     } else {
+  //       this.currentStage.Perform_stage = this.select.id - 1;
+  //       const path = "http://127.0.0.1:5000/ERU_INPUT";
+  //       const currentStageStringify = JSON.stringify({
+  //         Perform_stage: this.select.id - 1,
+  //       });
+  //       console.log(currentStageStringify);
+  //       axios
+  //         .post(path, currentStageStringify)
+  //         .then(() => {
+  //           console.log("Posted stage to ERU_INPUT");
+  //           this.$emit("setGeneralStage", this.select.stage, "ERU");
+  //         })
+  //         .catch((error) => {
+  //           console.log(error.response);
+  //         });
+  //     }
+  //   },
+  // },
 };
 </script>

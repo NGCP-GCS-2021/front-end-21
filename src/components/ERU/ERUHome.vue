@@ -99,78 +99,78 @@ export default {
       pointExists: false,
     };
   },
-  mounted() {
-    setTimeout(this.getCurrentTravelTo, 5000);
-  },
-  // updated() {
-  //   if (!this.firstGetHome) {
-  //     this.getCurrentTravelTo();
-  //   }
+  // mounted() {
+  //   setTimeout(this.getCurrentTravelTo, 5000);
   // },
-  methods: {
-    getCurrentTravelTo() {
-      const path = "http://127.0.0.1:5000/ERU_INPUT";
-      axios
-        .get(path)
-        .then((res) => {
-          if (this.firstGetHome) {
-            if (res.data.Travel_to_lng == 0 && res.data.Travel_to_lat == 0) {
-            } else {
-              this.Longitude = res.data.Travel_to_lng;
-              this.Latitude = res.data.Travel_to_lat;
-              this.setHomePosition(this.Longitude, this.Latitude);
-            }
-          } else {
-            this.setHomePosition(
-              res.data.Travel_to_lng,
-              res.data.Travel_to_lat
-            );
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-    setHomePosition(lng, lat) {
-      let coord = [lng, lat]; //array for editPointSource
-      this.$emit("editERUHome", coord);
-      //let pointExists = this.$refs.Map.editPointSource("mac_home", coord);
-      console.log("pointExists: " + this.pointExists);
-      if (this.pointExists) {
-        console.log("edited ERUHome point");
-      } else {
-        console.log("added ERUHome point");
-        this.$emit("addERUHome", lng, lat);
-      }
-      this.firstGetHome = false;
-    },
-    submit() {
-      this.$refs.observer.validate();
-      this.postTravelTo();
-    },
-    clear() {
-      this.Longitude = "";
-      this.Latitude = "";
-      this.$refs.observer.reset();
-    },
-    postTravelTo() {
-      this.travelTo = JSON.stringify({
-        Travel_to_lat: parseFloat(this.Latitude),
-        Travel_to_lng: parseFloat(this.Longitude),
-      });
-      const path = "http://127.0.0.1:5000/ERU_INPUT";
-      // console.log(this.travelTo);
-      axios
-        .post(path, this.travelTo)
-        .then(() => {
-          console.log("Posted Travel to/Home coordinates to ERU_INPUT");
-          console.log(this.travelTo);
-          this.getCurrentTravelTo();
-        })
-        .catch((error) => {
-          console.log(error.response);
-        });
-    },
-  },
+  // // updated() {
+  // //   if (!this.firstGetHome) {
+  // //     this.getCurrentTravelTo();
+  // //   }
+  // // },
+  // methods: {
+  //   getCurrentTravelTo() {
+  //     const path = "http://127.0.0.1:5000/ERU_INPUT";
+  //     axios
+  //       .get(path)
+  //       .then((res) => {
+  //         if (this.firstGetHome) {
+  //           if (res.data.Travel_to_lng == 0 && res.data.Travel_to_lat == 0) {
+  //           } else {
+  //             this.Longitude = res.data.Travel_to_lng;
+  //             this.Latitude = res.data.Travel_to_lat;
+  //             this.setHomePosition(this.Longitude, this.Latitude);
+  //           }
+  //         } else {
+  //           this.setHomePosition(
+  //             res.data.Travel_to_lng,
+  //             res.data.Travel_to_lat
+  //           );
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
+  //   },
+  //   setHomePosition(lng, lat) {
+  //     let coord = [lng, lat]; //array for editPointSource
+  //     this.$emit("editERUHome", coord);
+  //     //let pointExists = this.$refs.Map.editPointSource("mac_home", coord);
+  //     console.log("pointExists: " + this.pointExists);
+  //     if (this.pointExists) {
+  //       console.log("edited ERUHome point");
+  //     } else {
+  //       console.log("added ERUHome point");
+  //       this.$emit("addERUHome", lng, lat);
+  //     }
+  //     this.firstGetHome = false;
+  //   },
+  //   submit() {
+  //     this.$refs.observer.validate();
+  //     this.postTravelTo();
+  //   },
+  //   clear() {
+  //     this.Longitude = "";
+  //     this.Latitude = "";
+  //     this.$refs.observer.reset();
+  //   },
+  //   postTravelTo() {
+  //     this.travelTo = JSON.stringify({
+  //       Travel_to_lat: parseFloat(this.Latitude),
+  //       Travel_to_lng: parseFloat(this.Longitude),
+  //     });
+  //     const path = "http://127.0.0.1:5000/ERU_INPUT";
+  //     // console.log(this.travelTo);
+  //     axios
+  //       .post(path, this.travelTo)
+  //       .then(() => {
+  //         console.log("Posted Travel to/Home coordinates to ERU_INPUT");
+  //         console.log(this.travelTo);
+  //         this.getCurrentTravelTo();
+  //       })
+  //       .catch((error) => {
+  //         console.log(error.response);
+  //       });
+  //   },
+  // },
 };
 </script>
