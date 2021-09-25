@@ -69,7 +69,11 @@
                 <v-col cols="6">
                   <v-card class="pa-1" style="width: 100%">
                     <!-- Team A -->
-
+                  <form>
+                    <label>Mode</label>
+                    <input type="text" required v-model="Mode">
+                  </form> 
+                  <p>Mode: {{Mode}}</p>
                   </v-card>
                 </v-col>
                 <v-col cols="6">
@@ -261,6 +265,7 @@ export default {
     // pointExists: false,
     evacPointExists: false,
     counter: 0,
+    Mode: 'Autonomous',
   }),
   // mounted() {
   //   // setTimeout(this.getCurrentData, 5000);
