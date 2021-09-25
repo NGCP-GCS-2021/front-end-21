@@ -75,7 +75,16 @@
                 <v-col cols="6">
                   <v-card class="pa-1" style="width: 100%; height: 100%">
                    <!-- Team B -->
-
+                   <form>
+                    <h3>Pick one</h3>
+                    <input type="radio" :checked="state" id="manual" value="Manual" v-model="picked" name="Pick one">
+                    <label for="manual">Manual</label>
+                    <br>
+                    <input type="radio" :checked="!state" id="autonomous" value="Autonomous" v-model="picked"  name="Pick one">
+                    <label for="autonomous">Autonomous</label>
+                    <br>
+                   </form>
+                   <h1>Picked: {{ picked }}</h1>
                   </v-card>
                 </v-col>
               </v-row>
@@ -233,6 +242,8 @@ export default {
     ControllerBars,
   },
   data: () => ({
+    picked: "Autonomous",
+    state: true,
     updatedStage: null,
     updatedVehicle: null,
     manualControlView: false,
