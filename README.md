@@ -1,4 +1,4 @@
-# gcs
+# GCS Front-end Application
 
 ## Project setup
 ```
