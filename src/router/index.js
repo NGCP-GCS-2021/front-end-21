@@ -7,7 +7,7 @@ import MAC from "../views/MAC.vue";
 import Geofence from "../views/Geofence.vue";
 import NotFound from "../views/NotFound.vue";
 import Weenie from "../views/Weenie.vue";
-
+import TeamB from "../views/TeamB.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -46,10 +46,17 @@ const routes = [
     component: Weenie
   },
   {
+    path: "/teamb",
+    name: "Team B",
+    component: TeamB
+  },
+
+  {
     path: '/:catchAll(.*)',
     name: 'NotFound',
     component: NotFound
   },
+
   
 
 ];

@@ -30,6 +30,9 @@
       <router-link :to="{ name: 'Weenie' }"
         ><h1 class="font-weight-light">Weenie</h1></router-link
       >
+      <router-link :to="{name: 'Team B'}"
+      >
+      <h1 class="font-weight-light">Team B</h1></router-link>
     </v-app-bar>
     <v-main>
       <router-view @setGeneralStage="setGeneralStage"></router-view>
