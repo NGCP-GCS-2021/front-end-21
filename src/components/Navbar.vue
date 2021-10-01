@@ -24,7 +24,7 @@
       <router-link :to="{ name: 'MEA', params: { stage, vehicle } }"
         ><h1 class="font-weight-light">MEA</h1></router-link
       >
-      <router-link to="/geofence"
+      <router-link :to="{ name: 'Geofence' }"
         ><h1 class="font-weight-light">Geofence</h1></router-link
       >
     </v-app-bar>
