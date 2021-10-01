@@ -6,6 +6,7 @@ import MEA from "../views/MEA.vue";
 import MAC from "../views/MAC.vue";
 import Geofence from "../views/Geofence.vue";
 import NotFound from "../views/NotFound.vue";
+import Weenie from "../views/Weenie.vue";
 
 Vue.use(VueRouter);
 
@@ -40,10 +41,17 @@ const routes = [
     component: Geofence,
   },
   {
+    path: "/weenie",
+    name: "Weenie",
+    component: Weenie
+  },
+  {
     path: '/:catchAll(.*)',
     name: 'NotFound',
     component: NotFound
   },
+  
+
 ];
 
 const router = new VueRouter({

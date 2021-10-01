@@ -27,6 +27,9 @@
       <router-link :to="{ name: 'Geofence' }"
         ><h1 class="font-weight-light">Geofence</h1></router-link
       >
+      <router-link :to="{ name: 'Weenie' }"
+        ><h1 class="font-weight-light">Weenie</h1></router-link
+      >
     </v-app-bar>
     <v-main>
       <router-view @setGeneralStage="setGeneralStage"></router-view>
